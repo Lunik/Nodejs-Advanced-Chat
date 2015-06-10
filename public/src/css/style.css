@@ -1,0 +1,372 @@
+/* Fix user-agent */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+html, input {
+  font-family:
+    "HelveticaNeue-Light",
+    "Helvetica Neue Light",
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    "Lucida Grande",
+    sans-serif;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+  word-wrap: break-word;
+}
+
+a {
+	text-decoration: none;
+	color: #e74c3c;
+}
+
+a:hover, a:focus {
+	text-decoration: underline;
+	color: #F3734F;
+}
+
+/* Pages */
+
+.pages {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.page {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+/* Login Page */
+
+.login.page {
+  background-color: #000;
+}
+
+.login.page .form {
+  height: 100px;
+  margin-top: -100px;
+  position: absolute;
+
+  text-align: center;
+  top: 50%;
+  width: 100%;
+}
+
+.login.page .form .usernameInput{
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #fff;
+  outline: none;
+  padding-bottom: 15px;
+  text-align: center;
+  width: 50%;
+}
+
+.login.page .title {
+  font-size: 200%;
+}
+
+.login.page .usernameInput{
+  font-size: 200%;
+  letter-spacing: 3px;
+}
+
+.login.page .title, .login.page .usernameInput {
+  color: #fff;
+  font-weight: 100;
+}
+
+/* Chat page */
+
+.chat.page {
+  display: none;
+}
+
+/* Font */
+
+.messages {
+  font-size: 150%;
+}
+
+.inputMessage {
+  font-size: 100%;
+}
+
+.log {
+  color: gray;
+  font-size: 70%;
+  margin: 5px;
+  text-align: center;
+}
+
+/* Messages */
+
+.chatArea {
+  height: 100%;
+  padding-bottom: 60px;
+
+  background-color: #000;
+}
+
+.messages {
+  height: 90%;
+  margin: 0;
+  overflow-y: scroll;
+  padding: 10px 20px 10px 20px;
+
+  color: white;
+}
+
+.message.typing .messageBody {
+  color: gray;
+}
+/* IconDiv */
+.icon{
+  float: left;
+  padding-right:5px;
+  width:25px;
+  height:25px;
+}
+
+.icon img{
+  width:20px;
+  height:20px;
+}
+
+/* UsernameDiv */
+.username {
+  float: left;
+  font-weight: 700;
+  overflow: hidden;
+  padding-right: 15px;
+  text-align: right;
+  cursor: Pointer;
+}
+
+.messages img.img{
+	width:100px;
+}
+
+.mention{
+	background-color: white;
+	color:black;
+}
+
+/* CMD */
+.nom_cmd{
+	font-weight:bold;
+}
+
+.syntax_cmd{
+	margin-left:20px;
+}
+
+/* AdminDiv */
+
+.adminDiv{
+	width:20px;
+	height:15px;
+	margin-left:10px;
+	font-size: 50%;
+	background-color: #e74c3c;
+	border-radius:2px;
+	cursor: Pointer;
+}
+
+.adminDiv:hover, .adminDiv:focus {
+	background-color: #F3734F;
+}
+
+#deleted{
+	color:#e74c3c;
+}
+
+/* Date Div */
+.dateDiv {
+    color: gray;
+    font-size: 40%;
+
+    margin-left:10px;
+}
+/* Announce */
+.announce{
+    position: fixed;
+    top: 0px;
+    right:0px;
+
+    margin-left:5%;
+    margin-right:5%;
+    padding:10px;
+    max-width:90%;
+    max-height:90%;
+    overflow: auto;
+
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: linear-gradient(to bottom, rgb(255,50,50), rgb(255,40,40));
+    box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7);
+    opacity: 0;
+
+    text-align: left;
+    font-weight: bold;
+    vertical-align: top;
+
+    -webkit-transition: opacity 0.5s ease-in-out;
+}
+
+.announce img{
+    float:left;
+
+    margin-right:20px;
+
+    width: 40px;
+}
+
+.announce .but_closeAnnounce{
+    float:left;
+
+    margin-left: -10px;
+    margin-top: -12px;
+
+    width: 20px;
+    height: 20px;
+
+    background-color: transparent;
+    border: none;
+
+    text-align: center;
+    font-weight: bold;
+    font-size: 100%;
+
+    cursor: Pointer;
+    outline: none;
+}
+/* User List */
+.connected_body{
+	position:fixed;
+	right:0;
+	top:0;
+	bottom:60px;
+	padding-top:20px;
+	padding-left:10px;
+	background:#111;
+	width:150px;
+}
+.connected{
+	background-color: #111;
+	color:white;
+	font-weight:bold;
+}
+.but_co{
+	position:fixed;
+	right:0;
+	bottom:60px;
+	background-color: #000;
+	border-color: #e74c3c;
+	border-width: 3px;
+	border-radius: 3px;
+	color: #FFF;
+	outline: none;
+}
+
+.but_co:hover, .but_co:active, .but_co:focus{
+	background-color: #222;
+	color: #FFF;
+}
+
+.userlist{
+	margin-left:10px;
+	padding:2px;
+	cursor: Pointer;
+}
+/* Input */
+
+.inputMessage {
+  border: 10px solid #000;
+  bottom: 0;
+  height: 60px;
+  width: 100%;
+  left: 0;
+  outline: none;
+  padding-left: 10px;
+  position:absolute;
+  right: 0;
+}
+
+/* Smiley */
+.smiley_body{
+	left:0;
+	top:0;
+	bottom:60px;
+	padding-top:20px;
+	padding-left:10px;
+	position:fixed;
+	width:200px;
+	background:#111;
+}
+
+.Lsmiley{
+	color:white;
+	font-weight:bold;
+}
+
+.but_smiley{
+	left:0;
+	bottom:60px;
+	position:fixed;
+	background-color: #000;
+	border-color: #e74c3c;
+	border-width: 3px;
+	border-radius: 3px;
+	color: #FFF;
+	outline: none;
+}
+
+.but_smiley:hover, .but_smiley:active, .but_smiley:focus{
+	background-color: #222;
+	color: #FFF;
+}
+
+.smileylist{
+	margin-left:10px;
+	padding:2px;
+	width:16px;
+	height:16px;
+	cursor: Pointer;
+	background:none;
+}
+
+/* Sound */
+
+.but_sound{
+    right:15px;
+    bottom:15px;
+    position:fixed;
+
+    width:30px;
+    height:30px;
+    background-image: url("images/sound/unmute.png");
+    background-size: 100%;
+
+    cursor: pointer;
+}

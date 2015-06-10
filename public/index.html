@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no"/>
+  <title>Socket.io Chat</title>
+  <link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+	<ul class="pages">
+		<li class="chat page">
+			<div class="chatArea">
+				<ul class="messages"></ul>
+			</div>
+			<input class="inputMessage" placeholder="Ecrire ici..." list="smiley"/>
+		</li>
+		<li class="login page">
+			<div class="form">
+        		<h3 class="title">Username ?</h3>
+          		<input class="usernameInput" type="text" maxlength="14" />
+      		</div>
+		</li>
+	</ul>
+<footer>
+	<div class="includeJS">
+		<script src="src/js/jquery.min.js"></script>
+  		<script src="/socket.io/socket.io.js"></script>
+  		<script src="/src/js/client.js"></script>
+	</div>
+</footer>
+</body>
+</html>
