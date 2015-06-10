@@ -32,6 +32,7 @@ function initModules(){
 	$.get('/src/js/user.js');
 	$.get('/src/js/socketEvent.js');
 	$.get('/src/js/message.js');
+	$.get('/src/js/commande.js');
 }
 
 function currentHour(){

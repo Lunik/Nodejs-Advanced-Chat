@@ -11,7 +11,11 @@ $window.keydown(function (event) {
     	//Enter
     	case 13:
     		if (USER.connected) {
-    			sendMessage();
+    			if($inputMessage.val()[0] == '/'){
+    				sendCommand();
+    			} else {
+    				sendMessage();
+    			}
     		} else {
     			setUsername();
     		}

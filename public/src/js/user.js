@@ -1,8 +1,11 @@
 User = function(){
 	this.username = '';
 	this.connected = false;
-	this.ranks = {};
+	this.ranks = {
+		'moderation':0
+	};
 	this.badge;
+	this.cid;
 
 	this.connect = function (){ this.connected = true; }
 	this.disconnect = function (){ this.connected = false; }
@@ -18,6 +21,9 @@ User = function(){
 
 	this.setBadge = function (badge){ this.badge = badge; }
 	this.getBadge = function (){ return this.badge; }
+
+	this.setCid = function (cid){ this.cid = cid; }
+	this.getCid = function (){ return this.cid; }
 }
 
 initUser();

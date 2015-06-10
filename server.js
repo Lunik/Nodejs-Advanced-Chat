@@ -32,7 +32,7 @@ io.on('connection', function (socket) {
 		username = username.replace(/[^a-zA-Z0-9-_-]/g,'');
 
 		if(!username || username == "<Server>" || Users.usernames[username]){
-			username = "visiteur-"+Math.floor((Math.random() * 10000) + 1);;
+			username = "visiteur-"+Math.floor((Math.random() * 10000) + 1);
 		}
 
 		// we store the username in the socket session for this client
@@ -70,9 +70,8 @@ io.on('connection', function (socket) {
 
 });
 
-
-
-
-
+function genereCid(username){
+	Math.floor((Math.random() * 10000) + 1)
+}
 
 
