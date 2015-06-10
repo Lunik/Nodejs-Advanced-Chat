@@ -42,7 +42,7 @@ io.on('connection', function (socket) {
     	Users.usernames[username] = username;
     	Users.count++;
 
-    	console.log(username+' join');
+    	console.log('<server> '+username+' join');
 
     	socket.emit('login', {
 	  		username: username,
@@ -56,7 +56,7 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('disconnect', function () {
-	 	console.log(socket.username+' left');
+	 	console.log('<server> '+socket.username+' left');
     	// remove the username from global usernames list
 	   	delete Users.usernames[socket.username];
       	Users.count--;

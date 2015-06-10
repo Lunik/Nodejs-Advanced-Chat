@@ -25,13 +25,13 @@ function addChatMessage (data){
 		$from.append($icon);
 	});
 	//Ajout de l'username à from
-	var $username = $('<span>').addClass('username').text(user.getUsername());
+	var $username = $('<span>').addClass('username').text(user.getUsername()+':');
 	$from.append($username);
 	//Ajout de la data à from
-	var $time = $('<span>').addClass('timestamp').text();
+	var $time = $('<span>').addClass('timestamp').text(currentHour());
 
 	//Creation de l'element message
-	var $msg = $('<div>').addClass('text '+data.message.id).text(message);
+	var $msg = $('<div>').addClass('text '+data.message.id).text(message).append($time);
 
 	var $el = $('<li>').addClass('msg '+data.message.id);
 	$el.append($from).append($msg)
@@ -41,28 +41,40 @@ function addChatMessage (data){
 
 function addMessageElement(el){
 	$('.messages').append(el);
+	$messages[0].scrollTop = $messages[0].scrollHeight;
 }
 
 function generateMsgId(){
 	return 'cid-1';
 }
 function cleanMessage(message) {
+	//suppression des espace de debut
+	message = message.trim();
+	//on garde que les 150er chars
+	message = message.substring(0,150);
+
+	//supprimer toutes les balises html
+	var regexHtml = new RegExp("<.[^>]*>", "gi" );
+	message = message.replace(regexHtml,'');
+
 	return message;
 }
 function sendMessage(){
 	var message = cleanMessage($inputMessage.val());
-	cleaInput($inputMessage);
-	var data = {
-		'user': USER,
-		'message': {
-			'id': generateMsgId(),
-			'text': message
-		}
-	};
+	if(message){
+		cleaInput($inputMessage);
+		var data = {
+			'user': USER,
+			'message': {
+				'id': generateMsgId(),
+				'text': message
+			}
+		};
 
-	addChatMessage(data);
+		addChatMessage(data);
 
-	socket.emit('send msg', data);
+		socket.emit('send msg', data);
+	}
 }
 
 function cleaInput(input){

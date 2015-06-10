@@ -34,3 +34,8 @@ function initModules(){
 	$.get('/src/js/message.js');
 }
 
+function currentHour(){
+	var d = new Date();
+
+	return d.getHours()+':'+d.getMinutes();
+}
