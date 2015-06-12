@@ -1,7 +1,9 @@
 // Whenever the server emits 'login', log the login message
 socket.on('login', function (data) {
   USER.connect();
-  USER.setUsername(data.username);
+  USER.setUsername(data.user.username);
+  USER.setRanks(data.user.ranks);
+  USER.setCid(data.user.cid);
   USERS = data.allUsers;
  
   // Display the welcome message
@@ -23,4 +25,13 @@ socket.on('user left', function (data) {
 socket.on('new msg', function(data){
   data.user = getUserFromData(data.user);
   addChatMessage(data);
+});
+
+socket.on('cmd', function(data){
+  addServerMessage(data.valRetour);
+
+  switch(data.callback){
+    default:
+      break;
+  }
 });

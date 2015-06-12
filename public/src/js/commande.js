@@ -1,9 +1,12 @@
 COMMANDS = {
 	'list': function (){
-		return getAllUsernameConnected();
-	},
-	'kick': function (user){
-		console.log("kick");
+		socket.emit('command', {
+			'cid': USER.cid,
+			'command': {
+				'cmd':'list',
+				'param': []
+			}
+		});
 	}
 }
 
@@ -23,19 +26,22 @@ function sendCommand(){
 	//exectution de la commande
 	var commandReturn = execCommand(commande);
 	//affichages des resultats de la commande
-	addServerMessage(commandReturn.message);
+	if(commandReturn.message)
+		addServerMessage(commandReturn.message);
 
 }
 
 function execCommand(data){
 	var valRetour = {};
+
 	switch(data.cmd){
 		case 'list':
-			valRetour = {
-				'etat': 1,
-				'message': COMMANDS.list()
-			};
-			break;
+				COMMANDS.list();
+				valRetour = {
+					'etat': 1,
+					'message': ''
+				};
+				break;
 		default:
 			valRetour = {
 				'etat': 0,

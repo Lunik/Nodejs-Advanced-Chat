@@ -35,17 +35,26 @@ io.on('connection', function (socket) {
 			username = "visiteur-"+Math.floor((Math.random() * 10000) + 1);
 		}
 
-		// we store the username in the socket session for this client
-    	socket.username = username;
 
     	// add the client's username to the global list
-    	Users.usernames[username] = username;
+    	var cid = genereCid(username);
+    	Users.usernames[cid] = {
+    		'username': username,
+    		'ranks': {
+    			'moderation':0
+    		},
+    		'cid': cid
+    	}
     	Users.count = Users.count+1;
+
+    	// we store the username in the socket session for this client
+    	socket.username = username;
+    	socket.cid = cid;
 
     	console.log('<server> '+username+' join');
 
     	socket.emit('login', {
-	  		username: username,
+	  		user: Users.usernames[cid],
 	  		allUsers: Users
     	});
 
@@ -59,7 +68,7 @@ io.on('connection', function (socket) {
 		if(socket.username){
 		 	console.log('<server> '+socket.username+' left');
 	    	// remove the username from global usernames list
-		   	delete Users.usernames[socket.username];
+		   	delete Users.usernames[socket.cid];
 	      	Users.count--;
 
 	      // echo globally that this client has left
@@ -70,10 +79,72 @@ io.on('connection', function (socket) {
 	  	}
 	});
 
+
+	///////////////
+	// Commandes //
+	///////////////
+
+	socket.on('command',function(data){
+		console.log('['+Users.usernames[data.cid].username+'] execute '+data.command.cmd+' '+data.command.param);
+		var user = Users.usernames[data.cid];
+		var command = data.command;
+		var execCommand = 0;
+		switch(command.cmd){
+			case 'list':
+				if(user.ranks.moderation >= 1){
+					socket.emit('cmd', {
+						'valRetour': getAllUsernameConnected(),
+						'callback': ''
+					});
+					execCommand = 1;
+					console.log('----> OK');
+				}
+				break;
+			default:
+				socket.emit('cmd', {
+						'valRetour': "Command not found",
+						'callback': ''
+					});
+				break;
+		}
+
+		if(!execCommand){
+			socket.emit('cmd', {
+						'valRetour': 'Not permitted',
+						'callback': ''
+					});
+			console.log('----> FAIL');
+		}
+	});
 });
 
 function genereCid(username){
-	Math.floor((Math.random() * 10000) + 1)
+	var cid=1234567891234567;
+	for(var i=0; i < username.length; i=i+3){
+		if(username[i] && username[i+1])
+			cid = cid - (username.charCodeAt(i)*username.charCodeAt(i+1));
+		else if(username[i]){
+			cid = cid - username.charCodeAt(i)
+		}
+
+		cid = cid.toString();
+		cid = cid.split("").reverse().join("");
+		cid = Number(cid);
+
+		if(username[i+2])
+			cid = cid * username.charCodeAt(i+2);
+	}
+
+	cid = Math.abs(cid) % 10000000000000000;
+	return "cid-"+cid;
 }
 
+function getAllUsernameConnected(){
+	var usernames = [];
+	for (var cid in Users.usernames){
+		usernames.push(Users.usernames[cid].username);
+	}
+
+	return usernames;
+}
 

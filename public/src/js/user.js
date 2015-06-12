@@ -13,8 +13,11 @@ User = function(){
 	this.setUsername = function (username){ this.username = username; }
 	this.getUsername = function (){ return this.username; }
 
-	this.setRanks = function (rank,type){ 
+	this.setRank = function (rank,type){ 
 		this.ranks.type = rank; 
+	}
+	this.setRanks = function (ranks){ 
+		this.ranks = ranks; 
 	}
 	this.getRank = function (type){ return this.ranks.type; }
 	this.getRanks = function (){ return this.ranks; }
@@ -63,16 +66,6 @@ function getUserFromUsername(username){
 
 	return user;
 }
-
-function getAllUsernameConnected(){
-	var usernames = [];
-	$.each(USERS.usernames,function(index,data){
-		usernames.push(data);
-	});
-
-	return usernames;
-}
-
 
 
 
