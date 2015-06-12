@@ -49,10 +49,30 @@ function getIconFromRank(rank){
 	return 'icon-default';
 }
 
-function getUserFromUsername(data){
+function getUserFromData(data){
 	var user = new User();
 	user.setUsername(data.username);
 	user.setRanks(data.ranks);
 
 	return user;
 }
+
+function getUserFromUsername(username){
+	var user = new User();
+	user.setUsername(username);
+
+	return user;
+}
+
+function getAllUsernameConnected(){
+	var usernames = [];
+	$.each(USERS.usernames,function(index,data){
+		usernames.push(data);
+	});
+
+	return usernames;
+}
+
+
+
+

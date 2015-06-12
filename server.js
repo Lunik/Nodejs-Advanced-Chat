@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/public'));
 
 var Users = {
 	'count':0,
-	'usernames':[]
+	'usernames':{}
 };
 
 io.on('connection', function (socket) {
@@ -40,7 +40,7 @@ io.on('connection', function (socket) {
 
     	// add the client's username to the global list
     	Users.usernames[username] = username;
-    	Users.count++;
+    	Users.count = Users.count+1;
 
     	console.log('<server> '+username+' join');
 
@@ -56,17 +56,19 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('disconnect', function () {
-	 	console.log('<server> '+socket.username+' left');
-    	// remove the username from global usernames list
-	   	delete Users.usernames[socket.username];
-      	Users.count--;
+		if(socket.username){
+		 	console.log('<server> '+socket.username+' left');
+	    	// remove the username from global usernames list
+		   	delete Users.usernames[socket.username];
+	      	Users.count--;
 
-      // echo globally that this client has left
-      socket.broadcast.emit('user left', {
-        username: socket.username,
-        allUsers: Users
-      });
-  	});
+	      // echo globally that this client has left
+	      socket.broadcast.emit('user left', {
+	        username: socket.username,
+	        allUsers: Users
+	      });
+	  	}
+	});
 
 });
 

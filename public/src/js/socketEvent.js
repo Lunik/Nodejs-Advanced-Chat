@@ -21,6 +21,6 @@ socket.on('user left', function (data) {
 });
 
 socket.on('new msg', function(data){
-  data.user = getUserFromUsername(data.user);
+  data.user = getUserFromData(data.user);
   addChatMessage(data);
 });

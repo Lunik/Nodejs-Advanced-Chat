@@ -39,6 +39,17 @@ function addChatMessage (data){
 	addMessageElement($el);
 }
 
+function addServerMessage(message){
+	var serverUser = getUserFromUsername('<server>');
+	addChatMessage({
+		'user': serverUser,
+		'message': {
+			'id': generateMsgId(),
+			'text': message
+		}
+	});
+}
+
 function addMessageElement(el){
 	$('.messages').append(el);
 	$messages[0].scrollTop = $messages[0].scrollHeight;
@@ -59,6 +70,7 @@ function cleanMessage(message) {
 
 	return message;
 }
+
 function sendMessage(){
 	var message = cleanMessage($inputMessage.val());
 	if(message){
