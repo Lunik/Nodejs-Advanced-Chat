@@ -16,7 +16,7 @@ X argument obligateur
 
 |Command | Arguments |  Description |
 |:------:|:---------:|:--------------------------------------:|
-| /ls | | Affiche la liste des utilisateurs connectés |
+| /list | | Affiche la liste des utilisateurs connectés |
 
 ### Administrateurs
 
