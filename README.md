@@ -1,11 +1,10 @@
 # Lunik-Chat-V2.0
 
 
-X argument obligateur
-(X) argument optionnel
-
 ## Commandes:
 
+X argument obligateur
+(X) argument optionnel
 
 ### Utilisateurs classique
 
