@@ -4,6 +4,7 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 5000;
+var md5 = require('MD5'); //crypt
 
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
@@ -17,6 +18,11 @@ var Users = {
 	'count':0,
 	'usernames':{}
 };
+
+var password = {
+	'moderateur': 'd7163e6377d20276113e4e54efb61ad8',
+	'admin': '21232f297a57a5a743894a0e4a801fc3'
+}
 
 io.on('connection', function (socket) {
 
@@ -79,7 +85,9 @@ io.on('connection', function (socket) {
 	  	}
 	});
 
-
+	socket.on('user info', function(cid){
+		socket.emit('user info', Users.usernames[cid]);
+	});
 	///////////////
 	// Commandes //
 	///////////////
@@ -90,6 +98,43 @@ io.on('connection', function (socket) {
 		var command = data.command;
 		var execCommand = 0;
 		switch(command.cmd){
+			case 'login':
+				if(md5(data.command.param) == password.moderateur){
+					promoteUser(data.cid,'moderation',1);
+					socket.emit('cmd', {
+						'valRetour': 1,
+						'callback': 'login'
+					});
+					execCommand = 1;
+					console.log('----> OK');
+				} else if(md5(data.command.param) == password.admin){
+					promoteUser(data.cid,'moderation',2);
+					socket.emit('cmd', {
+						'valRetour': 2,
+						'callback': 'login'
+					});
+					execCommand = 1;
+					console.log('----> OK');
+				} else {
+					socket.emit('cmd', {
+						'valRetour': "Wrong password.",
+						'callback': 'login'
+					});
+					execCommand = 1;
+					console.log('----> FAIL');
+				}
+				break;
+			case 'logout':
+				if(user.ranks.moderation >= 1){
+					promoteUser(data.cid,'moderation',0);
+					socket.emit('cmd', {
+							'valRetour': 0,
+							'callback': 'logout'
+						});
+					execCommand = 1;
+					console.log('----> OK');
+				}
+				break;
 			case 'list':
 				if(user.ranks.moderation >= 1){
 					socket.emit('cmd', {
@@ -102,7 +147,7 @@ io.on('connection', function (socket) {
 				break;
 			default:
 				socket.emit('cmd', {
-						'valRetour': "Command not found",
+						'valRetour': "Command not found.",
 						'callback': ''
 					});
 				break;
@@ -110,7 +155,7 @@ io.on('connection', function (socket) {
 
 		if(!execCommand){
 			socket.emit('cmd', {
-						'valRetour': 'Not permitted',
+						'valRetour': "Not permitted.",
 						'callback': ''
 					});
 			console.log('----> FAIL');
@@ -148,3 +193,6 @@ function getAllUsernameConnected(){
 	return usernames;
 }
 
+function promoteUser(cid, type, rank){
+	Users.usernames[cid].ranks[type] = rank;
+}

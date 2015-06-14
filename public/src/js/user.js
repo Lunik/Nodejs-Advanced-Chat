@@ -67,5 +67,7 @@ function getUserFromUsername(username){
 	return user;
 }
 
-
+function updateMeUserInfo(){
+	socket.emit('user info', USER.getCid());
+}
 

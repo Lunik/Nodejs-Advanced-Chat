@@ -27,10 +27,24 @@ socket.on('new msg', function(data){
   addChatMessage(data);
 });
 
+socket.on('user info', function(user){
+  USER.ranks = user.ranks;
+  USER.username = user.username;
+  USER.cid = user.cid;
+});
+
 socket.on('cmd', function(data){
   addServerMessage(data.valRetour);
 
   switch(data.callback){
+    case 'login':
+        updateMeUserInfo();
+        addServerMessage('Logged on');
+      break;
+    case 'logout':
+        updateMeUserInfo();
+        addServerMessage('Logged out');
+      break;
     default:
       break;
   }

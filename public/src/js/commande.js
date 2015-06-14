@@ -1,4 +1,22 @@
 COMMANDS = {
+	'login': function(mdp){
+		socket.emit('command', {
+			'cid': USER.cid,
+			'command': {
+				'cmd':'login',
+				'param': mdp
+			}
+		});
+	},
+	'logout': function(){
+		socket.emit('command', {
+			'cid': USER.cid,
+			'command': {
+				'cmd':'logout',
+				'param': []
+			}
+		});
+	},
 	'list': function (){
 		socket.emit('command', {
 			'cid': USER.cid,
@@ -16,7 +34,6 @@ function sendCommand(){
 		cleaInput($inputMessage);
 
 		commandeMsg = commandeMsg.split(' ');
-		console.log(commandeMsg);
 		var commande = {
 			'cmd': commandeMsg.shift().substring(1),
 			'param': commandeMsg
@@ -35,13 +52,27 @@ function execCommand(data){
 	var valRetour = {};
 
 	switch(data.cmd){
+		case 'login':
+			COMMANDS.login(data.param[0]);
+			valRetour = {
+				'etat': 1,
+				'message': ''
+			};
+			break;
+		case 'logout':
+			COMMANDS.logout();
+			valRetour = {
+				'etat': 1,
+				'message': ''
+			};
+			break;
 		case 'list':
-				COMMANDS.list();
-				valRetour = {
-					'etat': 1,
-					'message': ''
-				};
-				break;
+			COMMANDS.list();
+			valRetour = {
+				'etat': 1,
+				'message': ''
+			};
+			break;
 		default:
 			valRetour = {
 				'etat': 0,
