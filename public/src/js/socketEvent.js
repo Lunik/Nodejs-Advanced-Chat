@@ -57,6 +57,15 @@ socket.on('cmd', function(data){
       }
       break;
 
+    case 'removeMsg':
+      removeMessage(data.valRetour);
+      break;
+
+    case 'clean':
+      clearChat();
+      addServerMessage(data.valRetour);
+      break;
+
     default:
       addServerMessage(data.valRetour);
       break;

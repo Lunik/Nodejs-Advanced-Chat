@@ -145,10 +145,11 @@ io.on('connection', function (socket) {
 							'callback': 'kick'
 					});
 
+					var cid = generateMsgCid();
 					socket.broadcast.emit('new msg', {
 						'user': getServerUser(),
 						'message': {
-							'id': generateMsgId(),
+							'id': cid,
 							'text': data.command.param+" was kicked by "+user.username
 						}
 					});
@@ -156,7 +157,7 @@ io.on('connection', function (socket) {
 					socket.emit('new msg', {
 						'user': getServerUser(),
 						'message': {
-							'id': generateMsgId(),
+							'id': cid,
 							'text': data.command.param+" was kicked by "+user.username
 						}
 					});
@@ -165,17 +166,40 @@ io.on('connection', function (socket) {
 				}
 				break;
 
-			case 'list':
+			case 'removeMsg':
 				if(user.ranks.moderation >= 1){
-					socket.emit('cmd', {
-						'valRetour': getAllUsernameConnected(),
-						'callback': ''
-					});
 					execCommand = 1;
+
+					socket.emit('cmd', {
+							'valRetour': data.command.param,
+							'callback': 'removeMsg'
+					});
+
+					socket.broadcast.emit('cmd', {
+							'valRetour': data.command.param,
+							'callback': 'removeMsg'
+					});
+
 					console.log('----> OK');
 				}
 				break;
 
+			case 'clean':
+				if(user.ranks.moderation >= 2){
+					socket.emit('cmd', {
+							'valRetour': 'Chat cleaned',
+							'callback': 'clean'
+					});
+
+					socket.broadcast.emit('cmd', {
+							'valRetour': '',
+							'callback': 'clean'
+					});
+
+					execCommand = 1;
+					console.log('----> OK');
+				}
+				break;
 			default:
 				socket.emit('cmd', {
 						'valRetour': "Command not found.",
@@ -228,8 +252,11 @@ function promoteUser(uid, type, rank){
 	Users.usernames[uid].ranks[type] = rank;
 }
 
-function generateMsgId(){
-	return 'cid-1';
+function generateMsgCid(){
+	var date = new Date();
+	var cid = date.getDate()+''+date.getMonth()+''+date.getYear()+''+date.getUTCHours()+''+date.getMinutes()+''+date.getSeconds()+''+date.getMilliseconds();
+	cid = cid+''+Math.floor(Math.random()*10000);
+	return cid;
 }
 
 function getServerUser(){

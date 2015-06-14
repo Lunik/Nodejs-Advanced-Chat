@@ -38,6 +38,26 @@ COMMANDS = {
 		} else {
 			addServerMessage(username+' not found');
 		}
+	},
+	'removeMsg': function(cid){
+		if($('.msg.'+cid).length && !$('.msg.'+cid+' .text .deleted').length){
+			socket.emit('command', {
+				'uid': USER.uid,
+				'command': {
+					'cmd':'removeMsg',
+					'param': cid
+				}
+			});
+		}
+	},
+	'clean': function(){
+		socket.emit('command', {
+			'uid': USER.uid,
+			'command': {
+				'cmd':'clean',
+				'param': []
+			}
+		});
 	}
 }
 
@@ -65,6 +85,7 @@ function execCommand(data){
 	var valRetour = {};
 
 	switch(data.cmd){
+
 		case 'login':
 			COMMANDS.login(data.param[0]);
 			valRetour = {
@@ -72,6 +93,7 @@ function execCommand(data){
 				'message': ''
 			};
 			break;
+
 		case 'logout':
 			COMMANDS.logout();
 			valRetour = {
@@ -79,6 +101,7 @@ function execCommand(data){
 				'message': ''
 			};
 			break;
+
 		case 'list':
 			COMMANDS.list();
 			valRetour = {
@@ -86,6 +109,7 @@ function execCommand(data){
 				'message': ''
 			};
 			break;
+
 		case 'kick':
 			COMMANDS.kick(data.param[0]);
 			valRetour = {
@@ -93,6 +117,28 @@ function execCommand(data){
 				'message': ''
 			};
 			break;
+
+		case 'removeMsg':
+			COMMANDS.removeMsg(data.param[0]);
+			valRetour = {
+				'etat': 1,
+				'message': ''
+			};
+			break;
+
+		case 'clear':
+			clearChat();
+			addServerMessage('Chat cleared');
+			break;
+
+		case 'clean':
+			COMMANDS.clean();
+			valRetour = {
+				'etat': 1,
+				'message': ''
+			};
+			break;
+
 		default:
 			valRetour = {
 				'etat': 0,

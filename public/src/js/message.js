@@ -40,14 +40,16 @@ function addChatMessage (data){
 }
 
 function addServerMessage(message){
-	var serverUser = getUserFromUsername('<server>');
-	addChatMessage({
-		'user': serverUser,
-		'message': {
-			'id': generateMsgId(),
-			'text': message
-		}
-	});
+	if(message){
+		var serverUser = getUserFromUsername('<server>');
+		addChatMessage({
+			'user': serverUser,
+			'message': {
+				'id': generateMsgCid(),
+				'text': message
+			}
+		});
+	}
 }
 
 function addMessageElement(el){
@@ -55,8 +57,11 @@ function addMessageElement(el){
 	$messages[0].scrollTop = $messages[0].scrollHeight;
 }
 
-function generateMsgId(){
-	return 'cid-1';
+function generateMsgCid(){
+	var date = new Date();
+	var cid = date.getDate()+''+date.getMonth()+''+date.getYear()+''+date.getUTCHours()+''+date.getMinutes()+''+date.getSeconds()+''+date.getMilliseconds();
+	cid = cid+''+Math.floor(Math.random()*10000);
+	return cid;
 }
 
 function cleanMessage(message) {
@@ -79,7 +84,7 @@ function sendMessage(){
 		var data = {
 			'user': USER,
 			'message': {
-				'id': generateMsgId(),
+				'id': generateMsgCid(),
 				'text': message
 			}
 		};
@@ -93,3 +98,13 @@ function sendMessage(){
 function cleaInput(input){
 	input.val('');
 }
+
+function removeMessage(cid){
+	var $deleted = $('<span>').addClass('deleted').text('Deleted');
+	$('.msg.'+cid+' .text').html($deleted);
+}
+
+function clearChat(){
+	$messages.html('');
+}
+

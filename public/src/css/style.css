@@ -156,6 +156,13 @@ a:hover, a:focus {
   width: 100%;
 }
 
+.msg .text .deleted{
+    color: red;
+    font-size: 60%;
+
+    vertical-align: middle;
+}
+
 /* Date Div */
 .timestamp{
     color: gray;
