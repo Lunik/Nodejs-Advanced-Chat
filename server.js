@@ -126,15 +126,13 @@ io.on('connection', function (socket) {
 				break;
 
 			case 'logout':
-				if(user.ranks.moderation >= 1){
-					promoteUser(data.uid,'moderation',0);
-					socket.emit('cmd', {
-							'valRetour': 0,
-							'callback': 'logout'
-						});
-					execCommand = 1;
-					console.log('----> OK');
-				}
+				promoteUser(data.uid,'moderation',0);
+				socket.emit('cmd', {
+						'valRetour': 0,
+						'callback': 'logout'
+					});
+				execCommand = 1;
+				console.log('----> OK');
 				break;
 
 			case 'kick':
