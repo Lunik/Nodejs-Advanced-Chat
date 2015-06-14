@@ -11,7 +11,7 @@ X argument obligateur
 |Commande | Arguments |  Description |
 |:------:|:---------:|:--------------------------------------:|
 | /login | Password | Connection moderateur / admin |
-| /logout | | Deconection moderateur / admin |
+| /logout | | Deconnection moderateur / admin |
 | /clear | | Efface le chat |
 
 ### Moderateurs
