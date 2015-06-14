@@ -18,7 +18,7 @@ X argument obligateur
 |Command | Arguments |  Description |
 |:------:|:---------:|:--------------------------------------:|
 | /list | | Affiche la liste des utilisateurs connectés |
-| /kick | Pseudo | Eject un utilisateur du chat |
+| /kick | Pseudo | Ejecte un utilisateur du chat |
 
 ### Administrateurs
 
