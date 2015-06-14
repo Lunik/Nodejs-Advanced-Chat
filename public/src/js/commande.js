@@ -1,7 +1,7 @@
 COMMANDS = {
 	'login': function(mdp){
 		socket.emit('command', {
-			'cid': USER.cid,
+			'uid': USER.uid,
 			'command': {
 				'cmd':'login',
 				'param': mdp
@@ -10,7 +10,7 @@ COMMANDS = {
 	},
 	'logout': function(){
 		socket.emit('command', {
-			'cid': USER.cid,
+			'uid': USER.uid,
 			'command': {
 				'cmd':'logout',
 				'param': []
@@ -19,12 +19,25 @@ COMMANDS = {
 	},
 	'list': function (){
 		socket.emit('command', {
-			'cid': USER.cid,
+			'uid': USER.uid,
 			'command': {
 				'cmd':'list',
 				'param': []
 			}
 		});
+	},
+	'kick': function (username){
+		if(getUidFromUsername(username)){
+			socket.emit('command', {
+				'uid': USER.uid,
+				'command': {
+					'cmd':'kick',
+					'param': username
+				}
+			});
+		} else {
+			addServerMessage(username+' not found');
+		}
 	}
 }
 
@@ -68,6 +81,13 @@ function execCommand(data){
 			break;
 		case 'list':
 			COMMANDS.list();
+			valRetour = {
+				'etat': 1,
+				'message': ''
+			};
+			break;
+		case 'kick':
+			COMMANDS.kick(data.param[0]);
 			valRetour = {
 				'etat': 1,
 				'message': ''

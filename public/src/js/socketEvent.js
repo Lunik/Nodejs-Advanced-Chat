@@ -3,7 +3,7 @@ socket.on('login', function (data) {
   USER.connect();
   USER.setUsername(data.user.username);
   USER.setRanks(data.user.ranks);
-  USER.setCid(data.user.cid);
+  USER.setUid(data.user.uid);
   USERS = data.allUsers;
  
   // Display the welcome message
@@ -28,24 +28,37 @@ socket.on('new msg', function(data){
 });
 
 socket.on('user info', function(user){
-  USER.ranks = user.ranks;
-  USER.username = user.username;
-  USER.cid = user.cid;
+  USER.setRank(user.ranks);
+  USER.setUsername(user.username);
+  USER.setUid(user.uid);
 });
 
 socket.on('cmd', function(data){
-  addServerMessage(data.valRetour);
 
   switch(data.callback){
     case 'login':
-        updateMeUserInfo();
-        addServerMessage('Logged on');
+      updateMeUserInfo();
+      addServerMessage('Logged on');
       break;
+
     case 'logout':
-        updateMeUserInfo();
-        addServerMessage('Logged out');
+      updateMeUserInfo();
+      addServerMessage('Logged out');
       break;
+
+    case 'list':
+      addServerMessage(data.valRetour);
+      break;
+
+    case 'kick':
+      if(data.valRetour == USER.getUsername()){
+        socket.disconnect();
+        location.reload();
+      }
+      break;
+
     default:
+      addServerMessage(data.valRetour);
       break;
   }
 });

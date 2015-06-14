@@ -5,7 +5,7 @@ User = function(){
 		'moderation':0
 	};
 	this.badge;
-	this.cid;
+	this.uid;
 
 	this.connect = function (){ this.connected = true; }
 	this.disconnect = function (){ this.connected = false; }
@@ -25,8 +25,8 @@ User = function(){
 	this.setBadge = function (badge){ this.badge = badge; }
 	this.getBadge = function (){ return this.badge; }
 
-	this.setCid = function (cid){ this.cid = cid; }
-	this.getCid = function (){ return this.cid; }
+	this.setUid = function (uid){ this.uid = uid; }
+	this.getUid = function (){ return this.uid; }
 }
 
 initUser();
@@ -68,6 +68,14 @@ function getUserFromUsername(username){
 }
 
 function updateMeUserInfo(){
-	socket.emit('user info', USER.getCid());
+	socket.emit('user info', USER.getUid());
 }
 
+function getUidFromUsername(username){
+	for(var uid in USERS.usernames){
+		if(username == USERS.usernames[uid].username){
+			return uid;
+		}
+	}
+	return null;
+}

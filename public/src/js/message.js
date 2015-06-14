@@ -58,6 +58,7 @@ function addMessageElement(el){
 function generateMsgId(){
 	return 'cid-1';
 }
+
 function cleanMessage(message) {
 	//suppression des espace de debut
 	message = message.trim();

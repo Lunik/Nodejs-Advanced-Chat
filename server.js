@@ -43,24 +43,24 @@ io.on('connection', function (socket) {
 
 
     	// add the client's username to the global list
-    	var cid = genereCid(username);
-    	Users.usernames[cid] = {
+    	var uid = genereUid(username);
+    	Users.usernames[uid] = {
     		'username': username,
     		'ranks': {
     			'moderation':0
     		},
-    		'cid': cid
+    		'uid': uid
     	}
     	Users.count = Users.count+1;
 
     	// we store the username in the socket session for this client
     	socket.username = username;
-    	socket.cid = cid;
+    	socket.uid = uid;
 
     	console.log('<server> '+username+' join');
 
     	socket.emit('login', {
-	  		user: Users.usernames[cid],
+	  		user: Users.usernames[uid],
 	  		allUsers: Users
     	});
 
@@ -74,7 +74,7 @@ io.on('connection', function (socket) {
 		if(socket.username){
 		 	console.log('<server> '+socket.username+' left');
 	    	// remove the username from global usernames list
-		   	delete Users.usernames[socket.cid];
+		   	delete Users.usernames[socket.uid];
 	      	Users.count--;
 
 	      // echo globally that this client has left
@@ -85,22 +85,22 @@ io.on('connection', function (socket) {
 	  	}
 	});
 
-	socket.on('user info', function(cid){
-		socket.emit('user info', Users.usernames[cid]);
+	socket.on('user info', function(uid){
+		socket.emit('user info', Users.usernames[uid]);
 	});
 	///////////////
 	// Commandes //
 	///////////////
 
 	socket.on('command',function(data){
-		console.log('['+Users.usernames[data.cid].username+'] execute '+data.command.cmd+' '+data.command.param);
-		var user = Users.usernames[data.cid];
+		console.log('['+Users.usernames[data.uid].username+'] execute '+data.command.cmd+' '+data.command.param);
+		var user = Users.usernames[data.uid];
 		var command = data.command;
 		var execCommand = 0;
 		switch(command.cmd){
 			case 'login':
 				if(md5(data.command.param) == password.moderateur){
-					promoteUser(data.cid,'moderation',1);
+					promoteUser(data.uid,'moderation',1);
 					socket.emit('cmd', {
 						'valRetour': 1,
 						'callback': 'login'
@@ -108,7 +108,7 @@ io.on('connection', function (socket) {
 					execCommand = 1;
 					console.log('----> OK');
 				} else if(md5(data.command.param) == password.admin){
-					promoteUser(data.cid,'moderation',2);
+					promoteUser(data.uid,'moderation',2);
 					socket.emit('cmd', {
 						'valRetour': 2,
 						'callback': 'login'
@@ -124,9 +124,10 @@ io.on('connection', function (socket) {
 					console.log('----> FAIL');
 				}
 				break;
+
 			case 'logout':
 				if(user.ranks.moderation >= 1){
-					promoteUser(data.cid,'moderation',0);
+					promoteUser(data.uid,'moderation',0);
 					socket.emit('cmd', {
 							'valRetour': 0,
 							'callback': 'logout'
@@ -135,6 +136,37 @@ io.on('connection', function (socket) {
 					console.log('----> OK');
 				}
 				break;
+
+			case 'kick':
+				if(user.ranks.moderation >= 1){
+					execCommand = 1;
+					console.log('kick '+data.command.param);
+
+					socket.broadcast.emit('cmd', {
+							'valRetour': data.command.param,
+							'callback': 'kick'
+					});
+
+					socket.broadcast.emit('new msg', {
+						'user': getServerUser(),
+						'message': {
+							'id': generateMsgId(),
+							'text': data.command.param+" was kicked by "+user.username
+						}
+					});
+
+					socket.emit('new msg', {
+						'user': getServerUser(),
+						'message': {
+							'id': generateMsgId(),
+							'text': data.command.param+" was kicked by "+user.username
+						}
+					});
+
+					console.log('----> OK');
+				}
+				break;
+
 			case 'list':
 				if(user.ranks.moderation >= 1){
 					socket.emit('cmd', {
@@ -145,6 +177,7 @@ io.on('connection', function (socket) {
 					console.log('----> OK');
 				}
 				break;
+
 			default:
 				socket.emit('cmd', {
 						'valRetour': "Command not found.",
@@ -163,36 +196,49 @@ io.on('connection', function (socket) {
 	});
 });
 
-function genereCid(username){
-	var cid=1234567891234567;
+function genereUid(username){
+	var uid=1234567891234567;
 	for(var i=0; i < username.length; i=i+3){
 		if(username[i] && username[i+1])
-			cid = cid - (username.charCodeAt(i)*username.charCodeAt(i+1));
+			uid = uid - (username.charCodeAt(i)*username.charCodeAt(i+1));
 		else if(username[i]){
-			cid = cid - username.charCodeAt(i)
+			uid = uid - username.charCodeAt(i)
 		}
 
-		cid = cid.toString();
-		cid = cid.split("").reverse().join("");
-		cid = Number(cid);
+		uid = uid.toString();
+		uid = uid.split("").reverse().join("");
+		uid = Number(uid);
 
 		if(username[i+2])
-			cid = cid * username.charCodeAt(i+2);
+			uid = uid * username.charCodeAt(i+2);
 	}
 
-	cid = Math.abs(cid) % 10000000000000000;
-	return "cid-"+cid;
+	uid = Math.abs(uid) % 10000000000000000;
+	return "uid-"+uid;
 }
 
 function getAllUsernameConnected(){
 	var usernames = [];
-	for (var cid in Users.usernames){
-		usernames.push(Users.usernames[cid].username);
+	for (var uid in Users.usernames){
+		usernames.push(Users.usernames[uid].username);
 	}
 
 	return usernames;
 }
 
-function promoteUser(cid, type, rank){
-	Users.usernames[cid].ranks[type] = rank;
+function promoteUser(uid, type, rank){
+	Users.usernames[uid].ranks[type] = rank;
+}
+
+function generateMsgId(){
+	return 'cid-1';
+}
+
+function getServerUser(){
+	return {
+		'username': "<server>",
+		'ranks': {
+			'moderation': 1000
+		}
+	};
 }
