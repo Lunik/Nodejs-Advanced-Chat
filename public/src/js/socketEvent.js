@@ -39,19 +39,13 @@ socket.on('cmd', function(data){
   switch(data.callback){
     case 'login':
       updateMeUserInfo();
-      if(data.valRetour ===  1 || data.valRetour === 2)
-        addServerMessage('Logged on');
-      else
-        addServerMessage(data.valRetour);
-      break;
 
     case 'logout':
       updateMeUserInfo();
-      addServerMessage('Logged out');
       break;
 
     case 'list':
-      addServerMessage(data.valRetour);
+
       break;
 
     case 'kick':
@@ -61,17 +55,22 @@ socket.on('cmd', function(data){
       }
       break;
 
+    case 'ban':
+      
+      break;
+
     case 'removeMsg':
       removeMessage(data.valRetour);
       break;
 
     case 'clean':
       clearChat();
-      addServerMessage(data.valRetour);
       break;
 
     default:
       addServerMessage(data.valRetour);
       break;
   }
+
+  addServerMessage(data.message);
 });

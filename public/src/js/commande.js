@@ -39,7 +39,7 @@ COMMANDS = {
 			addServerMessage(username+' not found');
 		}
 	},
-	'kick': function (username){
+	'ban': function (username){
 		socket.emit('command', {
 			'uid': USER.uid,
 			'command': {
@@ -131,7 +131,7 @@ function execCommand(data){
 			break;
 
 		case 'ban':
-			COMMANDS.kick(data.param[0]);
+			COMMANDS.ban(data.param[0]);
 			valRetour = {
 				'etat': 1,
 				'message': ''

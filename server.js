@@ -24,7 +24,7 @@ var Users = {
 var BannedNames = readJson('json/ban');
 var DEFAULSERVERNAME = 'SERVER';
 
-var password = {
+var PASSWORDS = {
 	'moderateur': 'moderateur',
 	'admin': 'admin'
 }
@@ -101,178 +101,10 @@ io.on('connection', function (socket) {
 
 	socket.on('command',function(data){
 		if(data.uid){
-			console.log('['+Users.usernames[data.uid].username+'] execute '+data.command.cmd+' '+data.command.param);
 			var user = Users.usernames[data.uid];
 			var command = data.command;
-			var execCommand = 0;
-			switch(command.cmd){
-				case 'login':
-					if(data.command.param == password.moderateur){
-						promoteUser(data.uid,'moderation',1);
-						socket.emit('cmd', {
-							'valRetour': 1,
-							'callback': 'login'
-						});
-						execCommand = 1;
-						console.log('----> OK');
-					} else if(data.command.param == password.admin){
-						promoteUser(data.uid,'moderation',2);
-						socket.emit('cmd', {
-							'valRetour': 2,
-							'callback': 'login'
-						});
-						execCommand = 1;
-						console.log('----> OK');
-					} else {
-						socket.emit('cmd', {
-							'valRetour': "Wrong password.",
-							'callback': 'login'
-						});
-						execCommand = 1;
-						console.log('----> FAIL');
-					}
-					break;
 
-				case 'logout':
-					promoteUser(data.uid,'moderation',0);
-					socket.emit('cmd', {
-							'valRetour': 0,
-							'callback': 'logout'
-						});
-					execCommand = 1;
-					console.log('----> OK');
-					break;
-				case 'list':
-					if(user.ranks.moderation >= 1){
-						socket.emit('cmd', {
-							'valRetour': getAllUsernameConnected(),
-							'callback': 'list'
-						});
-						execCommand = 1;
-						console.log('----> OK');
-					}
-					break;
-
-				case 'kick':
-					if(user.ranks.moderation >= 1){
-						execCommand = 1;
-						console.log('kick '+data.command.param);
-
-						socket.broadcast.emit('cmd', {
-								'valRetour': data.command.param,
-								'callback': 'kick'
-						});
-
-						var cid = generateMsgCid();
-						socket.broadcast.emit('new msg', {
-							'user': getServerUser(),
-							'message': {
-								'id': cid,
-								'text': data.command.param+" was kicked by "+user.username
-							}
-						});
-
-						socket.emit('new msg', {
-							'user': getServerUser(),
-							'message': {
-								'id': cid,
-								'text': data.command.param+" was kicked by "+user.username
-							}
-						});
-
-						console.log('----> OK');
-					}
-					break;
-
-				case 'ban':
-					if(user.ranks.moderation >= 2){
-						execCommand = 1;
-						console.log('ban '+data.command.param);
-
-						BannedNames.push(data.command.param);
-						saveObject('json/ban',BannedNames);
-
-						socket.broadcast.emit('cmd', {
-								'valRetour': data.command.param,
-								'callback': 'ban'
-						});
-
-						socket.broadcast.emit('cmd', {
-								'valRetour': data.command.param,
-								'callback': 'kick'
-						});
-
-						var cid = generateMsgCid();
-						socket.broadcast.emit('new msg', {
-							'user': getServerUser(),
-							'message': {
-								'id': cid,
-								'text': data.command.param+" was banned by "+user.username
-							}
-						});
-
-						socket.emit('new msg', {
-							'user': getServerUser(),
-							'message': {
-								'id': cid,
-								'text': data.command.param+" was banned by "+user.username
-							}
-						});
-
-						console.log('----> OK');
-					}
-					break;
-
-				case 'removeMsg':
-					if(user.ranks.moderation >= 1){
-						execCommand = 1;
-
-						socket.emit('cmd', {
-								'valRetour': data.command.param,
-								'callback': 'removeMsg'
-						});
-
-						socket.broadcast.emit('cmd', {
-								'valRetour': data.command.param,
-								'callback': 'removeMsg'
-						});
-
-						console.log('----> OK');
-					}
-					break;
-
-				case 'clean':
-					if(user.ranks.moderation >= 2){
-						socket.emit('cmd', {
-								'valRetour': 'Chat cleaned',
-								'callback': 'clean'
-						});
-
-						socket.broadcast.emit('cmd', {
-								'valRetour': '',
-								'callback': 'clean'
-						});
-
-						execCommand = 1;
-						console.log('----> OK');
-					}
-					break;
-
-				default:
-					socket.emit('cmd', {
-							'valRetour': "Command not found.",
-							'callback': ''
-						});
-					break;
-			}
-
-			if(!execCommand){
-				socket.emit('cmd', {
-							'valRetour': "Not permitted.",
-							'callback': ''
-						});
-				console.log('----> FAIL');
-			}
+			executeCommand(command,user,socket);
 		}
 	});
 });
@@ -345,4 +177,153 @@ function readJson(path){
 	return JSON.parse(fs.readFileSync(path, 'utf8'));
 }
 
+function executeCommand(command,user,socket){
+	console.log('['+user.username+'] execute '+command.cmd+' '+command.param);
+	
+	var server = getServerUser();
+	var cid = generateMsgCid();
+	var execCommand = 0;
+	
+	switch(command.cmd){
+		case 'login':
+			if(command.param == PASSWORDS.moderateur){
+				promoteUser(user.uid,'moderation',1);
+				socket.emit('cmd', {
+					'valRetour': 1,
+					'callback': 'login',
+					'message': 'Logged on Moderator'
+				});
+				execCommand = 1;
+				console.log('----> OK');
+			} else if(command.param == PASSWORDS.admin){
+				promoteUser(user.uid,'moderation',2);
+				socket.emit('cmd', {
+					'valRetour': 2,
+					'callback': 'login',
+					'message': 'Logged on Admin'
+				});
+				execCommand = 1;
+				console.log('----> OK');
+			} else {
+				socket.emit('cmd', {
+					'valRetour': 0,
+					'callback': 'login',
+					'message': 'Wrong Password'
+				});
+				execCommand = 1;
+				console.log('----> FAIL');
+			}
+			break;
+		case 'logout':
+			promoteUser(user.uid,'moderation',0);
+			socket.emit('cmd', {
+					'valRetour': 1,
+					'callback': 'logout',
+					'message': 'Logged out'
+				});
+			execCommand = 1;
+			console.log('----> OK');
+			break;
+		case 'list':
+			if(user.ranks.moderation >= 1){
+				socket.emit('cmd', {
+					'valRetour': 1,
+					'callback': 'list',
+					'message': JSON.stringify(getAllUsernameConnected())
+				});
+				execCommand = 1;
+				console.log('----> OK');
+			}
+			break;
+
+		case 'kick':
+			if(user.ranks.moderation >= 1){
+				execCommand = 1;
+				console.log('kick '+command.param);
+				socket.broadcast.emit('cmd', {
+						'valRetour': command.param,
+						'callback': 'kick',
+						'message': command.param+" was kicked by "+user.username
+				});
+
+				socket.emit('cmd', {
+						'valRetour': command.param,
+						'callback': 'kick',
+						'message': command.param+" was kicked"
+				});
+
+				console.log('----> OK');
+			}
+			break;
+
+		case 'ban':
+			if(user.ranks.moderation >= 2){
+				execCommand = 1;
+				console.log('ban '+command.param);
+				BannedNames.push(command.param);
+				saveObject('json/ban',BannedNames);
+
+				socket.emit('cmd', {
+						'valRetour': command.param,
+						'callback': 'ban',
+						'message': command.param+" was banned"
+				});
+
+				socket.broadcast.emit('cmd', {
+						'valRetour': command.param,
+						'callback': 'kick',
+						'message': command.param+" was banned by "+user.username
+				});
+
+				console.log('----> OK');
+			}
+			break;
+
+		case 'removeMsg':
+			if(user.ranks.moderation >= 1){
+				execCommand = 1;
+				socket.emit('cmd', {
+						'valRetour': command.param,
+						'callback': 'removeMsg'
+				});
+				socket.broadcast.emit('cmd', {
+						'valRetour': command.param,
+						'callback': 'removeMsg'
+				});
+				console.log('----> OK');
+			}
+			break;
+			
+		case 'clean':
+			if(user.ranks.moderation >= 2){
+				socket.emit('cmd', {
+						'valRetour': 1,
+						'callback': 'clean',
+						'message': 'Chat cleaned'
+				});
+				socket.broadcast.emit('cmd', {
+						'valRetour': '',
+						'callback': 'clean',
+						'message': "Chat cleaned by "+user.username
+				});
+				execCommand = 1;
+				console.log('----> OK');
+			}
+			break;
+		default:
+			socket.emit('cmd', {
+					'valRetour': "Command not found.",
+					'callback': ''
+				});
+			break;
+	}
+
+	if(!execCommand){
+		socket.emit('cmd', {
+					'valRetour': "Not permitted.",
+					'callback': ''
+				});
+			console.log('----> FAIL');
+		}
+}
 
