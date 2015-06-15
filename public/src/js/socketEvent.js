@@ -5,7 +5,8 @@ socket.on('login', function (data) {
   USER.setRanks(data.user.ranks);
   USER.setUid(data.user.uid);
   USERS = data.allUsers;
- 
+  
+  DEFAULSERVERNAME = data.serverName;
   // Display the welcome message
   var message = "Welcome to Socket.IO Chat";
 
@@ -28,7 +29,7 @@ socket.on('new msg', function(data){
 });
 
 socket.on('user info', function(user){
-  USER.setRank(user.ranks);
+  USER.setRanks(user.ranks);
   USER.setUsername(user.username);
   USER.setUid(user.uid);
 });
@@ -38,7 +39,10 @@ socket.on('cmd', function(data){
   switch(data.callback){
     case 'login':
       updateMeUserInfo();
-      addServerMessage('Logged on');
+      if(data.valRetour ===  1 || data.valRetour === 2)
+        addServerMessage('Logged on');
+      else
+        addServerMessage(data.valRetour);
       break;
 
     case 'logout':

@@ -58,6 +58,9 @@ COMMANDS = {
 				'param': []
 			}
 		});
+	},
+	'command': function(){
+		addServerMessage('<a href="https://github.com/Lunik/Lunik-Chat-V2.0/blob/master/README.md#commandes" target="_blank">Commands list</a>');
 	}
 }
 
@@ -139,6 +142,14 @@ function execCommand(data){
 			};
 			break;
 
+		case 'command':
+			COMMANDS.command();
+			valRetour = {
+				'etat': 1,
+				'message': ''
+			};
+			break;
+			
 		default:
 			valRetour = {
 				'etat': 0,
@@ -149,3 +160,8 @@ function execCommand(data){
 
 	return valRetour;
 }
+
+
+
+
+

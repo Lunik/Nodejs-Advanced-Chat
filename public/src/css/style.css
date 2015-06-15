@@ -163,6 +163,19 @@ a:hover, a:focus {
     vertical-align: middle;
 }
 
+.username.rm-default{
+  color: white;
+}
+.username.rm-moderator{
+  color: orange;
+}
+.username.rm-admin{
+  color: red;
+}
+.username.rm-server{
+  color: green;
+}
+
 /* Date Div */
 .timestamp{
     color: gray;

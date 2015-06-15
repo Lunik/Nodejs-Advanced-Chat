@@ -26,12 +26,21 @@ function addChatMessage (data){
 	});
 	//Ajout de l'username à from
 	var $username = $('<span>').addClass('username').text(user.getUsername()+':');
+	var classRanks = getClassRank(user.getRanks());
+	for(var i=0; i < classRanks.length; i++)
+		$username.addClass(classRanks[i])
+	
 	$from.append($username);
 	//Ajout de la data à from
 	var $time = $('<span>').addClass('timestamp').text(currentHour());
 
 	//Creation de l'element message
-	var $msg = $('<div>').addClass('text '+data.message.id).text(message).append($time);
+	var $msg = $('<div>').addClass('text '+data.message.id);
+	if(user.username == DEFAULSERVERNAME)
+		var $msg = $msg.append(message);
+	else
+		var $msg = $msg.text(message);
+	$msg.append($time);
 
 	var $el = $('<li>').addClass('msg '+data.message.id);
 	$el.append($from).append($msg)
@@ -41,7 +50,7 @@ function addChatMessage (data){
 
 function addServerMessage(message){
 	if(message){
-		var serverUser = getUserFromUsername('<server>');
+		var serverUser = getUserFromUsername(DEFAULSERVERNAME);
 		addChatMessage({
 			'user': serverUser,
 			'message': {

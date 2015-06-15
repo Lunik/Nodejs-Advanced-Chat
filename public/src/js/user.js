@@ -1,3 +1,4 @@
+var DEFAULSERVERNAME;
 User = function(){
 	this.username = '';
 	this.connected = false;
@@ -13,13 +14,13 @@ User = function(){
 	this.setUsername = function (username){ this.username = username; }
 	this.getUsername = function (){ return this.username; }
 
-	this.setRank = function (rank,type){ 
-		this.ranks.type = rank; 
+	this.setRank = function (type,rank){ 
+		this.ranks[type] = rank; 
 	}
 	this.setRanks = function (ranks){ 
 		this.ranks = ranks; 
 	}
-	this.getRank = function (type){ return this.ranks.type; }
+	this.getRank = function (type){ return this.ranks[type]; }
 	this.getRanks = function (){ return this.ranks; }
 
 	this.setBadge = function (badge){ this.badge = badge; }
@@ -63,6 +64,9 @@ function getUserFromData(data){
 function getUserFromUsername(username){
 	var user = new User();
 	user.setUsername(username);
+	user.connected
+	if(username == DEFAULSERVERNAME)
+		user.setRank('moderation',1000);
 
 	return user;
 }
@@ -79,3 +83,36 @@ function getUidFromUsername(username){
 	}
 	return null;
 }
+
+function getClassRank(ranks){
+	var returnClass = [];
+	switch(ranks.moderation){
+		case 1:
+			//moderator classRank
+			returnClass.push('rm-moderator');
+			
+			break;
+
+		case 2:
+			//admin classRank
+			returnClass.push('rm-admin');
+			break;
+
+		case 1000:
+			//admin classRank
+			returnClass.push('rm-server');
+			break;
+
+		default:
+			//default classRank
+			returnClass.push('rm-default');
+			break;
+	}
+
+	return returnClass;
+}
+
+
+
+
+

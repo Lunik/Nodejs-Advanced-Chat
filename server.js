@@ -18,6 +18,7 @@ var Users = {
 	'count':0,
 	'usernames':{}
 };
+var DEFAULSERVERNAME = 'SERVER';
 
 var password = {
 	'moderateur': 'd7163e6377d20276113e4e54efb61ad8',
@@ -29,6 +30,7 @@ io.on('connection', function (socket) {
 	//Quand le client emet un 'send message'
 	socket.on('send msg', function(data){
 		//On emet au client d'exectuter 'new message'
+		data.user.username = Users.usernames[data.user.uid].username;
 		console.log('<'+data.user.username+'> '+data.message.text);
 		socket.broadcast.emit('new msg', data);
 	});
@@ -36,8 +38,9 @@ io.on('connection', function (socket) {
 	socket.on('add user', function (username) {
 		username = username.replace(" ","_");
 		username = username.replace(/[^a-zA-Z0-9-_-]/g,'');
+		usernameUp = username.toUpperCase();
 
-		if(!username || username == "<Server>" || Users.usernames[username]){
+		if(!username || usernameUp == DEFAULSERVERNAME || Users.usernames[username]){
 			username = "visiteur-"+Math.floor((Math.random() * 10000) + 1);
 		}
 
@@ -57,11 +60,12 @@ io.on('connection', function (socket) {
     	socket.username = username;
     	socket.uid = uid;
 
-    	console.log('<server> '+username+' join');
+    	console.log(DEFAULSERVERNAME+' '+username+' join');
 
     	socket.emit('login', {
 	  		user: Users.usernames[uid],
-	  		allUsers: Users
+	  		allUsers: Users,
+	  		serverName: DEFAULSERVERNAME
     	});
 
     	socket.broadcast.emit('user joined', {
@@ -72,7 +76,7 @@ io.on('connection', function (socket) {
 
 	socket.on('disconnect', function () {
 		if(socket.username){
-		 	console.log('<server> '+socket.username+' left');
+		 	console.log(DEFAULSERVERNAME+' '+socket.username+' left');
 	    	// remove the username from global usernames list
 		   	delete Users.usernames[socket.uid];
 	      	Users.count--;
@@ -134,7 +138,16 @@ io.on('connection', function (socket) {
 				execCommand = 1;
 				console.log('----> OK');
 				break;
-
+			case 'list':
+				if(user.ranks.moderation >= 1){
+					socket.emit('cmd', {
+						'valRetour': getAllUsernameConnected(),
+						'callback': 'list'
+					});
+					execCommand = 1;
+					console.log('----> OK');
+				}
+				break;
 			case 'kick':
 				if(user.ranks.moderation >= 1){
 					execCommand = 1;
@@ -261,7 +274,7 @@ function generateMsgCid(){
 
 function getServerUser(){
 	return {
-		'username': "<server>",
+		'username': DEFAULSERVERNAME,
 		'ranks': {
 			'moderation': 1000
 		}
