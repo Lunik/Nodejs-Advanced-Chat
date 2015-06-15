@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-var port = 80;
+var port = 5000;
 var md5 = require('MD5'); //crypt
 
 server.listen(port, function () {
