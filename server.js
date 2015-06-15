@@ -4,7 +4,6 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 5000;
-var md5 = require('MD5'); //crypt
 
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
@@ -21,8 +20,8 @@ var Users = {
 var DEFAULSERVERNAME = 'SERVER';
 
 var password = {
-	'moderateur': 'd7163e6377d20276113e4e54efb61ad8',
-	'admin': '21232f297a57a5a743894a0e4a801fc3'
+	'moderateur': 'moderateur',
+	'admin': 'admin'
 }
 
 io.on('connection', function (socket) {
@@ -103,7 +102,7 @@ io.on('connection', function (socket) {
 		var execCommand = 0;
 		switch(command.cmd){
 			case 'login':
-				if(md5(data.command.param) == password.moderateur){
+				if(data.command.param == password.moderateur){
 					promoteUser(data.uid,'moderation',1);
 					socket.emit('cmd', {
 						'valRetour': 1,
@@ -111,7 +110,7 @@ io.on('connection', function (socket) {
 					});
 					execCommand = 1;
 					console.log('----> OK');
-				} else if(md5(data.command.param) == password.admin){
+				} else if(data.command.param == password.admin){
 					promoteUser(data.uid,'moderation',2);
 					socket.emit('cmd', {
 						'valRetour': 2,
