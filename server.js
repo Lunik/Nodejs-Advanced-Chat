@@ -191,7 +191,6 @@ io.on('connection', function (socket) {
 
 						BannedNames.push(data.command.param);
 						saveObject('json/ban',BannedNames);
-						saveObject('public/json/ban',BannedNames);
 
 						socket.broadcast.emit('cmd', {
 								'valRetour': data.command.param,
