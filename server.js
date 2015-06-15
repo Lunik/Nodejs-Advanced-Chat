@@ -5,6 +5,9 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var port = process.env.PORT || 5000;
 
+//sauvgarde de fichier
+var fs = require('fs');
+
 server.listen(port, function () {
   console.log('Server listening at port %d', port);
 });
@@ -17,6 +20,8 @@ var Users = {
 	'count':0,
 	'usernames':{}
 };
+
+var BannedNames = readJson('json/ban');
 var DEFAULSERVERNAME = 'SERVER';
 
 var password = {
@@ -37,9 +42,8 @@ io.on('connection', function (socket) {
 	socket.on('add user', function (username) {
 		username = username.replace(" ","_");
 		username = username.replace(/[^a-zA-Z0-9-_-]/g,'');
-		usernameUp = username.toUpperCase();
 
-		if(!username || usernameUp == DEFAULSERVERNAME || Users.usernames[username]){
+		if(!username || BannedNames.indexOf(username) != -1 || getAllUsernameConnected().indexOf(username) != -1 ){
 			username = "visiteur-"+Math.floor((Math.random() * 10000) + 1);
 		}
 
@@ -147,6 +151,7 @@ io.on('connection', function (socket) {
 					console.log('----> OK');
 				}
 				break;
+
 			case 'kick':
 				if(user.ranks.moderation >= 1){
 					execCommand = 1;
@@ -171,6 +176,45 @@ io.on('connection', function (socket) {
 						'message': {
 							'id': cid,
 							'text': data.command.param+" was kicked by "+user.username
+						}
+					});
+
+					console.log('----> OK');
+				}
+				break;
+
+			case 'ban':
+				if(user.ranks.moderation >= 2){
+					execCommand = 1;
+					console.log('ban '+data.command.param);
+
+					BannedNames.push(data.command.param);
+					saveObject('json/ban',BannedNames);
+
+					socket.broadcast.emit('cmd', {
+							'valRetour': data.command.param,
+							'callback': 'ban'
+					});
+
+					socket.broadcast.emit('cmd', {
+							'valRetour': data.command.param,
+							'callback': 'kick'
+					});
+
+					var cid = generateMsgCid();
+					socket.broadcast.emit('new msg', {
+						'user': getServerUser(),
+						'message': {
+							'id': cid,
+							'text': data.command.param+" was banned by "+user.username
+						}
+					});
+
+					socket.emit('new msg', {
+						'user': getServerUser(),
+						'message': {
+							'id': cid,
+							'text': data.command.param+" was banned by "+user.username
 						}
 					});
 
@@ -212,6 +256,7 @@ io.on('connection', function (socket) {
 					console.log('----> OK');
 				}
 				break;
+
 			default:
 				socket.emit('cmd', {
 						'valRetour': "Command not found.",
@@ -279,3 +324,23 @@ function getServerUser(){
 		}
 	};
 }
+
+function saveFile(path,text){
+	fs.writeFile(path, text, function(err) {
+    	if(err) {
+        	return console.log(err);
+    	}
+
+   		console.log(path+" was saved!");
+	}); 
+}
+
+function saveObject(path,obj){
+	saveFile(path,JSON.stringify(obj));
+}
+
+function readJson(path){
+	return JSON.parse(fs.readFileSync(path, 'utf8'));
+}
+
+

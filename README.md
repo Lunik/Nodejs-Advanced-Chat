@@ -27,3 +27,4 @@ X argument obligateur
 |Command | Arguments |  Description |
 |:------:|:---------:|:--------------------------------------:|
 | /clean | | Efface le chat pour tous les utilisateurs |
+| /ban | Pseudo | Banni le pseudo + kick l'utilisateur |

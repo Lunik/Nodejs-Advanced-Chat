@@ -39,6 +39,15 @@ COMMANDS = {
 			addServerMessage(username+' not found');
 		}
 	},
+	'kick': function (username){
+		socket.emit('command', {
+			'uid': USER.uid,
+			'command': {
+				'cmd':'ban',
+				'param': username
+			}
+		});
+	},
 	'removeMsg': function(cid){
 		if($('.msg.'+cid).length && !$('.msg.'+cid+' .text .deleted').length){
 			socket.emit('command', {
@@ -114,6 +123,14 @@ function execCommand(data){
 			break;
 
 		case 'kick':
+			COMMANDS.kick(data.param[0]);
+			valRetour = {
+				'etat': 1,
+				'message': ''
+			};
+			break;
+
+		case 'ban':
 			COMMANDS.kick(data.param[0]);
 			valRetour = {
 				'etat': 1,
