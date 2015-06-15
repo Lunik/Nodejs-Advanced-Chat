@@ -10,6 +10,7 @@ X argument obligateur
 
 |Commande | Arguments |  Description |
 |:------:|:---------:|:--------------------------------------:|
+| /command | | Affiche le lien vers la liste des commandes |
 | /login | Password | Connection moderateur / admin |
 | /logout | | Deconnection moderateur / admin |
 | /clear | | Efface le chat |
