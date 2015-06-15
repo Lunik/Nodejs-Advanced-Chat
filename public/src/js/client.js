@@ -14,7 +14,8 @@ var USER;
 var USERS;
 var $currentInput = $usernameInput.focus();
 
-var socket = io.connect('http://localhost');
+//var socket = io.connect('http://lunik-chat-v2.herokuapp.com/');
+var socket = io();
 
 //lancement du chat
 Main();
