@@ -14,7 +14,7 @@ var USER;
 var USERS;
 var $currentInput = $usernameInput.focus();
 
-var socket = io();
+var socket = io.connect('http://localhost');
 
 //lancement du chat
 Main();
