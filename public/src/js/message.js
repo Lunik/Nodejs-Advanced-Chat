@@ -16,29 +16,38 @@ function addChatMessage (data){
 
 	//Creation des elements icon de rank
 	$from = $('<div>').addClass('from');
+
 	//Creation de l'icon de message privé
 	if(data.message.private){
+		var $username = $('<span>').addClass('username').text(user.getUsername());
+		$from.append($username);
 		var $iconPv = $('<i>').addClass('icon icon-pv');
 		$from.append($iconPv);
-	}
-	$.each(user.getRanks(),function(type,rank){
-		if(rank > 0){
-			//Creation des elements d'icone de rank
-			var $icon = $('<i>').addClass('icon');
-			$icon.addClass(getIconFromRank(rank));
+	} else {
+		$.each(user.getRanks(),function(type,rank){
+			if(rank > 0){
+				//Creation des elements d'icone de rank
+				var $icon = $('<i>').addClass('icon');
+				$icon.addClass(getIconFromRank(rank));
 
-			//Ajout à la div From
-			$from.append($icon);
-		}
-	});
+				//Ajout à la div From
+				$from.append($icon);
+			}
+		});
+	}
 
 	//Ajout de l'username à from
-	var $username = $('<span>').addClass('username').text(user.getUsername()+':');
+	var $username = $('<span>').addClass('username');
+	if(data.message.private)
+		$username.text(USERS.usernames[data.toUid].username+':');
+	else 
+		$username.text(user.getUsername()+':');
+
 	var classRanks = getClassRank(user.getRanks());
 	for(var i=0; i < classRanks.length; i++)
 		$username.addClass(classRanks[i])
-	
 	$from.append($username);
+
 	//Ajout de la data à from
 	var $time = $('<span>').addClass('timestamp').text(currentHour());
 

@@ -81,15 +81,19 @@ COMMANDS = {
 		});
 	},
 	'msg': function(msg){
-		console.log(msg);
-		addChatMessage(msg);
-		socket.emit('command', {
-			'uid': USER.uid,
-			'command': {
-				'cmd':'msg',
-				'param': msg
-			}
-		});
+		if(msg.toUid){
+			console.log(msg);
+			addChatMessage(msg);
+			socket.emit('command', {
+				'uid': USER.uid,
+				'command': {
+					'cmd':'msg',
+					'param': msg
+				}
+			});
+		} else {
+			addServerMessage("User not Found");
+		}
 	}
 }
 
