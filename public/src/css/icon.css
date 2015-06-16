@@ -1,8 +1,11 @@
 .icon{
+	position: relative;
+	top: 1px;
+
 	width: 15px;
 	height: 15px;
 
-	background: url();
+	background: url("/src/img/icon.png");
 }
 
 /************/
@@ -14,16 +17,20 @@
 }
 
 .icon.icon-moderator{
-	background-position: 0px 0px;
+	background-position: -15px 0px;
 }
 
 .icon.icon-admin{
-	background-position: 0px 0px;
+	background-position: -30px 0px;
+}
+
+.icon.icon-server{
+	background-position: -45px 0px;
 }
 /****************/
 /*	  message	*/
 /****************/
 
 .icon.icon-pv{
-	background-position: 0px 0px;
+	background-position: 0px -30px;
 }

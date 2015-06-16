@@ -170,6 +170,10 @@ a:hover, a:focus {
     vertical-align: middle;
 }
 
+.from.username{
+  padding-left: 5px;
+}
+
 .username.rm-default{
   color: white;
 }
