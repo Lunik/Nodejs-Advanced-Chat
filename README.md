@@ -1,6 +1,16 @@
 # Lunik-Chat-V2.0
 ## [DEMO](http://chat.guillaume-lunik.fr/)
 
+## Require:
+	socket.io
+	express
+
+## Installation:
+	$ git clone https://github.com/Lunik/Lunik-Chat-V2.0.git
+	$ cd Lunik-Chat-V2.0/
+	$ node server.js
+	$ open http://localhost:5000	
+
 ## Commandes:
 
 X argument obligateur
