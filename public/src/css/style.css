@@ -1,4 +1,6 @@
-/* Fix user-agent */
+/*********************/
+/*       DEFAULT     */
+/*********************/
 
 * {
   box-sizing: border-box;
@@ -41,7 +43,9 @@ a:hover, a:focus {
 	color: #F3734F;
 }
 
-/* Pages */
+/**********************/
+/*         PAGES      */
+/**********************/
 
 .pages {
   height: 100%;
@@ -56,7 +60,9 @@ a:hover, a:focus {
   width: 100%;
 }
 
-/* Login Page */
+/*********************/
+/*     LOGIN PAGE    */
+/*********************/
 
 .login.page {
   background-color: #000;
@@ -96,7 +102,9 @@ a:hover, a:focus {
   font-weight: 100;
 }
 
-/* Chat page */
+/*********************/
+/*      CHAT PAGE    */
+/*********************/
 
 .chat.page {
   display: none;
@@ -119,7 +127,9 @@ a:hover, a:focus {
   text-align: center;
 }
 
-/* Messages */
+/*********************/
+/*      MESSAGES     */
+/*********************/
 
 .chatArea {
   height: 100%;
@@ -184,7 +194,31 @@ a:hover, a:focus {
     margin-left:10px;
 }
 
-/* Input */
+/*********************/
+/*        BUT     */
+/*********************/
+
+/* Moderation Buton */
+.but-moderation{
+  font-size: 50%;
+
+  margin-left:10px;
+  padding: 0px 2px 0px 2px;
+
+  border-radius: 2px;
+
+  background-color: #AA0000;
+
+  cursor: pointer;
+}
+
+.but-moderation:hover{
+  background-color: #CC0000;
+}
+
+/*********************/
+/*        INPUT      */
+/*********************/
 .inputMessage {
   border: 10px solid #000;
   bottom: 0;

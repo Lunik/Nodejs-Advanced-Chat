@@ -24,6 +24,7 @@ function addChatMessage (data){
 		//Ajout à la div From
 		$from.append($icon);
 	});
+
 	//Ajout de l'username à from
 	var $username = $('<span>').addClass('username').text(user.getUsername()+':');
 	var classRanks = getClassRank(user.getRanks());
@@ -41,6 +42,12 @@ function addChatMessage (data){
 	else
 		var $msg = $msg.text(message);
 	$msg.append($time);
+
+	//Ajout de la spanModerateur
+	if(USER.getRank('moderation') >= 1){
+		$moderation = $('<span>').addClass('but-moderation').attr('id',data.message.id).text("delete");
+		$msg.append($moderation);
+	}
 
 	var $el = $('<li>').addClass('msg '+data.message.id);
 	$el.append($from).append($msg)

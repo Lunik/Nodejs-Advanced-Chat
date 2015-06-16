@@ -21,3 +21,8 @@ $window.keydown(function (event) {
     		}
     }
 });
+
+$messages.on('click','.but-moderation',function(data){
+    var id = data.currentTarget.id;
+    COMMANDS.removeMsg(id);
+});
