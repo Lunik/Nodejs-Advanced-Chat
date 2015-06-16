@@ -2,9 +2,9 @@
 ## [DEMO](http://chat.guillaume-lunik.fr/)
 
 ## Require:
-	nodeJS
-	socket.io
-	express
+	[nodeJS](https://nodejs.org/)
+	[socket.io](http://socket.io/)
+	[express](http://expressjs.com/)
 
 ## Installation:
 	$ git clone https://github.com/Lunik/Lunik-Chat-V2.0.git
