@@ -44,7 +44,7 @@ function addChatMessage (data){
 	$msg.append($time);
 
 	//Ajout de la spanModerateur
-	if(USER.getRank('moderation') >= 1){
+	if(USER.getRank('moderation') >= 1 && user.username != DEFAULSERVERNAME){
 		$moderation = $('<span>').addClass('but-moderation').attr('id',data.message.id).text("delete");
 		$msg.append($moderation);
 	}
