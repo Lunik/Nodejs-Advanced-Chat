@@ -2,6 +2,7 @@
 ## [DEMO](http://chat.guillaume-lunik.fr/)
 
 ## Require:
+	nodeJS
 	socket.io
 	express
 
