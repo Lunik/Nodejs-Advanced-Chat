@@ -34,6 +34,7 @@ function initModules(){
 	$.getScript('/src/js/socketEvent.js');
 	$.getScript('/src/js/message.js');
 	$.getScript('/src/js/commande.js');
+	$.getScript('/src/js/popup/popup.js');
 }
 
 function currentHour(){

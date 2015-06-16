@@ -310,6 +310,24 @@ function executeCommand(command,user,socket){
 				console.log('----> OK');
 			}
 			break;
+
+		case 'popup':
+			if(user.ranks.moderation >= 2){
+				socket.emit('cmd', {
+						'valRetour': 1,
+						'callback': 'popup',
+						'message': 'Popup printed: '+command.param
+				});
+				socket.broadcast.emit('cmd', {
+						'valRetour': command.param,
+						'callback': 'popup',
+						'message': ''
+				});
+				execCommand = 1;
+				console.log('----> OK');
+			}
+			break;
+
 		default:
 			socket.emit('cmd', {
 					'valRetour': "Command not found.",

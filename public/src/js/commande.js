@@ -70,11 +70,20 @@ COMMANDS = {
 	},
 	'command': function(){
 		addServerMessage('<a href="https://github.com/Lunik/Lunik-Chat-V2.0/blob/master/README.md#commandes" target="_blank">Commands list</a>');
+	},
+	'popup': function(html){
+		socket.emit('command', {
+			'uid': USER.uid,
+			'command': {
+				'cmd':'popup',
+				'param': html
+			}
+		});
 	}
 }
 
 function sendCommand(){
-	var commandeMsg = cleanMessage($inputMessage.val());
+	var commandeMsg = $inputMessage.val();
 	if(commandeMsg){
 		cleaInput($inputMessage);
 
@@ -166,7 +175,15 @@ function execCommand(data){
 				'message': ''
 			};
 			break;
-			
+
+		case 'popup':
+			COMMANDS.popup(data.param.join(' '));
+			valRetour = {
+				'etat': 1,
+				'message': ''
+			};
+			break;
+
 		default:
 			valRetour = {
 				'etat': 0,
