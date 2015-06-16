@@ -25,6 +25,7 @@ X argument obligateur
 | /login | Password | Connection moderateur / admin |
 | /logout | | Deconnection moderateur / admin |
 | /clear | | Efface le chat |
+| /msg | Pseudo Message | Envoyer un message Privé |
 
 ### Moderateurs
 

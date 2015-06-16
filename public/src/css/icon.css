@@ -1,5 +1,8 @@
 .icon{
+	width: 15px;
+	height: 15px;
 
+	background: url();
 }
 
 /************/
@@ -7,20 +10,20 @@
 /************/
 
 .icon.icon-default{
-
+	background-position: 0px 0px;
 }
 
 .icon.icon-moderator{
-
+	background-position: 0px 0px;
 }
 
 .icon.icon-admin{
-	
+	background-position: 0px 0px;
 }
 /****************/
 /*	  message	*/
 /****************/
 
 .icon.icon-pv{
-	
+	background-position: 0px 0px;
 }
