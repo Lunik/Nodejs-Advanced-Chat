@@ -71,7 +71,7 @@ socket.on('cmd', function(data){
       if(data.valRetour !== 1){
         popupClose();
         var pop = new Popup();
-        pop.init('center','center','50%','50%',"Announce",data.valRetour);
+        pop.init('center','center','50%','',"Announce",data.valRetour);
         pop.draw();
       }
       break;
