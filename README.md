@@ -1,5 +1,5 @@
 # Lunik-Chat-V2.0
-## [DEMO](http://lunik-chat-v2.herokuapp.com/)
+## [DEMO](http://chat.guillaume-lunik.fr/)
 
 ## Commandes:
 
