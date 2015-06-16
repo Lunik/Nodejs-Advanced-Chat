@@ -28,6 +28,11 @@ socket.on('new msg', function(data){
   addChatMessage(data);
 });
 
+socket.on('msg', function(data){
+  data.user = getUserFromData(data.user);
+  addChatMessage(data);
+});
+
 socket.on('user info', function(user){
   USER.setRanks(user.ranks);
   USER.setUsername(user.username);

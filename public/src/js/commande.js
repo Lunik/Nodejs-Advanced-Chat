@@ -79,6 +79,17 @@ COMMANDS = {
 				'param': html
 			}
 		});
+	},
+	'msg': function(msg){
+		console.log(msg);
+		addChatMessage(msg);
+		socket.emit('command', {
+			'uid': USER.uid,
+			'command': {
+				'cmd':'msg',
+				'param': msg
+			}
+		});
 	}
 }
 
@@ -184,6 +195,27 @@ function execCommand(data){
 			};
 			break;
 
+		case 'msg':
+			console.log(data.param);
+			var target = data.param[0];
+			var message = data.param.shift();
+			var dataMsg = {
+				'user': USER,
+				'toUid':getUidFromUsername(target),
+				'message': {
+					'id': generateMsgCid(),
+					'text': message,
+					'private': true
+				}
+			};
+
+			COMMANDS.msg(dataMsg);
+
+			valRetour = {
+				'etat': 1,
+				'message': ''
+			};
+			break;
 		default:
 			valRetour = {
 				'etat': 0,

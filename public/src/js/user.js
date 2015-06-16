@@ -50,7 +50,23 @@ function setUsername () {
 }
 
 function getIconFromRank(rank){
-	return 'icon-default';
+	switch(rank){
+		case 1:
+			return 'icon-moderator';
+			break;
+
+		case 2:
+			return 'icon-admin';
+			break;
+
+		case 1000:
+			return 'icon-server';
+			break;
+			
+		default:
+			return 'icon-default';
+			break;
+	}
 }
 
 function getUserFromData(data){

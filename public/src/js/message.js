@@ -25,6 +25,12 @@ function addChatMessage (data){
 		$from.append($icon);
 	});
 
+	//Creation de l'icon de message privé
+	if(data.message.private){
+		var $iconPv = $('<i>').addClass('icon icon-pv');
+		$from.append($iconPv);
+	}
+
 	//Ajout de l'username à from
 	var $username = $('<span>').addClass('username').text(user.getUsername()+':');
 	var classRanks = getClassRank(user.getRanks());

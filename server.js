@@ -47,7 +47,6 @@ io.on('connection', function (socket) {
 			username = "visiteur-"+Math.floor((Math.random() * 10000) + 1);
 		}
 
-
     	// add the client's username to the global list
     	var uid = genereUid(username);
     	Users.usernames[uid] = {
@@ -55,8 +54,10 @@ io.on('connection', function (socket) {
     		'ranks': {
     			'moderation':0
     		},
-    		'uid': uid
+    		'uid': uid,
+    		'socketId':socket.id
     	}
+
     	Users.count = Users.count+1;
 
     	// we store the username in the socket session for this client
@@ -214,6 +215,7 @@ function executeCommand(command,user,socket){
 				console.log('----> FAIL');
 			}
 			break;
+
 		case 'logout':
 			promoteUser(user.uid,'moderation',0);
 			socket.emit('cmd', {
@@ -224,6 +226,7 @@ function executeCommand(command,user,socket){
 			execCommand = 1;
 			console.log('----> OK');
 			break;
+
 		case 'list':
 			if(user.ranks.moderation >= 1){
 				socket.emit('cmd', {
@@ -328,6 +331,15 @@ function executeCommand(command,user,socket){
 			}
 			break;
 
+		case 'msg':
+			if(Users.usernames[command.param.toUid]){
+				var toSocket = Users.usernames[command.param.toUid].socketId;
+				io.to(toSocket).emit('msg',command.param);
+				execCommand = 1;
+				console.log('----> OK');
+			}
+			break;
+			
 		default:
 			socket.emit('cmd', {
 					'valRetour': "Command not found.",
