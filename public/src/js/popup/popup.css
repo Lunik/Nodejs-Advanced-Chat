@@ -54,6 +54,9 @@
 
 .popupHtml{
     padding: 0px;
-    margin: 10px 5px 10px 5px;
+    margin: auto;
+
     overflow: hidden;
+
+    text-align: center;
 }
