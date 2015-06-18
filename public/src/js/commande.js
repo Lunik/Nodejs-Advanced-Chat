@@ -82,7 +82,6 @@ COMMANDS = {
 	},
 	'msg': function(msg){
 		if(msg.toUid){
-			console.log(msg);
 			addChatMessage(msg);
 			socket.emit('command', {
 				'uid': USER.uid,
@@ -200,9 +199,11 @@ function execCommand(data){
 			break;
 
 		case 'msg':
-			console.log(data.param);
-			var target = data.param[0];
-			var message = data.param.shift();
+			var target = data.param[0].replace('@','');
+			var message = data.param;
+			message.shift();
+			message = message.join(' ');
+
 			var dataMsg = {
 				'user': USER,
 				'toUid':getUidFromUsername(target),

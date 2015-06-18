@@ -6,7 +6,7 @@ function log (message) {
 
 function addChatMessage (data){
 	var user = data.user;
-	var message = data.message.text;
+	var message = data.message;
 
 	//Creation de l'element Badge
 	var $badge = $('<i>').addClass('bdg');
@@ -17,8 +17,14 @@ function addChatMessage (data){
 	//Creation des elements icon de rank
 	$from = $('<div>').addClass('from');
 
+	//Si mention dans le message
+	if(message.mention){
+		var $iconMention = $('<i>').addClass('icon icon-mention');
+		$from.append($iconMention);
+	}
+
 	//Creation de l'icon de message privé
-	if(data.message.private){
+	if(message.private){
 		var $username = $('<span>').addClass('username').text(user.getUsername());
 		$from.append($username);
 		var $iconPv = $('<i>').addClass('icon icon-pv');
@@ -38,35 +44,36 @@ function addChatMessage (data){
 
 	//Ajout de l'username à from
 	var $username = $('<span>').addClass('username');
-	if(data.message.private)
-		$username.text(USERS.usernames[data.toUid].username+':');
+	if(message.private)
+		$username.text(USERS.usernames[data.toUid].username);
 	else 
-		$username.text(user.getUsername()+':');
+		$username.text(user.getUsername());
 
 	var classRanks = getClassRank(user.getRanks());
 	for(var i=0; i < classRanks.length; i++)
 		$username.addClass(classRanks[i])
-	$from.append($username);
+	$from.append($username).append(':');
 
 	//Ajout de la data à from
 	var $time = $('<span>').addClass('timestamp').text(currentHour());
 
 	//Creation de l'element message
-	var $msg = $('<div>').addClass('text '+data.message.id);
+	var $msg = $('<div>').addClass('text '+message.id);
+
 	if(user.username == DEFAULSERVERNAME)
-		var $msg = $msg.append(message);
+		var $msg = $msg.append(message.text);
 	else
-		var $msg = $msg.text(message);
+		var $msg = $msg.text(message.text);
 	$msg.append($time);
 
 	//Ajout de la spanModerateur
 	if(USER.getRank('moderation') >= 1 && user.username != DEFAULSERVERNAME){
-		$moderation = $('<span>').addClass('but-moderation').attr('id',data.message.id).text("delete");
+		$moderation = $('<span>').addClass('but-moderation').attr('id',message.id).text("delete");
 		$msg.append($moderation);
 	}
 
-	var $el = $('<li>').addClass('msg '+data.message.id);
-	$el.append($from).append($msg)
+	var $el = $('<li>').addClass('msg '+message.id);
+	$el.append($from).append($msg);
 
 	addMessageElement($el);
 }
@@ -139,4 +146,10 @@ function removeMessage(cid){
 function clearChat(){
 	$messages.html('');
 }
+
+function addInput(input,text){
+	input.val(input.val().trim()+text+' ');
+}
+
+
 

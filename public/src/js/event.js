@@ -22,7 +22,14 @@ $window.keydown(function (event) {
     }
 });
 
+//Effacer le message quand on clique sur le bouton delete
 $messages.on('click','.but-moderation',function(data){
     var id = data.currentTarget.id;
     COMMANDS.removeMsg(id);
+});
+
+//Ajout du pseudo quand on clique dessus
+$messages.on('click','.username',function(data){
+    var username = data.currentTarget.innerText;
+    addInput($currentInput,' @'+username);
 });

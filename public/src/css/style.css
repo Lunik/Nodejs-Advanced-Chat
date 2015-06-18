@@ -172,6 +172,8 @@ a:hover, a:focus {
 
 .from .username{
   padding: 0px 5px 0px 5px;
+
+  cursor: pointer;
 }
 
 .username.rm-default{

@@ -24,6 +24,7 @@ socket.on('user left', function (data) {
 });
 
 socket.on('new msg', function(data){
+  data.message.mention = isMention(USER.getUsername(),data.message.text);
   data.user = getUserFromData(data.user);
   addChatMessage(data);
 });

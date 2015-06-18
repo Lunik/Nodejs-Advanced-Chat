@@ -128,6 +128,14 @@ function getClassRank(ranks){
 	return returnClass;
 }
 
+function isMention(user,message){
+	message = message+' ';
+	if(message.indexOf(' @'+user+' ') != -1)
+		return 1;
+	return 0;
+}
+
+
 
 
 
