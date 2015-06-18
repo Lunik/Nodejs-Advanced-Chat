@@ -7,7 +7,7 @@ User = function(){
 	};
 	this.badge;
 	this.uid;
-	this.color = 'white';
+	this.color = '#FFFFFF';
 
 	this.connect = function (){ this.connected = true; }
 	this.disconnect = function (){ this.connected = false; }

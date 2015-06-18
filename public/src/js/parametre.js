@@ -12,7 +12,7 @@ function parameterHtml(){
 	// COULEUR D'ECRITURE //
 	$colorDiv = $('<div>').addClass('param-color');
 	$colorLabel = $('<label>').text('Color:');
-	$colorInput = $('<input>').attr('type','text').attr('value',USER.getColor());
+	$colorInput = $('<input>').attr('type','color').attr('value',USER.getColor());
 	$colorDiv.append($colorLabel).append($colorInput);
 	$html.append($colorDiv);
 
