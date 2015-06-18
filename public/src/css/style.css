@@ -146,6 +146,7 @@ a:hover, a:focus {
 
 .msg *{
   display: inline-block;
+  padding: 5px 0px 5px 0px;
 }
 
 .msg.alter{
