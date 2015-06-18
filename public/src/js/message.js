@@ -1,3 +1,5 @@
+var ALTERCOLOR = 0;
+
 // Log a message
 function log (message) {
 	var $el = $('<li>').addClass('log').text(message);
@@ -73,6 +75,10 @@ function addChatMessage (data){
 	}
 
 	var $el = $('<li>').addClass('msg '+message.id);
+	if(message.mention){
+		$el.addClass('mention');
+	}
+	
 	$el.append($from).append($msg);
 
 	addMessageElement($el);
@@ -92,6 +98,14 @@ function addServerMessage(message){
 }
 
 function addMessageElement(el){
+
+	if(ALTERCOLOR){
+		el.addClass('alter');
+		ALTERCOLOR = 0;
+	}
+	else
+		ALTERCOLOR = 1;
+
 	$('.messages').append(el);
 	$messages[0].scrollTop = $messages[0].scrollHeight;
 }

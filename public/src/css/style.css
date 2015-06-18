@@ -148,6 +148,14 @@ a:hover, a:focus {
   display: inline-block;
 }
 
+.msg.alter{
+  background-color: #111;
+}
+
+.msg.mention{
+  background-color: #008;
+}
+
 .msg .from{
   display: inline-block;
 
