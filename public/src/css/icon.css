@@ -38,3 +38,20 @@
 .icon.icon-mention{
 	background-position: -15px -30px;
 }
+
+/****************/
+/*	But System	*/
+/****************/
+.icon.icon-param{
+	width: 30px;
+	height: 30px;
+
+	background-position: 0px -60px;
+}
+
+.icon.icon-close{
+	width: 30px;
+	height: 30px;
+
+	background-position: -30px -60px;
+}

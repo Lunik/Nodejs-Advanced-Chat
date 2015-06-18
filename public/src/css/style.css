@@ -213,6 +213,14 @@ a:hover, a:focus {
 /*        BUT     */
 /*********************/
 
+.but{
+  cursor: pointer;
+}
+
+.but:hover{
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 /* Moderation Buton */
 .but-moderation{
   font-size: 50%;
@@ -224,11 +232,24 @@ a:hover, a:focus {
 
   background-color: #AA0000;
 
-  cursor: pointer;
 }
 
-.but-moderation:hover{
-  background-color: #CC0000;
+/* param Buton */
+.but-param{
+  position: fixed;
+
+  right: 0px;
+  top: 0px;
+
+  width: 40px;
+  height: 40px;
+
+  background-color: #111;
+}
+
+.but-param *{
+  position: fixed !important;
+  margin: 5px;
 }
 
 /*********************/

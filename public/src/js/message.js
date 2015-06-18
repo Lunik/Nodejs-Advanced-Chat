@@ -70,9 +70,11 @@ function addChatMessage (data){
 
 	//Ajout de la spanModerateur
 	if(USER.getRank('moderation') >= 1 && user.username != DEFAULSERVERNAME){
-		$moderation = $('<span>').addClass('but-moderation').attr('id',message.id).text("delete");
+		$moderation = $('<span>').addClass('but but-moderation').attr('id',message.id).text("delete");
 		$msg.append($moderation);
 	}
+	//Ajout de la couleur
+	applyColorOnDiv($msg,user.getColor());
 
 	var $el = $('<li>').addClass('msg '+message.id);
 	if(message.mention){
@@ -163,6 +165,10 @@ function clearChat(){
 
 function addInput(input,text){
 	input.val(input.val().trim()+text+' ');
+}
+
+function applyColorOnDiv(div,color){
+	$(div).css('color',color);
 }
 
 

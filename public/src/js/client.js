@@ -31,9 +31,11 @@ function initModules(){
 	//Module d'evenement
 	$.getScript('/src/js/event.js');
 	$.getScript('/src/js/user.js');
+	$.getScript('/src/js/storage.js');
 	$.getScript('/src/js/socketEvent.js');
 	$.getScript('/src/js/message.js');
 	$.getScript('/src/js/commande.js');
+	$.getScript('/src/js/parametre.js');
 	$.getScript('/src/js/popup/popup.js');
 }
 

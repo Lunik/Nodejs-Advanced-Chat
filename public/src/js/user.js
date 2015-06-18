@@ -7,6 +7,7 @@ User = function(){
 	};
 	this.badge;
 	this.uid;
+	this.color = 'white';
 
 	this.connect = function (){ this.connected = true; }
 	this.disconnect = function (){ this.connected = false; }
@@ -28,6 +29,9 @@ User = function(){
 
 	this.setUid = function (uid){ this.uid = uid; }
 	this.getUid = function (){ return this.uid; }
+
+	this.setColor = function (color){ this.color = color; }
+	this.getColor = function (){ return this.color; }
 }
 
 initUser();
@@ -73,6 +77,7 @@ function getUserFromData(data){
 	var user = new User();
 	user.setUsername(data.username);
 	user.setRanks(data.ranks);
+	user.setColor(data.color);
 
 	return user;
 }
@@ -135,7 +140,9 @@ function isMention(user,message){
 	return 0;
 }
 
-
+function saveUser(){
+	storeData('USER',USER);
+}
 
 
 

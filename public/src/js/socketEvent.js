@@ -10,6 +10,7 @@ socket.on('login', function (data) {
   // Display the welcome message
   var message = "Welcome to Socket.IO Chat";
 
+  saveUser();
   log(message);
 });
 
@@ -38,6 +39,8 @@ socket.on('user info', function(user){
   USER.setRanks(user.ranks);
   USER.setUsername(user.username);
   USER.setUid(user.uid);
+
+  saveUser();
 });
 
 socket.on('cmd', function(data){

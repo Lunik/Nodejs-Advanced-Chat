@@ -4,7 +4,8 @@ $window.keydown(function (event) {
 
 	// Auto focus sur $currentInput
     if (!(event.ctrlKey || event.metaKey || event.altKey)) {
-      $currentInput.focus();
+        if($currentInput)
+            $currentInput.focus();
     }
 
     switch (event.which) {
@@ -32,4 +33,11 @@ $messages.on('click','.but-moderation',function(data){
 $messages.on('click','.username',function(data){
     var username = data.currentTarget.innerText;
     addInput($currentInput,' @'+username);
+});
+
+$chatPage.on('click','.but-param',function(data){
+    var pop = new Popup;
+    pop.init('center','center','50%','','Parametres',parameterHtml());
+    pop.draw();
+    $currentInput = null;
 });
