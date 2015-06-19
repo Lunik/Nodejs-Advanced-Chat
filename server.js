@@ -194,6 +194,8 @@ function executeCommand(command,user,socket){
 					'callback': 'login',
 					'message': 'Logged on Moderator'
 				});
+				socket.broadcast.emit('update userlist', Users);
+
 				execCommand = 1;
 				console.log('----> OK');
 			} else if(command.param == PASSWORDS.admin){
@@ -203,6 +205,8 @@ function executeCommand(command,user,socket){
 					'callback': 'login',
 					'message': 'Logged on Admin'
 				});
+				socket.broadcast.emit('update userlist', Users);
+				
 				execCommand = 1;
 				console.log('----> OK');
 			} else {

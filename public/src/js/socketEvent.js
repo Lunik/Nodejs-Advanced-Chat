@@ -24,6 +24,10 @@ socket.on('user left', function (data) {
   USERS = data.allUsers;
 });
 
+socket.on('update userlist', function (allUsers) {
+  USERS = allUsers;
+});
+
 socket.on('new msg', function(data){
   data.message.mention = isMention(USER.getUsername(),data.message.text);
   data.user = getUserFromData(data.user);

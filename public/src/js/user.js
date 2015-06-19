@@ -55,15 +55,15 @@ function setUsername () {
 
 function getIconFromRank(rank){
 	switch(rank){
-		case 1:
+		case 'rm-moderator':
 			return 'icon-moderator';
 			break;
 
-		case 2:
+		case 'rm-admin':
 			return 'icon-admin';
 			break;
 
-		case 1000:
+		case 'rm-server':
 			return 'icon-server';
 			break;
 			
@@ -144,6 +144,7 @@ function saveUser(){
 	storeData('USER',USER);
 }
 
+function getUserDiv(user){
 
-
+}
 

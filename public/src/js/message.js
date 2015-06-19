@@ -27,33 +27,44 @@ function addChatMessage (data){
 
 	//Creation de l'icon de message privé
 	if(message.private){
-		var $username = $('<span>').addClass('username').text(user.getUsername());
+		var $username = $('<span>').addClass('username');
+
+		var classRanks = getClassRank(user.getRanks());
+		for(var i=0; i < classRanks.length; i++){
+			$username.addClass(classRanks[i])
+			var $icon = $('<i>').addClass('icon');
+			$icon.addClass(getIconFromRank(classRanks[i]));
+			$from.append($icon);
+		}
+		$username.text(user.getUsername());
 		$from.append($username);
+
 		var $iconPv = $('<i>').addClass('icon icon-pv');
 		$from.append($iconPv);
-	} else {
-		$.each(user.getRanks(),function(type,rank){
-			if(rank > 0){
-				//Creation des elements d'icone de rank
-				var $icon = $('<i>').addClass('icon');
-				$icon.addClass(getIconFromRank(rank));
-
-				//Ajout à la div From
-				$from.append($icon);
-			}
-		});
 	}
 
 	//Ajout de l'username à from
 	var $username = $('<span>').addClass('username');
-	if(message.private)
+	if(message.private){
+		var classRanks = getClassRank(USERS.usernames[data.toUid].ranks);
+		for(var i=0; i < classRanks.length; i++){
+			$username.addClass(classRanks[i])
+			var $icon = $('<i>').addClass('icon');
+			$icon.addClass(getIconFromRank(classRanks[i]));
+			$from.append($icon);
+		}
 		$username.text(USERS.usernames[data.toUid].username);
-	else 
+	} else {
+		var classRanks = getClassRank(user.getRanks());
+		for(var i=0; i < classRanks.length; i++){
+			$username.addClass(classRanks[i])
+			var $icon = $('<i>').addClass('icon');
+			$icon.addClass(getIconFromRank(classRanks[i]));
+			$from.append($icon);
+		}
 		$username.text(user.getUsername());
+	}
 
-	var classRanks = getClassRank(user.getRanks());
-	for(var i=0; i < classRanks.length; i++)
-		$username.addClass(classRanks[i])
 	$from.append($username).append(':');
 
 	//Ajout de la data à from
