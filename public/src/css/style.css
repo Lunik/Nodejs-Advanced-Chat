@@ -238,7 +238,7 @@ a:hover, a:focus {
 .but-param{
   position: fixed;
 
-  right: 0px;
+  left: 0px;
   top: 0px;
 
   width: 40px;

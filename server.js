@@ -195,6 +195,7 @@ function executeCommand(command,user,socket){
 					'message': 'Logged on Moderator'
 				});
 				socket.broadcast.emit('update userlist', Users);
+				socket.emit('update userlist', Users);
 
 				execCommand = 1;
 				console.log('----> OK');
@@ -206,7 +207,8 @@ function executeCommand(command,user,socket){
 					'message': 'Logged on Admin'
 				});
 				socket.broadcast.emit('update userlist', Users);
-				
+				socket.emit('update userlist', Users);
+
 				execCommand = 1;
 				console.log('----> OK');
 			} else {

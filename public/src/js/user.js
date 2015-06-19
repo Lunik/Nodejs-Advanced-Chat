@@ -145,6 +145,20 @@ function saveUser(){
 }
 
 function getUserDiv(user){
+	var $div = $('<div>');
+	var $username = $('<span>').addClass('username');
 
+	var classRanks = getClassRank(user.ranks);
+	for(var i=0; i < classRanks.length; i++){
+		$username.addClass(classRanks[i])
+		var $icon = $('<i>').addClass('icon');
+		$icon.addClass(getIconFromRank(classRanks[i]));
+		$div.append($icon);
+	}
+
+	$username.text(user.username);
+	$div.append($username);
+
+	return $div;
 }
 
