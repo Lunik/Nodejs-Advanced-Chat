@@ -31,7 +31,8 @@ $messages.on('click','.but-moderation',function(data){
 
 //Ajout du pseudo quand on clique dessus
 $messages.on('click','.username',function(data){
-    var username = data.currentTarget.innerText;
+    console.log(data);
+    var username = data.currentTarget.innerHTML;
     addInput($currentInput,' @'+username);
 });
 
