@@ -64,6 +64,7 @@ socket.on('cmd', function(data){
     case 'kick':
       if(data.valRetour == USER.getUsername()){
         socket.disconnect();
+        clearData();
         location.reload();
       }
       break;

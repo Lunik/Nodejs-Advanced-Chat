@@ -27,12 +27,13 @@ COMMANDS = {
 		});
 	},
 	'kick': function (username){
-		if(getUidFromUsername(username)){
+		var uid = getUidFromUsername(username);
+		if(uid){
 			socket.emit('command', {
 				'uid': USER.uid,
 				'command': {
 					'cmd':'kick',
-					'param': username
+					'param': uid
 				}
 			});
 		} else {
@@ -118,6 +119,8 @@ function sendCommand(){
 
 function execCommand(data){
 	var valRetour = {};
+	if(data.param[0])
+		data.param[0] = data.param[0].replace('@','');
 
 	switch(data.cmd){
 
@@ -199,7 +202,7 @@ function execCommand(data){
 			break;
 
 		case 'msg':
-			var target = data.param[0].replace('@','');
+			var target = data.param[0];
 			var message = data.param;
 			message.shift();
 			message = message.join(' ');

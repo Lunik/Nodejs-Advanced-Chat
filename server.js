@@ -248,17 +248,19 @@ function executeCommand(command,user,socket){
 		case 'kick':
 			if(user.ranks.moderation >= 1){
 				execCommand = 1;
-				console.log('kick '+command.param);
+				var kickUser = Users.usernames[command.param];
+				console.log('kick '+kickUser.username);
+
 				socket.broadcast.emit('cmd', {
-						'valRetour': command.param,
+						'valRetour': kickUser.username,
 						'callback': 'kick',
-						'message': command.param+" was kicked by "+user.username
+						'message': kickUser.username+" was kicked by "+user.username
 				});
 
 				socket.emit('cmd', {
-						'valRetour': command.param,
+						'valRetour': kickUser.username,
 						'callback': 'kick',
-						'message': command.param+" was kicked"
+						'message': kickUser.username+" was kicked"
 				});
 
 				console.log('----> OK');
