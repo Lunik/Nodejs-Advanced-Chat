@@ -1,4 +1,4 @@
-var VERSION;
+var VERSION = 2.4.0;
  
 // Initialize varibles
 var $window = $(window);

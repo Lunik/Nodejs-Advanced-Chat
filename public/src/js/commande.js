@@ -9,77 +9,109 @@ COMMANDS = {
 		});
 	},
 	'logout': function(){
-		socket.emit('command', {
-			'uid': USER.uid,
-			'command': {
-				'cmd':'logout',
-				'param': []
-			}
-		});
-	},
-	'list': function (){
-		socket.emit('command', {
-			'uid': USER.uid,
-			'command': {
-				'cmd':'list',
-				'param': []
-			}
-		});
-	},
-	'kick': function (username){
-		var uid = getUidFromUsername(username);
-		if(uid){
+		if(USER.ranks.moderation >= 1){
 			socket.emit('command', {
 				'uid': USER.uid,
 				'command': {
-					'cmd':'kick',
-					'param': uid
+					'cmd':'logout',
+					'param': []
 				}
 			});
 		} else {
-			addServerMessage(username+' not found');
+			addServerMessage('Not permitted.');
 		}
 	},
-	'ban': function (username){
-		socket.emit('command', {
-			'uid': USER.uid,
-			'command': {
-				'cmd':'ban',
-				'param': username
-			}
-		});
-	},
-	'removeMsg': function(cid){
-		if($('.msg.'+cid).length && !$('.msg.'+cid+' .text .deleted').length){
+	'list': function (){
+		if(USER.ranks.moderation >= 1){
 			socket.emit('command', {
 				'uid': USER.uid,
 				'command': {
-					'cmd':'removeMsg',
-					'param': cid
+					'cmd':'list',
+					'param': []
 				}
 			});
+		} else {
+			addServerMessage('Not permitted.');
 		}
 	},
-	'clean': function(){
-		socket.emit('command', {
-			'uid': USER.uid,
-			'command': {
-				'cmd':'clean',
-				'param': []
+	'kick': function (username){
+		if(USER.ranks.moderation >= 1){
+			var uid = getUidFromUsername(username);
+			if(uid){
+				socket.emit('command', {
+					'uid': USER.uid,
+					'command': {
+						'cmd':'kick',
+						'param': uid
+					}
+				});
+			} else {
+				addServerMessage(username+' not found');
 			}
-		});
+		} else {
+			addServerMessage('Not permitted.');
+		}
+	},
+	'ban': function (username){
+		if(USER.ranks.moderation >= 2){
+			socket.emit('command', {
+				'uid': USER.uid,
+				'command': {
+					'cmd':'ban',
+					'param': username
+				}
+			});
+		} else {
+			addServerMessage('Not permitted.');
+		}
+	},
+	'removeMsg': function(cid){
+		if(USER.ranks.moderation >= 1){
+			if($('.msg.'+cid).length && !$('.msg.'+cid+' .text .deleted').length){
+				socket.emit('command', {
+					'uid': USER.uid,
+					'command': {
+						'cmd':'removeMsg',
+						'param': cid
+					}
+				});
+			}
+		} else {
+			addServerMessage('Not permitted.');
+		}
+	},
+	'clear': function(){
+		clearChat();
+		addServerMessage('Chat cleared');
+	},
+	'clean': function(){
+		if(USER.ranks.moderation >= 2){
+			socket.emit('command', {
+				'uid': USER.uid,
+				'command': {
+					'cmd':'clean',
+					'param': []
+				}
+			});
+		} else {
+			addServerMessage('Not permitted.');
+		}
 	},
 	'command': function(){
 		addServerMessage('<a href="https://github.com/Lunik/Lunik-Chat-V2.0/blob/master/README.md#commandes" target="_blank">Commands list</a>');
 	},
 	'popup': function(html){
-		socket.emit('command', {
-			'uid': USER.uid,
-			'command': {
-				'cmd':'popup',
-				'param': html
-			}
-		});
+		if(USER.ranks.moderation >= 2){
+			socket.emit('command', {
+				'uid': USER.uid,
+				'command': {
+					'cmd':'popup',
+					'param': html
+				}
+			});
+		} else {
+			addServerMessage('Not permitted.');
+		}
 	},
 	'msg': function(msg){
 		if(msg.toUid){
@@ -94,6 +126,9 @@ COMMANDS = {
 		} else {
 			addServerMessage("User not Found");
 		}
+	},
+	'version': function(){
+		addServerMessage("Version du chat: "+VERSION);
 	}
 }
 
@@ -173,8 +208,11 @@ function execCommand(data){
 			break;
 
 		case 'clear':
-			clearChat();
-			addServerMessage('Chat cleared');
+			COMMANDS.clear();
+			valRetour = {
+				'etat': 1,
+				'message': ''
+			};
 			break;
 
 		case 'clean':
@@ -219,6 +257,13 @@ function execCommand(data){
 
 			COMMANDS.msg(dataMsg);
 
+			valRetour = {
+				'etat': 1,
+				'message': ''
+			};
+			break;
+		case 'version':
+			COMMANDS.version();
 			valRetour = {
 				'etat': 1,
 				'message': ''
