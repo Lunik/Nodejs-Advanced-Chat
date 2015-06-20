@@ -53,6 +53,15 @@ function setUsername () {
 	}
 }
 
+function getAllUsernameConnected(){
+	var usernames = [];
+	for (var uid in USERS.usernames){
+		usernames.push(USERS.usernames[uid].username);
+	}
+
+	return usernames;
+}
+
 function getIconFromRank(rank){
 	switch(rank){
 		case 'rm-moderator':

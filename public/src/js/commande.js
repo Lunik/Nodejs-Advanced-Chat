@@ -22,17 +22,12 @@ COMMANDS = {
 		}
 	},
 	'list': function (){
-		if(USER.ranks.moderation >= 1){
-			socket.emit('command', {
-				'uid': USER.uid,
-				'command': {
-					'cmd':'list',
-					'param': []
-				}
-			});
-		} else {
-			addServerMessage('Not permitted.');
+		var usr = getAllUsernameConnected();
+		var listUsr = '';
+		for(var i=0; i< usr.length ;i++){
+			listUsr = listUsr+usr[i]+', ';
 		}
+		addServerMessage(listUsr);
 	},
 	'kick': function (username){
 		if(USER.ranks.moderation >= 1){

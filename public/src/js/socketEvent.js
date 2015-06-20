@@ -57,10 +57,6 @@ socket.on('cmd', function(data){
       updateMeUserInfo();
       break;
 
-    case 'list':
-
-      break;
-
     case 'kick':
       if(data.valRetour == USER.getUsername()){
         socket.disconnect();

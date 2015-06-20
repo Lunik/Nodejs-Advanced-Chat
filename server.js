@@ -233,18 +233,6 @@ function executeCommand(command,user,socket){
 			console.log('----> OK');
 			break;
 
-		case 'list':
-			if(user.ranks.moderation >= 1){
-				socket.emit('cmd', {
-					'valRetour': 1,
-					'callback': 'list',
-					'message': JSON.stringify(getAllUsernameConnected())
-				});
-				execCommand = 1;
-				console.log('----> OK');
-			}
-			break;
-
 		case 'kick':
 			if(user.ranks.moderation >= 1){
 				execCommand = 1;
