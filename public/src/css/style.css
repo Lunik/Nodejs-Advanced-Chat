@@ -169,13 +169,13 @@ a:hover, a:focus {
   vertical-align: top;
 }
 
-.msg .text {
+.msg .message {
   display: inline;
 
   width: 100%;
 }
 
-.msg .text .deleted{
+.msg .message .deleted{
     color: red;
     font-size: 60%;
 

@@ -43,12 +43,18 @@ function addChatMessage (data){
 	var $time = $('<span>').addClass('timestamp').text(currentHour());
 
 	//Creation de l'element message
-	var $msg = $('<div>').addClass('text '+message.id);
+	var $msg = $('<div>').addClass('message '+message.id);
 
-	if(user.username == DEFAULSERVERNAME)
-		var $msg = $msg.append(message.text);
-	else
-		var $msg = $msg.text(message.text);
+	var $text = $('<span>').addClass('text');
+	if(user.username == DEFAULSERVERNAME){
+		$text.append(message.text);
+	} else {
+		$text.text(message.text);
+	}
+	//Ajout de la couleur
+	applyColorOnDiv($text,user.getColor());
+
+	$msg.append($text);
 	$msg.append($time);
 
 	//Ajout de la spanModerateur
@@ -56,8 +62,6 @@ function addChatMessage (data){
 		$moderation = $('<span>').addClass('but but-moderation').attr('id',message.id).text("delete");
 		$msg.append($moderation);
 	}
-	//Ajout de la couleur
-	applyColorOnDiv($msg,user.getColor());
 
 	var $el = $('<li>').addClass('msg '+message.id);
 	if(message.mention){
