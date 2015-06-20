@@ -128,7 +128,7 @@ COMMANDS = {
 		}
 	},
 	'version': function(){
-		addServerMessage("Version du chat: "+VERSION);
+		addServerMessage("Chat version: "+VERSION);
 	}
 }
 
