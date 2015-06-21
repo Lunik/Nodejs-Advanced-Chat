@@ -36,9 +36,23 @@ $messages.on('click','.username',function(data){
     addInput($currentInput,' @'+username);
 });
 
+//Click sur le boutson de parametre
 $chatPage.on('click','.but-param',function(data){
     var pop = new Popup;
     pop.init('center','center','50%','','Parametres',parameterHtml());
     pop.draw();
     $currentInput = null;
 });
+
+//On new message 
+$messages.bind('DOMNodeInserted', function(data){ 
+    var className = '.'+data.target.className.split(' ').join('.');
+    $newMsg = $(className);
+    $message = $(className+' .text');
+
+    addMessageEmoji($message);
+});
+
+emojify.run();
+
+

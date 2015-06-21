@@ -1,0 +1,96 @@
+.em{
+	position: relative;
+
+	width: 27px;
+	height: 25px;
+
+	background: url("/src/img/emoji.png");
+}
+
+.em.em-smiley{
+	background-position: 0px 0px;
+}
+
+.em.em-blush{
+	background-position: -27px 0px;
+}
+
+.em.em-grimacing{
+	background-position: -54px 0px;
+}
+
+.em.em-grin{
+	background-position: -81px 0px;
+}
+
+.em.em-joy{
+	background-position: -108px 0px;
+}
+
+.em.em-grinning{
+	background-position: -135px 0px;
+}
+
+.em.em-smile{
+	background-position: -162px 0px;
+}
+
+.em.em-sweat_smile{
+	background-position: -135px 0px;
+}
+
+.em.em-laughing{
+	background-position: -189px 0px;
+}
+
+.em.em-innocent{
+	background-position: -216px 0px;
+}
+
+.em.em-devil{
+	background-position: -243px 0px;
+}
+
+.em.em-wink{
+	background-position: 0px -20px;
+}
+
+.em.em-confounded{
+	background-position: -27px -20px;
+}
+
+.em.em-neutral_face{
+	background-position: -54px -20px;
+}
+
+.em.em-expressionless{
+	background-position: -81px -20px;
+}
+
+.em.em-unamused{
+	background-position: -108px -20px;
+}
+
+.em.em-angry{
+	background-position: -135px -20px;
+}
+
+.em.em-realy_angry{
+	background-position: -162px -20px;
+}
+
+.em.em-sweat_smile{
+	background-position: -135px -20px;
+}
+
+.em.em-laughing{
+	background-position: -189px -20px;
+}
+
+.em.em-innocent{
+	background-position: -216px -20px;
+}
+
+.em.em-devil{
+	background-position: -243px -20px;
+}
