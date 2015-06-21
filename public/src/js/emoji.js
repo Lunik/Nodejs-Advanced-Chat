@@ -1,4 +1,4 @@
-var ALLEMOJI = [':smiley:',':blush:',':grimacing:',':grin:',':joy:',':grinning:',':smile:',':sweat_smile:',':laughing:',':innocent:',':devil:',':wink:',':confounded:',':neutral_face:',':expressionless:',':unamused:',':angry:',':realy_angry:'];
+var ALLEMOJI = [':smiley:',':blush:',':grimacing:',':grin:',':joy:',':grinning:',':smile:',':sweat_smile:',':laughing:',':innocent:',':devil:',':wink:',':confounded:',':neutral_face:',':expressionless:',':unamused:',':angry:',':realy_angry:',':upset:',':cry:',':sleeping:',':hushed:',':persevere:',':triumph:'];
 function getEmojiCode(code){
 	code = code.replace(/:/g,'');
 	return 'em em-'+code;

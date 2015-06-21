@@ -52,45 +52,89 @@
 }
 
 .em.em-wink{
-	background-position: 0px -20px;
+	background-position: 0px -25px;
 }
 
 .em.em-confounded{
-	background-position: -27px -20px;
+	background-position: -27px -25px;
 }
 
 .em.em-neutral_face{
-	background-position: -54px -20px;
+	background-position: -54px -25px;
 }
 
 .em.em-expressionless{
-	background-position: -81px -20px;
+	background-position: -81px -25px;
 }
 
 .em.em-unamused{
-	background-position: -108px -20px;
+	background-position: -108px -25px;
 }
 
 .em.em-angry{
-	background-position: -135px -20px;
+	background-position: -135px -25px;
 }
 
 .em.em-realy_angry{
-	background-position: -162px -20px;
+	background-position: -162px -25px;
 }
 
-.em.em-sweat_smile{
-	background-position: -135px -20px;
+.em.em-upset{
+	background-position: -135px -25px;
 }
 
-.em.em-laughing{
-	background-position: -189px -20px;
+.em.em-cry{
+	background-position: -189px -25px;
 }
 
-.em.em-innocent{
-	background-position: -216px -20px;
+.em.em-sleeping{
+	background-position: -216px -25px;
 }
 
-.em.em-devil{
-	background-position: -243px -20px;
+.em.em-hushed{
+	background-position: -243px -25px;
+}
+
+.em.em-persevere{
+	background-position: 0px -50px;
+}
+
+.em.em-triumph{
+	background-position: -27px -50px;
+}
+
+.em.em-neutral_face{
+	background-position: -54px -50px;
+}
+
+.em.em-expressionless{
+	background-position: -81px -50px;
+}
+
+.em.em-unamused{
+	background-position: -108px -50px;
+}
+
+.em.em-angry{
+	background-position: -135px -50px;
+}
+
+.em.em-realy_angry{
+	background-position: -162px -50px;
+}
+
+.em.em-upset{
+	background-position: -135px -50px;
+}
+
+.em.em-cry{
+	background-position: -189px -50px;
+}
+
+.em.em-sleeping{
+	background-position: -216px -50px;
+}
+
+.em.em-hushed{
+	background-position: -243px -50px;
 }
