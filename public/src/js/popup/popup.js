@@ -1,12 +1,13 @@
 var Popup = function(){
   //Initialisation du popup
-  this.init = function (posX,posY,width,height,title,html){
+  this.init = function (posX,posY,width,height,title,html,closeBut){
     this.posX = formatPosX(posX);
     this.posY = formatPosY(posY);
     this.width = formatWidth(width);
     this.height = formatHeight(height);
     this.title = title;
     this.html = html;
+    this.closeBut = closeBut;
   };
 
   //Ouvrir le popup
@@ -23,13 +24,15 @@ var Popup = function(){
       .css("margin-top",this.posY+"px")
       .css("margin-left",this.posX+"px");
 
+    if(this.closeBut){
     //Creation du bouton de fermeture du popup
-    $('.popupContainer')
-      .append("<button class='popupClose'>");
-    $('.popupClose')
-      .css("margin-top",-15)
-      .css("margin-left",this.width-15);
-
+      $('.popupContainer')
+        .append("<button class='popupClose'>");
+      $('.popupClose')
+        .css("margin-top",-15)
+        .css("margin-left",this.width-15);
+    }
+    
     $('.popupContainer')
       .append("<h1 class='popupTitle'>")
       .append("<p class='popupHtml'>");

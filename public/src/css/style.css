@@ -209,9 +209,6 @@ a:hover, a:focus {
 /*********************/
 /*        BUT     */
 /*********************/
-/*.popupClose{
-  display: none !important;
-}*/
 
 .but{
   cursor: pointer;

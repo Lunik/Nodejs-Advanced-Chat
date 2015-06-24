@@ -39,7 +39,7 @@ $messages.on('click','.username',function(data){
 //Click sur le boutson de parametre
 $chatPage.on('click','.but-param',function(data){
     var pop = new Popup;
-    pop.init('center','center','50%','','Parametres',parameterHtml());
+    pop.init('center','center','50%','','Parametres',parameterHtml(),false);
     pop.draw();
     $currentInput = null;
 });
@@ -47,7 +47,7 @@ $chatPage.on('click','.but-param',function(data){
 //Click sur le bouton de smiley
 $chatPage.on('click','.but-smiley',function(data){
     var pop = new Popup;
-    pop.init('center','center','50%','','Insert Emoji',smileyHtml());
+    pop.init('center','center','50%','','Insert Emoji',smileyHtml(),true);
     pop.draw();
 });
 
