@@ -44,6 +44,13 @@ $chatPage.on('click','.but-param',function(data){
     $currentInput = null;
 });
 
+//Click sur le bouton de smiley
+$chatPage.on('click','.but-smiley',function(data){
+    var pop = new Popup;
+    pop.init('center','center','50%','','Insert Emoji',smileyHtml());
+    pop.draw();
+});
+
 //On new message 
 $messages.bind('DOMNodeInserted', function(data){ 
     var className = '.'+data.target.className.split(' ').join('.');

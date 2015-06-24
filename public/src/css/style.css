@@ -144,12 +144,9 @@ a:hover, a:focus {
   color: white;
 }
 
-.msg {
-  padding: 5px 0px 5px 0px;
-}
-
 .msg *{
   display: inline-block;
+  vertical-align: middle;
 }
 
 .msg.alter{
@@ -212,6 +209,9 @@ a:hover, a:focus {
 /*********************/
 /*        BUT     */
 /*********************/
+/*.popupClose{
+  display: none !important;
+}*/
 
 .but{
   cursor: pointer;
@@ -250,6 +250,22 @@ a:hover, a:focus {
 .but-param *{
   position: fixed !important;
   margin: 5px;
+}
+
+/* Smiley Button */
+.but-smiley {
+  position: fixed;
+
+  right: 10px;
+  bottom: 8%;
+
+  width: 32px;
+  height: 32px;
+}
+
+.but-smiley *{
+  position: fixed !important;
+  margin: 3px;
 }
 
 /*********************/
