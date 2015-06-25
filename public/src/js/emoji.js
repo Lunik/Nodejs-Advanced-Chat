@@ -29,5 +29,5 @@ function smileyHtml(){
 
 $('body').on('click','.select-smiley',function(data){
 	var id = data.currentTarget.id;
-	$inputMessage.val($inputMessage.val()+' '+id+' ');
+	$inputMessage.val($inputMessage.val().trim()+' '+id+' ');
 });
