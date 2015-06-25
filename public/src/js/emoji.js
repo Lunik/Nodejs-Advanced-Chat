@@ -4,15 +4,15 @@ function getEmojiCode(code){
 	return 'em em-'+code;
 }
 
-function addMessageEmoji($div){
-	var msg = $div.text().split(' ');
+function addMessageEmoji(text){
+	var msg = text.split(' ');
 	for(var i=0; i<msg.length; i++){
 		if(ALLEMOJI.indexOf(msg[i]) != -1){
 			msg[i] = '<i class="'+getEmojiCode(msg[i])+'"></i>';
 		}
 	}
 	msg = msg.join(' ');
-	$div.html(msg);
+	return msg;
 }
 
 function smileyHtml(){
@@ -30,5 +30,4 @@ function smileyHtml(){
 $('body').on('click','.select-smiley',function(data){
 	var id = data.currentTarget.id;
 	$inputMessage.val($inputMessage.val()+' '+id+' ');
-	popupClose();
 });

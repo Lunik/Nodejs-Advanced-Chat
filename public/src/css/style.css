@@ -40,6 +40,9 @@ a:hover, a:focus {
 	color: #F3734F;
 }
 
+footer{
+  display: none;
+}
 /**********************/
 /*         PAGES      */
 /**********************/
@@ -253,7 +256,7 @@ a:hover, a:focus {
 .but-smiley {
   position: fixed;
 
-  right: 10px;
+  right: 52px;
   bottom: 8%;
 
   width: 32px;
@@ -262,21 +265,41 @@ a:hover, a:focus {
 
 .but-smiley *{
   position: fixed !important;
-  margin: 3px;
+}
+
+/* send message Buton */
+.but-send_message{
+  position: fixed;
+
+  right: 10px;
+  bottom: 8%;
+
+  width: 30px;
+  height: 30px;
+
+}
+
+.but-send_message *{
+  position: fixed !important;
 }
 
 /*********************/
 /*        INPUT      */
 /*********************/
 .inputMessage {
-  border: 10px solid #000;
+  position:absolute;
+  display: inline-block;
+
+  left: 0;
+  right: 0;
   bottom: 0;
+
+  padding-left: 10px;
+
   height: 8%;
   min-height: 40px;
   width: 100%;
-  left: 0;
+
+  border: 10px solid #000;
   outline: none;
-  padding-left: 10px;
-  position:absolute;
-  right: 0;
 }

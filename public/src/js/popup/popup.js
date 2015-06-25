@@ -4,6 +4,8 @@ var Popup = function(){
     this.posX = formatPosX(posX);
     this.posY = formatPosY(posY);
     this.width = formatWidth(width);
+    if(this.width > 500)
+        this.width = 500;
     this.height = formatHeight(height);
     this.title = title;
     this.html = html;

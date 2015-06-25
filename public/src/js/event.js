@@ -47,8 +47,13 @@ $chatPage.on('click','.but-param',function(data){
 //Click sur le bouton de smiley
 $chatPage.on('click','.but-smiley',function(data){
     var pop = new Popup;
-    pop.init('center','center','50%','','Insert Emoji',smileyHtml(),true);
+    pop.init('center','center','80%','','Insert Emoji',smileyHtml(),true);
     pop.draw();
+});
+
+//Click sur le bouton de send message
+$chatPage.on('click','.but-send_message',function(data){
+    sendMessage();
 });
 
 //On new message 
@@ -57,7 +62,7 @@ $messages.bind('DOMNodeInserted', function(data){
     $newMsg = $(className);
     $message = $(className+' .text');
 
-    addMessageEmoji($message);
+    $message.html(addMessageEmoji($message.text()));
 });
 
 emojify.run();

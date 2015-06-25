@@ -1,5 +1,9 @@
-.select-smiley{
-	display: inline-block;
+.select-smiley:hover{
+	background-color: rgba(0,0,0,0.1);
+}
+
+.select-smiley:active, .select-smiley:focus{
+	background-color: rgba(0,0,0,0.2);
 }
 
 .em{

@@ -81,6 +81,8 @@ socket.on('cmd', function(data){
       if(data.valRetour !== 1){
         popupClose();
         var pop = new Popup();
+        data.valRetour = addMessageEmoji(data.valRetour);
+        console.log(data.valRetour);
         pop.init('center','center','50%','',"Announce",data.valRetour,true);
         pop.draw();
       }

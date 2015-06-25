@@ -18,12 +18,14 @@
     margin: auto;
     margin-top: 10%;
 
+    max-width: 500px;
+
     border-radius: 5px;
 
     box-shadow: 2px 2px 6px #000;
     background-color: #FFF;
 
-    overflow: hidden;
+    overflow: auto;
 }
 
 .popupTitle{
@@ -57,4 +59,8 @@
     overflow: hidden;
 
     text-align: center;
+}
+
+.popupHtml *{
+    display: inline-block;
 }
