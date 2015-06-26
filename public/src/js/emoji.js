@@ -39,7 +39,6 @@ $('.smileys').on('click','.select-smiley',function(data){
 //Fermer l'onglet smiley si on clique ailleur
 $chatPage.click(
 	function(data){
-		console.log(data);
 		if(data.target.className.indexOf('em') == -1 && data.target.className != 'smiley-container')
 			$('.smiley-container').hide();
 	}
