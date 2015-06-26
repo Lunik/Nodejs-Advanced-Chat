@@ -1,3 +1,22 @@
+.smiley-container{
+	position: fixed;
+	display: none;
+
+	bottom: 8%;
+	right: 52px;
+
+	margin-bottom: 32px;
+
+	width: 50%;
+	max-width: 400px;
+	max-height: 50%;
+
+	overflow: auto;
+
+	background-color: #FFF;
+	border-radius: 5px;
+}
+
 .select-smiley:hover{
 	background-color: rgba(0,0,0,0.1);
 }

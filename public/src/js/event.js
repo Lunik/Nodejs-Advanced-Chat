@@ -46,9 +46,10 @@ $chatPage.on('click','.but-param',function(data){
 
 //Click sur le bouton de smiley
 $chatPage.on('click','.but-smiley',function(data){
-    var pop = new Popup;
-    pop.init('center','center','80%','','Insert Emoji',smileyHtml(),true);
-    pop.draw();
+    if($('.smiley-container').css('display') == 'none')
+        $('.smiley-container').show();
+    else
+        $('.smiley-container').hide();
 });
 
 //Click sur le bouton de send message
