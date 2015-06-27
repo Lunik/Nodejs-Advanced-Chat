@@ -37,6 +37,7 @@ function initModules(){
 	$.getScript('/src/js/commande.js');
 	$.getScript('/src/js/parametre.js');
 	$.getScript('/src/js/emoji.js');
+	$.getScript('/src/js/notif.js');
 	$.getScript('/src/js/popup/popup.js');
 }
 

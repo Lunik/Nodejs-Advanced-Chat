@@ -32,6 +32,8 @@ socket.on('new msg', function(data){
   data.message.mention = isMention(USER.getUsername(),data.message.text);
   data.user = getUserFromData(data.user);
   addChatMessage(data);
+  WAITINGMESSAGES++;
+  addNotifWaitingMessage();
 });
 
 socket.on('msg', function(data){
