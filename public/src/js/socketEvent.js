@@ -5,7 +5,7 @@ socket.on('login', function (data) {
   USER.setRanks(data.user.ranks);
   USER.setUid(data.user.uid);
   USERS = data.allUsers;
-  
+
   DEFAULSERVERNAME = data.serverName;
   // Display the welcome message
   var message = "Welcome to Socket.IO Chat";
@@ -68,7 +68,7 @@ socket.on('cmd', function(data){
       break;
 
     case 'ban':
-      
+
       break;
 
     case 'removeMsg':
@@ -84,7 +84,6 @@ socket.on('cmd', function(data){
         popupClose();
         var pop = new Popup();
         data.valRetour = addMessageEmoji(data.valRetour);
-        console.log(data.valRetour);
         pop.init('center','center','50%','',"Announce",data.valRetour,true);
         pop.draw();
       }

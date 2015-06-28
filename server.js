@@ -148,7 +148,7 @@ function generateMsgCid(){
 	var date = new Date();
 	var cid = date.getDate()+''+date.getMonth()+''+date.getYear()+''+date.getUTCHours()+''+date.getMinutes()+''+date.getSeconds()+''+date.getMilliseconds();
 	cid = cid+''+Math.floor(Math.random()*10000);
-	return cid;
+	return 'cid-'+cid;
 }
 
 function getServerUser(){
@@ -167,7 +167,7 @@ function saveFile(path,text){
     	}
 
    		console.log(path+" was saved!");
-	}); 
+	});
 }
 
 function saveObject(path,obj){
@@ -180,11 +180,11 @@ function readJson(path){
 
 function executeCommand(command,user,socket){
 	console.log('['+user.username+'] execute '+command.cmd+' '+command.param);
-	
+
 	var server = getServerUser();
 	var cid = generateMsgCid();
 	var execCommand = 0;
-	
+
 	switch(command.cmd){
 		case 'login':
 			if(command.param == PASSWORDS.moderateur){
@@ -292,7 +292,7 @@ function executeCommand(command,user,socket){
 				console.log('----> OK');
 			}
 			break;
-			
+
 		case 'clean':
 			if(user.ranks.moderation >= 2){
 				socket.emit('cmd', {
@@ -335,7 +335,7 @@ function executeCommand(command,user,socket){
 				console.log('----> OK');
 			}
 			break;
-			
+
 		default:
 			socket.emit('cmd', {
 					'valRetour': "Command not found.",
@@ -352,4 +352,3 @@ function executeCommand(command,user,socket){
 			console.log('----> FAIL');
 		}
 }
-

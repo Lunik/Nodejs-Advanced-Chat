@@ -43,7 +43,7 @@ function addChatMessage (data){
 	var $time = $('<span>').addClass('timestamp').text(currentHour());
 
 	//Creation de l'element message
-	var $msg = $('<div>').addClass('message '+message.id);
+	var $msg = $('<div>').addClass('message '+message.id).attr('id',message.id);
 
 	var $text = $('<span>').addClass('text');
 	if(user.username == DEFAULSERVERNAME){
@@ -63,11 +63,11 @@ function addChatMessage (data){
 		$msg.append($moderation);
 	}
 
-	var $el = $('<li>').addClass('msg '+message.id);
+	var $el = $('<li>').addClass('msg '+message.id).attr('id',message.id);
 	if(message.mention){
 		$el.addClass('mention');
 	}
-	
+
 	$el.append($from).append($msg);
 
 	addMessageElement($el);
@@ -103,7 +103,7 @@ function generateMsgCid(){
 	var date = new Date();
 	var cid = date.getDate()+''+date.getMonth()+''+date.getYear()+''+date.getUTCHours()+''+date.getMinutes()+''+date.getSeconds()+''+date.getMilliseconds();
 	cid = cid+''+Math.floor(Math.random()*10000);
-	return cid;
+	return 'cid-'+cid;
 }
 
 function cleanMessage(message) {
@@ -158,31 +158,51 @@ function applyColorOnDiv(div,color){
 	$(div).css('color',color);
 }
 
+function ValidUrl(str) {
+  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+  '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+  '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+  '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+  '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+  '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  if(!pattern.test(str)) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 function getUrls(text){
 	var mots = text.split(' ');
 	var urls = [];
+
 	for(var i=0; i<mots.length; i++){
-		if(mots[i].substring(0,7) == "http://" || mots[i].substring(0,8) == "https://")
+		if(ValidUrl(mots[i]) && urls.indexOf(mots[i]) == -1)
 			urls.push(mots[i]);
 	}
 	return urls;
 }
 
-function addImageToMessage(message){
+function addIdToUrls(message,messageId){
 	if(message){
 		var urls = getUrls(message);
 		for(var i=0; i<urls.length; i++){
-			var img = new Image();
-			img.src = urls[i];
-			img.id = generateMsgCid();
-			img.className = 'msg-image';
-			img.onerror = function(){ $('#'+this.id).parent().parent().html(message); };
-			var resMessage = message.replace(urls[i],'<a target="_blank" href="'+img.src+'">'+img.outerHTML+'</a>');
+			message = message.replace(urls[i],'<a class="'+messageId+i+'" href="'+urls[i]+'">'+urls[i]+'</a>');
 		}
 	}
-	return resMessage;
+	return message;
 }
 
-
-
-
+function addImageToUrls(messageCid){
+	var i=0;
+	while ($('.'+messageCid+i).length) {
+		var img = new Image();
+		img.src = $('.'+messageCid+i).attr('href');
+		img.id = messageCid+i;
+		img.onload = function(){
+			$('.'+this.id).html(this);
+			$messages[0].scrollTop = $messages[0].scrollHeight;
+		}
+		i++;
+	}
+}

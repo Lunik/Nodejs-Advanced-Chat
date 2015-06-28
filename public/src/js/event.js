@@ -31,7 +31,6 @@ $messages.on('click','.but-moderation',function(data){
 
 //Ajout du pseudo quand on clique dessus
 $messages.on('click','.username',function(data){
-    console.log(data);
     var username = data.currentTarget.innerHTML;
     addInput($currentInput,' @'+username);
 });
@@ -57,16 +56,16 @@ $chatPage.on('click','.but-send_message',function(data){
     sendMessage();
 });
 
-//On new message 
-$messages.bind('DOMNodeInserted', function(data){ 
+//On new message
+$messages.bind('DOMNodeInserted', function(data){
     var className = '.'+data.target.className.split(' ').join('.');
+    var messageId = data.target.id;
     $newMsg = $(className);
     $message = $(className+' .text');
 
     $message.html(addMessageEmoji($message.text()));
-    $message.html(addImageToMessage($message.html()));
+    $message.html(addIdToUrls($message.text(),messageId));
+    addImageToUrls(messageId);
 });
 
 emojify.run();
-
-
