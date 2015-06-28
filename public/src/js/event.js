@@ -64,6 +64,7 @@ $messages.bind('DOMNodeInserted', function(data){
     $message = $(className+' .text');
 
     $message.html(addMessageEmoji($message.text()));
+    $message.html(addImageToMessage($message.html()));
 });
 
 emojify.run();

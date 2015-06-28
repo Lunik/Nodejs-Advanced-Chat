@@ -158,5 +158,31 @@ function applyColorOnDiv(div,color){
 	$(div).css('color',color);
 }
 
+function getUrls(text){
+	var mots = text.split(' ');
+	var urls = [];
+	for(var i=0; i<mots.length; i++){
+		if(mots[i].substring(0,7) == "http://" || mots[i].substring(0,8) == "https://")
+			urls.push(mots[i]);
+	}
+	return urls;
+}
+
+function addImageToMessage(message){
+	if(message){
+		var urls = getUrls(message);
+		for(var i=0; i<urls.length; i++){
+			var img = new Image();
+			img.src = urls[i];
+			img.id = generateMsgCid();
+			img.className = 'msg-image';
+			img.onerror = function(){ $('#'+this.id).remove(); };
+			message = message.replace(urls[i],'<a target="_blank" href="'+img.src+'">'+img.outerHTML+'</a>');
+		}
+	}
+	return message;
+}
+
+
 
 

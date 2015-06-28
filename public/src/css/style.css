@@ -209,6 +209,12 @@ footer{
     margin-left:10px;
 }
 
+/* images */
+
+.msg .text img{
+  max-width: 200px;
+}
+
 /*********************/
 /*        BUT     */
 /*********************/
