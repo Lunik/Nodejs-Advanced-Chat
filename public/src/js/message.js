@@ -176,11 +176,11 @@ function addImageToMessage(message){
 			img.src = urls[i];
 			img.id = generateMsgCid();
 			img.className = 'msg-image';
-			img.onerror = function(){ $('#'+this.id).remove(); };
-			message = message.replace(urls[i],'<a target="_blank" href="'+img.src+'">'+img.outerHTML+'</a>');
+			img.onerror = function(){ $('#'+this.id).parent().parent().html(message); };
+			var resMessage = message.replace(urls[i],'<a target="_blank" href="'+img.src+'">'+img.outerHTML+'</a>');
 		}
 	}
-	return message;
+	return resMessage;
 }
 
 

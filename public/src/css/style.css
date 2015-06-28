@@ -40,7 +40,7 @@ a:hover, a:focus {
 	color: #F3734F;
 }
 
-footer{
+.includeJS{
   display: none;
 }
 /**********************/
@@ -213,6 +213,7 @@ footer{
 
 .msg .text img{
   max-width: 200px;
+  max-height: 200px;
 }
 
 /*********************/
