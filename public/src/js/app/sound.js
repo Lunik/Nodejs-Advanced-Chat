@@ -22,6 +22,7 @@ function initSounds(){
 }
 
 function playSound(sound){
-  if(SOUNDS.etat)
+  if(SOUNDS.etat){
     SOUNDS[sound].play();
+  }
 }

@@ -19,6 +19,7 @@ COMMANDS = {
 			});
 		} else {
 			addServerMessage('Not permitted.');
+			playSound('error');
 		}
 	},
 	'list': function (){
@@ -42,9 +43,11 @@ COMMANDS = {
 				});
 			} else {
 				addServerMessage(username+' not found');
+				playSound('error');
 			}
 		} else {
 			addServerMessage('Not permitted.');
+			playSound('error');
 		}
 	},
 	'ban': function (username){
@@ -58,6 +61,7 @@ COMMANDS = {
 			});
 		} else {
 			addServerMessage('Not permitted.');
+			playSound('error');
 		}
 	},
 	'removeMsg': function(cid){
@@ -73,6 +77,7 @@ COMMANDS = {
 			}
 		} else {
 			addServerMessage('Not permitted.');
+			playSound('error');
 		}
 	},
 	'clear': function(){
@@ -90,6 +95,7 @@ COMMANDS = {
 			});
 		} else {
 			addServerMessage('Not permitted.');
+			playSound('error');
 		}
 	},
 	'command': function(){
@@ -106,6 +112,7 @@ COMMANDS = {
 			});
 		} else {
 			addServerMessage('Not permitted.');
+			playSound('error');
 		}
 	},
 	'msg': function(msg){
@@ -120,6 +127,7 @@ COMMANDS = {
 			});
 		} else {
 			addServerMessage("User not Found");
+			playSound('error');
 		}
 	},
 	'version': function(){
@@ -276,6 +284,7 @@ function execCommand(data){
 			};
 			break;
 		default:
+			playSound('error');
 			valRetour = {
 				'etat': 0,
 				'message': "Command not found"

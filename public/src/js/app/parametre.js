@@ -51,7 +51,7 @@ $('body').on('click','.param-save',function(){
 	USER.setColor(color);
 
 	saveUser();
-	storeData('SOUNDS',SOUNDS);
+	storeData('SOUNDS',SOUNDS.etat);
 	$currentInput = $inputMessage;
 	popupClose();
 });

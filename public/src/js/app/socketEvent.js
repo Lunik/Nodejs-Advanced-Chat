@@ -12,16 +12,19 @@ socket.on('login', function (data) {
 
   saveUser();
   log(message);
+  playSound('login');
 });
 
 socket.on('user joined', function (data) {
   log(data.username+' joined');
   USERS = data.allUsers;
+  playSound('join');
 });
 
 socket.on('user left', function (data) {
   log(data.username+' left');
   USERS = data.allUsers;
+  playSound('leave');
 });
 
 socket.on('update userlist', function (allUsers) {
@@ -34,11 +37,17 @@ socket.on('new msg', function(data){
   addChatMessage(data);
   WAITINGMESSAGES++;
   addNotifWaitingMessage();
+  if(data.message.mention){
+    playSound('mention');
+  } else {
+    playSound('newMsg');
+  }
 });
 
 socket.on('msg', function(data){
   data.user = getUserFromData(data.user);
   addChatMessage(data);
+  playSound('mention');
 });
 
 socket.on('user info', function(user){
@@ -93,6 +102,5 @@ socket.on('cmd', function(data){
       addServerMessage(data.valRetour);
       break;
   }
-
   addServerMessage(data.message);
 });
