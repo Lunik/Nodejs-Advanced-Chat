@@ -10,7 +10,7 @@
 	$ git clone https://github.com/Lunik/Lunik-Chat-V2.0.git
 	$ cd Lunik-Chat-V2.0/
 	$ node server.js
-	$ open http://localhost:5000	
+	$ open http://localhost:5000
 
 ## Commandes:
 
@@ -26,6 +26,7 @@ X argument obligateur
 | /logout | | Deconnection moderateur / admin |
 | /clear | | Efface le chat |
 | /msg | Pseudo Message | Envoyer un message Privé |
+| /quit |  | Quitte le chat |
 
 ### Moderateurs
 
