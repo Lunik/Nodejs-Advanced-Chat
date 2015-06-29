@@ -184,6 +184,7 @@ function getUrls(text){
 }
 
 function addIdToUrls(message,messageId){
+	//exclusion des logs
 	if(message){
 		var urls = getUrls(message);
 		for(var i=0; i<urls.length; i++){
