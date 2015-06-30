@@ -45,4 +45,4 @@ X argument obligateur
 |:------:|:---------:|:--------------------------------------:|
 | /clean | | Efface le chat pour tous les utilisateurs |
 | /ban | Pseudo | Banni le pseudo + kick l'utilisateur |
-| /popup | Html | Affiche un popup sur tous les ecrans |
+| /popup | HTML | Affiche un popup sur tous les ecrans |
