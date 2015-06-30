@@ -27,7 +27,7 @@ X argument obligateur
 | /clear | | Efface le chat |
 | /msg | Pseudo Message | Envoyer un message Privé |
 | /quit |  | Quitte le chat |
-| /join | Salle | Se connect à une salle |
+| /join | Salle | Se connecter à une salle |
 
 ### Moderateurs
 
