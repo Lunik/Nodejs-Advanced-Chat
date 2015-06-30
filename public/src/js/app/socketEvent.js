@@ -108,12 +108,13 @@ socket.on('cmd', function(data){
       break;
 
     case 'join':
-      log(data.message);
       if(data.valRetour && data.valRetour.type == 'join'){
+        clearChat();
         USER.room = data.valRetour.room;
         updateMeUserInfo();
         setNotifRoom(data.valRetour.room);
       }
+      log(data.message);
       break;
 
     default:

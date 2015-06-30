@@ -2,7 +2,7 @@
 ## [DEMO](http://chat.guillaume-lunik.fr/)
 
 ## Require:
-#### [nodeJS](https://nodejs.org/)
+#### [node.js](https://nodejs.org/)
 #### [socket.io](http://socket.io/)
 #### [express](http://expressjs.com/)
 
