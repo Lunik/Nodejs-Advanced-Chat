@@ -28,6 +28,7 @@ var PASSWORDS = {
 	'moderateur': 'moderateur',
 	'admin': 'admin'
 }
+var SLOW = 0;
 
 io.on('connection', function (socket) {
   socket.room = 'Default';
@@ -72,7 +73,8 @@ io.on('connection', function (socket) {
     	socket.emit('login', {
 	  		user: Users.usernames[uid],
 	  		allUsers: Users,
-	  		serverName: DEFAULSERVERNAME
+	  		serverName: DEFAULSERVERNAME,
+        slow: SLOW
     	});
 
     	socket.broadcast.to(socket.room).emit('user joined', {
@@ -370,7 +372,23 @@ function executeCommand(command,user,socket){
       execCommand = 1;
       console.log('----> OK');
   		break;
-
+    case 'slow':
+  		if(user.ranks.moderation >= 1){
+        SLOW = command.param;
+        socket.broadcast.to(socket.room).emit('cmd', {
+            'valRetour': SLOW,
+            'callback': 'slow',
+            'message': 'Temps entre chaques messages: '+SLOW+'s'
+        });
+        socket.emit('cmd', {
+            'valRetour': SLOW,
+            'callback': 'slow',
+            'message': 'Temps entre chaques messages: '+SLOW+'s'
+        });
+  			execCommand = 1;
+  			console.log('----> OK');
+  		}
+  		break;
 		default:
 			socket.emit('cmd', {
 					'valRetour': "Command not found.",

@@ -28,6 +28,7 @@ X argument obligateur
 | /msg | Pseudo Message | Envoyer un message Privé |
 | /quit |  | Quitte le chat |
 | /join | Salle | Se connecter à une salle |
+| /slow | | Affiche le temps minimum entre chaque message |
 
 ### Moderateurs
 
@@ -35,6 +36,8 @@ X argument obligateur
 |:------:|:---------:|:--------------------------------------:|
 | /list | | Affiche la liste des utilisateurs connectés |
 | /kick | Pseudo | Ejecte un utilisateur du chat |
+| /slow | | Affiche le temps entre chaque message |
+| /slow | Secondes | Change le temps minimum entre chaque message |
 
 ### Administrateurs
 

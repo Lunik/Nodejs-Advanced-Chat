@@ -1,5 +1,6 @@
 var ALTERCOLOR = 1;
 var WAITINGMESSAGES = 0;
+var LASTMESSAGETIME = 0;
 
 // Log a message
 function log (message) {
@@ -124,18 +125,22 @@ function cleanMessage(message) {
 function sendMessage(){
 	var message = cleanMessage($inputMessage.val());
 	if(message){
-		cleaInput($inputMessage);
-		var data = {
-			'user': USER,
-			'message': {
-				'id': generateMsgCid(),
-				'text': message
-			}
-		};
+		var currentTime = new Date();
+		if((currentTime - LASTMESSAGETIME) >= SLOW*1000){
+			LASTMESSAGETIME = currentTime;
+			cleaInput($inputMessage);
+			var data = {
+				'user': USER,
+				'message': {
+					'id': generateMsgCid(),
+					'text': message
+				}
+			};
 
-		addChatMessage(data);
+			addChatMessage(data);
 
-		socket.emit('send msg', data);
+			socket.emit('send msg', data);
+		}
 	}
 }
 

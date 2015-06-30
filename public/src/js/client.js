@@ -54,6 +54,11 @@ function initModules(){
 
 function currentHour(){
 	var d = new Date();
-
-	return d.getHours()+':'+d.getMinutes();
+	var h = d.getHours();
+	if(h < 10)
+		h = '0'+h;
+	var m = d.getMinutes();
+	if(m < 10)
+		m = '0'+m;
+	return h+':'+m;
 }

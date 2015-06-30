@@ -159,6 +159,24 @@ COMMANDS = {
 			addServerMessage('You are already in \"'+room+'\" room.');
 			playSound('error');
 		}
+	},
+	'slow': function(slow){
+		if(USER.ranks.moderation >= 1){
+			if(slow && slow == parseInt(slow, 10)){
+				slow = parseInt(slow, 10);
+				socket.emit('command', {
+					'uid': USER.uid,
+					'command': {
+						'cmd':'slow',
+						'param': slow
+					}
+				});
+			} else {
+				addServerMessage('Slow actuel: '+SLOW+'s.');
+			}
+		} else {
+			addServerMessage('Slow actuel: '+SLOW+'s.');
+		}
 	}
 }
 
@@ -308,6 +326,13 @@ function execCommand(data){
 			break;
 		case 'join':
 			COMMANDS.join(data.param[0]);
+			valRetour = {
+				'etat': 1,
+				'message': ''
+			};
+			break;
+		case 'slow':
+			COMMANDS.slow(data.param[0]);
 			valRetour = {
 				'etat': 1,
 				'message': ''

@@ -8,6 +8,7 @@ socket.on('login', function (data) {
   USERS = data.allUsers;
 
   DEFAULSERVERNAME = data.serverName;
+  SLOW = data.slow;
   // Display the welcome message
   var message = "Welcome to Socket.IO Chat";
 
@@ -120,7 +121,10 @@ socket.on('cmd', function(data){
       }
       log(data.message);
       break;
-
+    case 'slow':
+      SLOW = data.valRetour;
+      serverMessage = 1;
+      break;
     default:
       addServerMessage(data.valRetour);
       if(data.valRetour == "Not permitted.")
