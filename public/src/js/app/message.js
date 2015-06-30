@@ -47,10 +47,11 @@ function addChatMessage (data){
 
 	var $text = $('<span>').addClass('text');
 	if(user.username == DEFAULSERVERNAME){
-		$text.append(message.text);
+		$text.html(message.text);
 	} else {
 		$text.text(message.text);
 	}
+
 	//Ajout de la couleur
 	applyColorOnDiv($text,user.getColor());
 

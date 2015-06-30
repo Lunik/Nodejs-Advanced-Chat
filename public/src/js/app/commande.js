@@ -1,12 +1,17 @@
 COMMANDS = {
 	'login': function(mdp){
-		socket.emit('command', {
-			'uid': USER.uid,
-			'command': {
-				'cmd':'login',
-				'param': mdp
-			}
-		});
+		if(mdp){
+			socket.emit('command', {
+				'uid': USER.uid,
+				'command': {
+					'cmd':'login',
+					'param': mdp
+				}
+			});
+		} else {
+			addServerMessage('Wrong Password.');
+			playSound('error');
+		}
 	},
 	'logout': function(){
 		if(USER.ranks.moderation >= 1){
@@ -42,7 +47,7 @@ COMMANDS = {
 					}
 				});
 			} else {
-				addServerMessage(username+' not found');
+				addServerMessage(username+' not found.');
 				playSound('error');
 			}
 		} else {
@@ -99,17 +104,19 @@ COMMANDS = {
 		}
 	},
 	'command': function(){
-		addServerMessage('<a href="https://github.com/Lunik/Lunik-Chat-V2.0/blob/master/README.md#commandes" target="_blank">Commands list</a>');
+		addServerMessage('<a href="https://github.com/Lunik/Lunik-Chat-V2.0/blob/master/README.md#commandes" target="_blank">Commands list.</a>');
 	},
 	'popup': function(html){
 		if(USER.ranks.moderation >= 2){
-			socket.emit('command', {
-				'uid': USER.uid,
-				'command': {
-					'cmd':'popup',
-					'param': html
-				}
-			});
+			if(html){
+				socket.emit('command', {
+					'uid': USER.uid,
+					'command': {
+						'cmd':'popup',
+						'param': html
+					}
+				});
+			}
 		} else {
 			addServerMessage('Not permitted.');
 			playSound('error');
@@ -126,7 +133,7 @@ COMMANDS = {
 				}
 			});
 		} else {
-			addServerMessage("User not Found");
+			addServerMessage("User not Found.");
 			playSound('error');
 		}
 	},
@@ -138,13 +145,20 @@ COMMANDS = {
 		location.reload();
 	},
 	'join': function(room){
-		socket.emit('command', {
-			'uid': USER.uid,
-			'command': {
-				'cmd':'join',
-				'param': room
-			}
-		});
+		if(!room)
+			room = 'default';
+		if(room != USER.room){
+			socket.emit('command', {
+				'uid': USER.uid,
+				'command': {
+					'cmd':'join',
+					'param': room
+				}
+			});
+		} else {
+			addServerMessage('You are already in \"'+room+'\" room.');
+			playSound('error');
+		}
 	}
 }
 
@@ -303,7 +317,7 @@ function execCommand(data){
 			playSound('error');
 			valRetour = {
 				'etat': 0,
-				'message': "Command not found"
+				'message': "Command not found."
 			};
 			break;
 	}

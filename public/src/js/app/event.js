@@ -63,8 +63,8 @@ $messages.bind('DOMNodeInserted', function(data){
     $newMsg = $(className);
     $message = $(className+' .text');
 
-    $message.html(addMessageEmoji($message.text()));
-    $message.html(addIdToUrls($message.text(),messageId));
+    $message.html(addMessageEmoji($message.html()));
+    $message.html(addIdToUrls($message.html(),messageId));
     addImageToUrls(messageId);
 });
 

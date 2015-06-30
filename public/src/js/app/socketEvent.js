@@ -68,6 +68,8 @@ socket.on('cmd', function(data){
     case 'login':
       updateMeUserInfo();
       serverMessage = 1;
+      if(!data.valRetour)
+        playSound('error');
 
     case 'logout':
       updateMeUserInfo();
@@ -119,6 +121,8 @@ socket.on('cmd', function(data){
 
     default:
       addServerMessage(data.valRetour);
+      if(data.valRetour == "Not permitted.")
+          playSound('error');
       break;
   }
   if(serverMessage)

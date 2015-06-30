@@ -8,14 +8,16 @@ function getEmojiCode(code){
 }
 
 function addMessageEmoji(text){
-	var msg = text.split(' ');
-	for(var i=0; i<msg.length; i++){
-		if(ALLEMOJI.indexOf(msg[i]) != -1){
-			msg[i] = '<i class="'+getEmojiCode(msg[i])+'"></i>';
+	if(text){
+		text = text.split(' ');
+		for(var i=0; i<text.length; i++){
+			if(ALLEMOJI.indexOf(text[i]) != -1){
+				text[i] = '<i class="'+getEmojiCode(text[i])+'"></i>';
+			}
 		}
+		text = text.join(' ');
 	}
-	msg = msg.join(' ');
-	return msg;
+	return text;
 }
 
 function smileyHtml(){
@@ -43,7 +45,3 @@ $chatPage.click(
 			$('.smiley-container').hide();
 	}
 );
-
-
-
-

@@ -197,7 +197,7 @@ function executeCommand(command,user,socket){
 				socket.emit('cmd', {
 					'valRetour': 1,
 					'callback': 'login',
-					'message': 'Logged on Moderator'
+					'message': 'Logged on Moderator.'
 				});
 				socket.broadcast.emit('update userlist', Users);
 				socket.emit('update userlist', Users);
@@ -209,7 +209,7 @@ function executeCommand(command,user,socket){
 				socket.emit('cmd', {
 					'valRetour': 2,
 					'callback': 'login',
-					'message': 'Logged on Admin'
+					'message': 'Logged on Admin.'
 				});
 				socket.broadcast.emit('update userlist', Users);
 				socket.emit('update userlist', Users);
@@ -220,7 +220,7 @@ function executeCommand(command,user,socket){
 				socket.emit('cmd', {
 					'valRetour': 0,
 					'callback': 'login',
-					'message': 'Wrong Password'
+					'message': 'Wrong Password.'
 				});
 				execCommand = 1;
 				console.log('----> FAIL');
@@ -232,7 +232,7 @@ function executeCommand(command,user,socket){
 			socket.emit('cmd', {
 					'valRetour': 1,
 					'callback': 'logout',
-					'message': 'Logged out'
+					'message': 'Logged out.'
 				});
 			execCommand = 1;
 			console.log('----> OK');
@@ -247,13 +247,13 @@ function executeCommand(command,user,socket){
 				socket.broadcast.to(socket.room).emit('cmd', {
 						'valRetour': kickUser.username,
 						'callback': 'kick',
-						'message': kickUser.username+" was kicked by "+user.username
+						'message': kickUser.username+" was kicked by "+user.username+'.'
 				});
 
 				socket.emit('cmd', {
 						'valRetour': kickUser.username,
 						'callback': 'kick',
-						'message': kickUser.username+" was kicked"
+						'message': kickUser.username+" was kicked/"
 				});
 
 				console.log('----> OK');
@@ -270,13 +270,13 @@ function executeCommand(command,user,socket){
 				socket.emit('cmd', {
 						'valRetour': command.param,
 						'callback': 'ban',
-						'message': command.param+" was banned"
+						'message': command.param+" was banned."
 				});
 
 				socket.broadcast.to(socket.room).emit('cmd', {
 						'valRetour': command.param,
 						'callback': 'kick',
-						'message': command.param+" was banned by "+user.username
+						'message': command.param+" was banned by "+user.username+'.'
 				});
 
 				console.log('----> OK');
@@ -303,12 +303,12 @@ function executeCommand(command,user,socket){
 				socket.emit('cmd', {
 						'valRetour': 1,
 						'callback': 'clean',
-						'message': 'Chat cleaned'
+						'message': 'Chat cleaned.'
 				});
 				socket.broadcast.to(socket.room).emit('cmd', {
 						'valRetour': '',
 						'callback': 'clean',
-						'message': "Chat cleaned by "+user.username
+						'message': "Chat cleaned by "+user.username+'.'
 				});
 				execCommand = 1;
 				console.log('----> OK');
