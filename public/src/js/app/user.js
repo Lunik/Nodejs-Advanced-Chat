@@ -8,6 +8,7 @@ User = function(){
 	this.badge;
 	this.uid;
 	this.color = '#FFFFFF';
+	this.room = 'default';
 
 	this.connect = function (){ this.connected = true; }
 	this.disconnect = function (){ this.connected = false; }

@@ -22,13 +22,13 @@ COMMANDS = {
 			playSound('error');
 		}
 	},
-	'list': function (){
+	'list': function (){/*
 		var usr = getAllUsernameConnected();
 		var listUsr = '';
 		for(var i=0; i< usr.length ;i++){
 			listUsr = listUsr+usr[i]+', ';
 		}
-		addServerMessage(listUsr);
+		addServerMessage(listUsr);*/
 	},
 	'kick': function (username){
 		if(USER.ranks.moderation >= 1){
@@ -136,6 +136,15 @@ COMMANDS = {
 	'quit': function(){
 		clearData();
 		location.reload();
+	},
+	'join': function(room){
+		socket.emit('command', {
+			'uid': USER.uid,
+			'command': {
+				'cmd':'join',
+				'param': room
+			}
+		});
 	}
 }
 
@@ -278,6 +287,13 @@ function execCommand(data){
 			break;
 		case 'quit':
 			COMMANDS.quit();
+			valRetour = {
+				'etat': 1,
+				'message': ''
+			};
+			break;
+		case 'join':
+			COMMANDS.join(data.param[0]);
 			valRetour = {
 				'etat': 1,
 				'message': ''

@@ -3,6 +3,7 @@ socket.on('login', function (data) {
   USER.connect();
   USER.setUsername(data.user.username);
   USER.setRanks(data.user.ranks);
+  USER.room = data.user.room;
   USER.setUid(data.user.uid);
   USERS = data.allUsers;
 
@@ -12,6 +13,7 @@ socket.on('login', function (data) {
 
   saveUser();
   log(message);
+  setNotifRoom(USER.room);
   playSound('login');
 });
 
@@ -54,18 +56,22 @@ socket.on('user info', function(user){
   USER.setRanks(user.ranks);
   USER.setUsername(user.username);
   USER.setUid(user.uid);
+  USER.room = user.room
 
   saveUser();
 });
 
 socket.on('cmd', function(data){
+  var serverMessage;
 
   switch(data.callback){
     case 'login':
       updateMeUserInfo();
+      serverMessage = 1;
 
     case 'logout':
       updateMeUserInfo();
+      serverMessage = 1;
       break;
 
     case 'kick':
@@ -74,10 +80,11 @@ socket.on('cmd', function(data){
         clearData();
         location.reload();
       }
+      serverMessage = 1;
       break;
 
     case 'ban':
-
+      serverMessage = 1;
       break;
 
     case 'removeMsg':
@@ -86,6 +93,7 @@ socket.on('cmd', function(data){
 
     case 'clean':
       clearChat();
+      serverMessage = 1;
       break;
 
     case 'popup':
@@ -96,11 +104,22 @@ socket.on('cmd', function(data){
         pop.init('center','center','50%','',"Announce",data.valRetour,true);
         pop.draw();
       }
+      serverMessage = 1;
+      break;
+
+    case 'join':
+      log(data.message);
+      if(data.valRetour && data.valRetour.type == 'join'){
+        USER.room = data.valRetour.room;
+        updateMeUserInfo();
+        setNotifRoom(data.valRetour.room);
+      }
       break;
 
     default:
       addServerMessage(data.valRetour);
       break;
   }
-  addServerMessage(data.message);
+  if(serverMessage)
+    addServerMessage(data.message);
 });

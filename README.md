@@ -27,12 +27,13 @@ X argument obligateur
 | /clear | | Efface le chat |
 | /msg | Pseudo Message | Envoyer un message Privé |
 | /quit |  | Quitte le chat |
+| /join | Salle | Se connect à une salle |
 
 ### Moderateurs
 
 |Command | Arguments |  Description |
 |:------:|:---------:|:--------------------------------------:|
-| /list | | Affiche la liste des utilisateurs connectés |
+| /list | | Affiche la liste des utilisateurs connectés | DESCATIVÉE
 | /kick | Pseudo | Ejecte un utilisateur du chat |
 
 ### Administrateurs

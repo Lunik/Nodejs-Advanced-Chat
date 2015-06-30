@@ -30,13 +30,15 @@ var PASSWORDS = {
 }
 
 io.on('connection', function (socket) {
+  socket.room = 'default';
+  socket.join(socket.room);
 
 	//Quand le client emet un 'send message'
 	socket.on('send msg', function(data){
 		//On emet au client d'exectuter 'new message'
 		data.user.username = Users.usernames[data.user.uid].username;
-		console.log('<'+data.user.username+'> '+data.message.text);
-		socket.broadcast.emit('new msg', data);
+		console.log('['+socket.room+']<'+data.user.username+'> '+data.message.text);
+		socket.broadcast.to(socket.room).emit('new msg', data);
 	});
 
 	socket.on('add user', function (username) {
@@ -55,7 +57,8 @@ io.on('connection', function (socket) {
     			'moderation':0
     		},
     		'uid': uid,
-    		'socketId':socket.id
+    		'socketId':socket.id,
+        'room': socket.room
     	}
 
     	Users.count = Users.count+1;
@@ -64,7 +67,7 @@ io.on('connection', function (socket) {
     	socket.username = username;
     	socket.uid = uid;
 
-    	console.log(DEFAULSERVERNAME+' '+username+' join');
+    	console.log('['+socket.room+']'+DEFAULSERVERNAME+' '+username+' join');
 
     	socket.emit('login', {
 	  		user: Users.usernames[uid],
@@ -72,7 +75,7 @@ io.on('connection', function (socket) {
 	  		serverName: DEFAULSERVERNAME
     	});
 
-    	socket.broadcast.emit('user joined', {
+    	socket.broadcast.to(socket.room).emit('user joined', {
       		username: socket.username,
 	  		allUsers: Users
     	});
@@ -80,13 +83,13 @@ io.on('connection', function (socket) {
 
 	socket.on('disconnect', function () {
 		if(socket.username){
-		 	console.log(DEFAULSERVERNAME+' '+socket.username+' left');
+		 	console.log('['+socket.room+']'+DEFAULSERVERNAME+' '+socket.username+' left');
 	    	// remove the username from global usernames list
 		   	delete Users.usernames[socket.uid];
 	      	Users.count--;
 
 	      // echo globally that this client has left
-	      socket.broadcast.emit('user left', {
+	      socket.broadcast.to(socket.room).emit('user left', {
 	        username: socket.username,
 	        allUsers: Users
 	      });
@@ -179,7 +182,7 @@ function readJson(path){
 }
 
 function executeCommand(command,user,socket){
-	console.log('['+user.username+'] execute '+command.cmd+' '+command.param);
+	console.log('['+socket.room+']<'+user.username+'> execute '+command.cmd+' '+command.param);
 
 	var server = getServerUser();
 	var cid = generateMsgCid();
@@ -194,7 +197,7 @@ function executeCommand(command,user,socket){
 					'callback': 'login',
 					'message': 'Logged on Moderator'
 				});
-				socket.broadcast.emit('update userlist', Users);
+				socket.broadcast.to(socket.room).emit('update userlist', Users);
 				socket.emit('update userlist', Users);
 
 				execCommand = 1;
@@ -206,7 +209,7 @@ function executeCommand(command,user,socket){
 					'callback': 'login',
 					'message': 'Logged on Admin'
 				});
-				socket.broadcast.emit('update userlist', Users);
+				socket.broadcast.to(socket.room).emit('update userlist', Users);
 				socket.emit('update userlist', Users);
 
 				execCommand = 1;
@@ -239,7 +242,7 @@ function executeCommand(command,user,socket){
 				var kickUser = Users.usernames[command.param];
 				console.log('kick '+kickUser.username);
 
-				socket.broadcast.emit('cmd', {
+				socket.broadcast.to(socket.room).emit('cmd', {
 						'valRetour': kickUser.username,
 						'callback': 'kick',
 						'message': kickUser.username+" was kicked by "+user.username
@@ -268,7 +271,7 @@ function executeCommand(command,user,socket){
 						'message': command.param+" was banned"
 				});
 
-				socket.broadcast.emit('cmd', {
+				socket.broadcast.to(socket.room).emit('cmd', {
 						'valRetour': command.param,
 						'callback': 'kick',
 						'message': command.param+" was banned by "+user.username
@@ -285,7 +288,7 @@ function executeCommand(command,user,socket){
 						'valRetour': command.param,
 						'callback': 'removeMsg'
 				});
-				socket.broadcast.emit('cmd', {
+				socket.broadcast.to(socket.room).emit('cmd', {
 						'valRetour': command.param,
 						'callback': 'removeMsg'
 				});
@@ -300,7 +303,7 @@ function executeCommand(command,user,socket){
 						'callback': 'clean',
 						'message': 'Chat cleaned'
 				});
-				socket.broadcast.emit('cmd', {
+				socket.broadcast.to(socket.room).emit('cmd', {
 						'valRetour': '',
 						'callback': 'clean',
 						'message': "Chat cleaned by "+user.username
@@ -317,7 +320,7 @@ function executeCommand(command,user,socket){
 						'callback': 'popup',
 						'message': 'Popup printed: '+command.param
 				});
-				socket.broadcast.emit('cmd', {
+				socket.broadcast.to(socket.room).emit('cmd', {
 						'valRetour': command.param,
 						'callback': 'popup',
 						'message': ''
@@ -335,6 +338,34 @@ function executeCommand(command,user,socket){
 				console.log('----> OK');
 			}
 			break;
+    case 'join':
+      socket.leave(socket.room);
+      socket.broadcast.to(socket.room).emit('cmd', {
+          'valRetour': '',
+          'callback': 'join',
+          'message': socket.username+' leave the room'
+      });
+      socket.emit('cmd', {
+          'valRetour': {'type': 'leave', 'room': socket.room},
+          'callback': 'join',
+          'message': 'Leave the room: '+socket.room
+      });
+      socket.join(command.param);
+      socket.room = command.param;
+      user.room = socket.room;
+      socket.broadcast.to(socket.room).emit('cmd', {
+          'valRetour': '',
+          'callback': 'join',
+          'message': socket.username+' join the room'
+      });
+      socket.emit('cmd', {
+          'valRetour': {'type': 'join', 'room': socket.room},
+          'callback': 'join',
+          'message': 'Join the room: '+socket.room
+      });
+      execCommand = 1;
+      console.log('----> OK');
+  		break;
 
 		default:
 			socket.emit('cmd', {
