@@ -1,5 +1,6 @@
 var ALTERCOLOR = 1;
 var WAITINGMESSAGES = 0;
+
 // Log a message
 function log (message) {
 	var $el = $('<li>').addClass('log').text(message);

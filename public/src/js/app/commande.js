@@ -31,7 +31,7 @@ COMMANDS = {
 		var usr = getAllUsernameRoom(USER.room);
 		var listUsr = '';
 		for(var i=0; i< usr.length ;i++){
-			listUsr = listUsr+usr[i]+', ';
+			listUsr = listUsr+'<span class="username">'+usr[i]+'</span>, ';
 		}
 		addServerMessage(listUsr);
 	},

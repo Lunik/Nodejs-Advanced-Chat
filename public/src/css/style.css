@@ -182,10 +182,12 @@ a:hover, a:focus {
     vertical-align: middle;
 }
 
+.username{
+  cursor: pointer;
+}
+
 .from .username{
   padding: 0px 5px 0px 5px;
-
-  cursor: pointer;
 }
 
 .username.rm-default{
