@@ -30,7 +30,7 @@ var PASSWORDS = {
 }
 
 io.on('connection', function (socket) {
-  socket.room = 'default';
+  socket.room = 'Default';
   socket.join(socket.room);
 
 	//Quand le client emet un 'send message'

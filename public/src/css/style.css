@@ -290,17 +290,82 @@ a:hover, a:focus {
   position: fixed !important;
 }
 
-/* room */
-.room {
-  position: fixed;
-  top: 0px;
-  right: 10px;
-  color: white;
-  font-size: 150%;
+/*********************/
+/*     PARAMETER     */
+/*********************/
+
+.parameterHtml{
+  margin-left: 10px;
+  text-align: left;
 }
 
-.room .room-id{
-  color: green;
+.parameterHtml div{
+  padding: 3px;
+}
+
+.parameterHtml label{
+  display: inline-block;
+  width: 100px;
+
+  font-weight: bold;
+}
+
+.parameterHtml span{
+  display: inline-block;
+  width: 100px;
+}
+
+.parameterHtml .param-input[type=submit], .parameterHtml .param-input[type=color]{
+  border: 3px outset #e74c3c;
+  border-radius: 3px;
+
+  background-color: #e74c3c;
+
+  font-size: 12px;
+}
+
+.parameterHtml .param-input[type=submit]:active, .parameterHtml .param-input[type=color]:active{
+  border-style: inset;
+}
+
+/* Bouton de couleur */
+.param-input.change-color{
+  margin: -4px 0px 0px -4px;
+
+  width: 30px;
+  height: 30px;
+
+  border: none !important;
+
+  background-color: #FFF !important;
+}
+
+/* Bouton de son */
+.param-input.change-sound{
+  width: 20px;
+  height: 20px;
+
+  color: transparent;
+  border: none !important;
+}
+.param-input.change-sound[value=true]{
+  background-color: green;
+}
+.param-input.change-sound[value=false]{
+  background-color: red;
+}
+
+/* room */
+.param-room {
+  position: fixed;
+
+  top: 10px;
+  right: 10px;
+
+  border: 3px outset #e74c3c;
+  border-radius: 3px;
+
+  background-color: #e74c3c;
 }
 /*********************/
 /*        INPUT      */

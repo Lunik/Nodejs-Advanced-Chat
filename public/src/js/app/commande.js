@@ -146,7 +146,7 @@ COMMANDS = {
 	},
 	'join': function(room){
 		if(!room)
-			room = 'default';
+			room = 'Default';
 		if(room != USER.room){
 			socket.emit('command', {
 				'uid': USER.uid,

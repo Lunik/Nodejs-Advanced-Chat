@@ -13,7 +13,7 @@ socket.on('login', function (data) {
 
   saveUser();
   log(message);
-  setNotifRoom(USER.room);
+  setParamRoom(USER.room);
   playSound('login');
 });
 
@@ -31,6 +31,7 @@ socket.on('user left', function (data) {
 
 socket.on('update userlist', function (allUsers) {
   USERS = allUsers;
+  setParamRoom(USER.room);
 });
 
 socket.on('new msg', function(data){
@@ -114,7 +115,8 @@ socket.on('cmd', function(data){
         clearChat();
         USER.room = data.valRetour.room;
         updateMeUserInfo();
-        setNotifRoom(data.valRetour.room);
+        setParamRoom(data.valRetour.room);
+        playSound('login');
       }
       log(data.message);
       break;
