@@ -33,7 +33,7 @@ X argument obligateur
 
 |Command | Arguments |  Description |
 |:------:|:---------:|:--------------------------------------:|
-| /list | | Affiche la liste des utilisateurs connectés | DESCATIVÉE
+| /list | | Affiche la liste des utilisateurs connectés |
 | /kick | Pseudo | Ejecte un utilisateur du chat |
 
 ### Administrateurs

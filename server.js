@@ -37,7 +37,7 @@ io.on('connection', function (socket) {
 	socket.on('send msg', function(data){
 		//On emet au client d'exectuter 'new message'
 		data.user.username = Users.usernames[data.user.uid].username;
-		console.log('['+socket.room+']<'+data.user.username+'> '+data.message.text);
+		console.log('['+socket.room+'] <'+data.user.username+'> '+data.message.text);
 		socket.broadcast.to(socket.room).emit('new msg', data);
 	});
 
@@ -67,7 +67,7 @@ io.on('connection', function (socket) {
     	socket.username = username;
     	socket.uid = uid;
 
-    	console.log('['+socket.room+']'+DEFAULSERVERNAME+' '+username+' join');
+    	console.log('['+socket.room+'] '+DEFAULSERVERNAME+' '+username+' join');
 
     	socket.emit('login', {
 	  		user: Users.usernames[uid],
@@ -79,11 +79,12 @@ io.on('connection', function (socket) {
       		username: socket.username,
 	  		allUsers: Users
     	});
+      socket.broadcast.emit('update userlist', Users);
 	});
 
 	socket.on('disconnect', function () {
 		if(socket.username){
-		 	console.log('['+socket.room+']'+DEFAULSERVERNAME+' '+socket.username+' left');
+		 	console.log('['+socket.room+'] '+DEFAULSERVERNAME+' '+socket.username+' left');
 	    	// remove the username from global usernames list
 		   	delete Users.usernames[socket.uid];
 	      	Users.count--;
@@ -93,6 +94,7 @@ io.on('connection', function (socket) {
 	        username: socket.username,
 	        allUsers: Users
 	      });
+        socket.broadcast.emit('update userlist', Users);
 	  	}
 	});
 
@@ -182,7 +184,7 @@ function readJson(path){
 }
 
 function executeCommand(command,user,socket){
-	console.log('['+socket.room+']<'+user.username+'> execute '+command.cmd+' '+command.param);
+	console.log('['+socket.room+'] <'+user.username+'> execute '+command.cmd+' '+command.param);
 
 	var server = getServerUser();
 	var cid = generateMsgCid();
@@ -197,7 +199,7 @@ function executeCommand(command,user,socket){
 					'callback': 'login',
 					'message': 'Logged on Moderator'
 				});
-				socket.broadcast.to(socket.room).emit('update userlist', Users);
+				socket.broadcast.emit('update userlist', Users);
 				socket.emit('update userlist', Users);
 
 				execCommand = 1;
@@ -209,7 +211,7 @@ function executeCommand(command,user,socket){
 					'callback': 'login',
 					'message': 'Logged on Admin'
 				});
-				socket.broadcast.to(socket.room).emit('update userlist', Users);
+				socket.broadcast.emit('update userlist', Users);
 				socket.emit('update userlist', Users);
 
 				execCommand = 1;
@@ -352,7 +354,7 @@ function executeCommand(command,user,socket){
       });
       socket.join(command.param);
       socket.room = command.param;
-      user.room = socket.room;
+      Users.usernames[user.uid].room = socket.room;
       socket.broadcast.to(socket.room).emit('cmd', {
           'valRetour': '',
           'callback': 'join',
@@ -363,6 +365,8 @@ function executeCommand(command,user,socket){
           'callback': 'join',
           'message': 'Join the room: '+socket.room
       });
+      socket.broadcast.emit('update userlist', Users);
+      socket.emit('update userlist', Users);
       execCommand = 1;
       console.log('----> OK');
   		break;

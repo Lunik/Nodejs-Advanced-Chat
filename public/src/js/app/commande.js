@@ -22,13 +22,13 @@ COMMANDS = {
 			playSound('error');
 		}
 	},
-	'list': function (){/*
-		var usr = getAllUsernameConnected();
+	'list': function (){
+		var usr = getAllUsernameRoom(USER.room);
 		var listUsr = '';
 		for(var i=0; i< usr.length ;i++){
 			listUsr = listUsr+usr[i]+', ';
 		}
-		addServerMessage(listUsr);*/
+		addServerMessage(listUsr);
 	},
 	'kick': function (username){
 		if(USER.ranks.moderation >= 1){

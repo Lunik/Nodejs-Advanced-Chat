@@ -63,6 +63,16 @@ function getAllUsernameConnected(){
 	return usernames;
 }
 
+function getAllUsernameRoom(room){
+	var usernames = [];
+	for (var uid in USERS.usernames){
+		if(USERS.usernames[uid].room == room)
+			usernames.push(USERS.usernames[uid].username);
+	}
+
+	return usernames;
+}
+
 function getIconFromRank(rank){
 	switch(rank){
 		case 'rm-moderator':
