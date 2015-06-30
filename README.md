@@ -25,7 +25,7 @@ X argument obligateur
 | /login | Password | Connection moderateur / admin |
 | /logout | | Deconnection moderateur / admin |
 | /clear | | Efface le chat |
-| /msg | Pseudo Message | Envoyer un message Privé |
+| /msg | Pseudo | Envoyer un message Privé |
 | /quit |  | Quitte le chat |
 | /join | Salle | Se connecter à une salle |
 | /slow | | Affiche le temps minimum entre chaque message |
