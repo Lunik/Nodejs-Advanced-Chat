@@ -1,4 +1,4 @@
-$.getScript('/src/js/howler/howler.min.js',function(){
+$.getScript('src/js/howler/howler.min.js',function(){
   initSounds();
 });
 
@@ -9,7 +9,7 @@ function initSounds(){
     if(SOUNDS.etat == null)
       SOUNDS.etat = true;
 
-    var soundPath = '/src/audio/';
+    var soundPath = 'src/audio/';
     SOUNDS.login = new Howl({ urls: [soundPath+'login.mp3'] });
     SOUNDS.join = new Howl({ urls: [soundPath+'join.mp3'] });
     SOUNDS.leave = new Howl({ urls: [soundPath+'leave.mp3'] });
