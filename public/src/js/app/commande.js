@@ -145,31 +145,37 @@ COMMANDS = {
 		location.reload();
 	},
 	'join': function(r){
-		//verif du nom de salle
-		if(r[0]){
-			r[0] = r[0].substring(0,9);
-			r[0] = r[0].replace(/[^\w\s]/gi,'');
-		} else {
-			r[0] = 'Default';
-		}
-
-		//salle prive ou non
-		if(r[1] && r[1] != 'false')
-			r[1] = true;
-		else
-			r[1] = false;
-
-		if(r[0] != USER.room){
-			socket.emit('command', {
-				'uid': USER.uid,
-				'command': {
-					'cmd':'join',
-					'param': {room: r[0], priv: r[1]}
-				}
-			});
-		} else {
-			addServerMessage('You are already in \"'+r[0]+'\" room.');
+		if(r[0] == '('+r[0].replace(/[()]/g,'')+')'){
+			addServerMessage(' is a private room.');
 			playSound('error');
+			setParamRoom(USER.room);
+		} else {
+			//salle prive ou non
+			if(r[1] && r[1] != 'false')
+				r[1] = true;
+			else
+				r[1] = false;
+
+			//verif du nom de salle
+			if(r[0]){
+				r[0] = r[0].substring(0,9);
+				r[0] = r[0].replace(/[^\w\s]/gi,'');
+			} else {
+				r[0] = 'Default';
+			}
+
+			if(r[0] != USER.room){
+				socket.emit('command', {
+					'uid': USER.uid,
+					'command': {
+						'cmd':'join',
+						'param': {room: r[0], priv: r[1]}
+					}
+				});
+			} else {
+				addServerMessage('You are already in \"'+r[0]+'\" room.');
+				playSound('error');
+			}
 		}
 	},
 	'slow': function(slow){
