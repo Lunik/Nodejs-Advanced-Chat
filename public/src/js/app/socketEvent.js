@@ -119,7 +119,12 @@ socket.on('cmd', function(data){
         setParamRoom(data.valRetour.room);
         playSound('login');
       }
-      log(data.message);
+      if(data.valRetour === 0){
+        serverMessage = 1;
+        playSound('error');
+      } else {
+        log(data.message);
+      }
       break;
     case 'slow':
       SLOW = data.valRetour;

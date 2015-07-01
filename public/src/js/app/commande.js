@@ -144,19 +144,31 @@ COMMANDS = {
 		clearData();
 		location.reload();
 	},
-	'join': function(room){
-		if(!room)
-			room = 'Default';
-		if(room != USER.room){
+	'join': function(r){
+		//verif du nom de salle
+		if(r[0]){
+			r[0] = r[0].substring(0,9);
+			r[0] = r[0].replace(/[^\w\s]/gi,'');
+		} else {
+			r[0] = 'Default';
+		}
+
+		//salle prive ou non
+		if(r[1] && r[1] != 'false')
+			r[1] = true;
+		else
+			r[1] = false;
+
+		if(r[0] != USER.room){
 			socket.emit('command', {
 				'uid': USER.uid,
 				'command': {
 					'cmd':'join',
-					'param': room
+					'param': {room: r[0], priv: r[1]}
 				}
 			});
 		} else {
-			addServerMessage('You are already in \"'+room+'\" room.');
+			addServerMessage('You are already in \"'+r[0]+'\" room.');
 			playSound('error');
 		}
 	},
@@ -325,7 +337,7 @@ function execCommand(data){
 			};
 			break;
 		case 'join':
-			COMMANDS.join(data.param[0]);
+			COMMANDS.join(data.param);
 			valRetour = {
 				'etat': 1,
 				'message': ''

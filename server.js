@@ -28,6 +28,7 @@ var PASSWORDS = {
 	'moderateur': 'moderateur',
 	'admin': 'admin'
 }
+
 var SLOW = 0;
 
 io.on('connection', function (socket) {
@@ -167,6 +168,17 @@ function getServerUser(){
 	};
 }
 
+function getAllRooms(){
+	var rooms = ["Default"];
+	for (var uid in Users.usernames){
+		var room = Users.usernames[uid].room;
+		if(rooms.indexOf(room) == -1)
+			rooms.push(room);
+	}
+
+	return rooms;
+}
+
 function saveFile(path,text){
 	fs.writeFile(path, text, function(err) {
     	if(err) {
@@ -186,7 +198,8 @@ function readJson(path){
 }
 
 function executeCommand(command,user,socket){
-	console.log('['+socket.room+'] <'+user.username+'> execute '+command.cmd+' '+command.param);
+	console.log('['+socket.room+'] <'+user.username+'> execute '+command.cmd);
+  console.log(command.param);
 
 	var server = getServerUser();
 	var cid = generateMsgCid();
@@ -343,34 +356,51 @@ function executeCommand(command,user,socket){
 			}
 			break;
     case 'join':
-      socket.leave(socket.room);
-      socket.broadcast.to(socket.room).emit('cmd', {
-          'valRetour': '',
-          'callback': 'join',
-          'message': socket.username+' leave the room'
-      });
-      socket.emit('cmd', {
-          'valRetour': {'type': 'leave', 'room': socket.room},
-          'callback': 'join',
-          'message': 'Leave the room: '+socket.room
-      });
-      socket.join(command.param);
-      socket.room = command.param;
-      Users.usernames[user.uid].room = socket.room;
-      socket.broadcast.to(socket.room).emit('cmd', {
-          'valRetour': '',
-          'callback': 'join',
-          'message': socket.username+' join the room'
-      });
-      socket.emit('cmd', {
-          'valRetour': {'type': 'join', 'room': socket.room},
-          'callback': 'join',
-          'message': 'Join the room: '+socket.room
-      });
-      socket.broadcast.emit('update userlist', Users);
-      socket.emit('update userlist', Users);
-      execCommand = 1;
-      console.log('----> OK');
+      var rooms = getAllRooms();
+      if(command.param.priv){
+        console.log('----> Private Room');
+        command.param.room = '('+command.param.room+')';
+        if(rooms.indexOf(command.param.room) != -1){
+          execCommand = 1;
+  				console.log('----> FAIL');
+          socket.emit('cmd', {
+              'valRetour': 0,
+              'callback': 'join',
+              'message': command.param.room+' is a private room.'
+          });
+          break;
+        }
+      }
+      if(rooms.indexOf(command.param.room == -1)){
+        socket.leave(socket.room);
+        socket.broadcast.to(socket.room).emit('cmd', {
+            'valRetour': '',
+            'callback': 'join',
+            'message': socket.username+' leave the room'
+        });
+        socket.emit('cmd', {
+            'valRetour': {'type': 'leave', 'room': socket.room},
+            'callback': 'join',
+            'message': 'Leave the room: '+socket.room
+        });
+        socket.join(command.param.room);
+        socket.room = command.param.room;
+        Users.usernames[user.uid].room = socket.room;
+        socket.broadcast.to(socket.room).emit('cmd', {
+            'valRetour': '',
+            'callback': 'join',
+            'message': socket.username+' join the room'
+        });
+        socket.emit('cmd', {
+            'valRetour': {'type': 'join', 'room': socket.room},
+            'callback': 'join',
+            'message': 'Join the room: '+socket.room
+        });
+        socket.broadcast.emit('update userlist', Users);
+        socket.emit('update userlist', Users);
+        execCommand = 1;
+        console.log('----> OK');
+      }
   		break;
     case 'slow':
   		if(user.ranks.moderation >= 1){
