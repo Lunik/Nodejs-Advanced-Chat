@@ -145,8 +145,8 @@ COMMANDS = {
 		location.reload();
 	},
 	'join': function(r){
-		if(r[0] == '('+r[0].replace(/[()]/g,'')+')'){
-			addServerMessage(' is a private room.');
+		if(r[0] && r[0] == '('+r[0].replace(/[()]/g,'')+')' && USER.ranks.moderation < 1){
+			addServerMessage(r[0]+' is a private room.');
 			playSound('error');
 			setParamRoom(USER.room);
 		} else {
@@ -158,8 +158,10 @@ COMMANDS = {
 
 			//verif du nom de salle
 			if(r[0]){
-				r[0] = r[0].substring(0,9);
-				r[0] = r[0].replace(/[^\w\s]/gi,'');
+				if(USER.ranks.moderation < 1){
+					r[0] = r[0].substring(0,9);
+					r[0] = r[0].replace(/[^\w\s]/gi,'');
+				}
 			} else {
 				r[0] = 'Default';
 			}

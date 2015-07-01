@@ -360,18 +360,16 @@ function executeCommand(command,user,socket){
       if(command.param.priv){
         console.log('----> Private Room');
         command.param.room = '('+command.param.room+')';
-        if(rooms.indexOf(command.param.room) != -1){
-          execCommand = 1;
-  				console.log('----> FAIL');
-          socket.emit('cmd', {
-              'valRetour': 0,
-              'callback': 'join',
-              'message': command.param.room+' is a private room.'
-          });
-          break;
-        }
       }
-      if(rooms.indexOf(command.param.room == -1)){
+      if(rooms.indexOf(command.param.room) != -1 && command.param.room == '('+command.param.room.replace(/[()]/g,'')+')' && user.ranks.moderation < 1){
+        execCommand = 1;
+        console.log('----> FAIL');
+        socket.emit('cmd', {
+            'valRetour': 0,
+            'callback': 'join',
+            'message': command.param.room+' is a private room.'
+        });
+      } else if(rooms.indexOf(command.param.room == -1)){
         socket.leave(socket.room);
         socket.broadcast.to(socket.room).emit('cmd', {
             'valRetour': '',
