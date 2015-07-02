@@ -145,37 +145,37 @@ COMMANDS = {
 		location.reload();
 	},
 	'join': function(r){
-		if(r[0] && r[0] == '('+r[0].replace(/[()]/g,'')+')' && USER.ranks.moderation < 1){
-			addServerMessage(r[0]+' is a private room.');
+		if(r.room && r.room == '('+r.room.replace(/[()]/g,'')+')' && USER.ranks.moderation < 1 && !r.invite){
+			addServerMessage(r.room+' is a private room.');
 			playSound('error');
 			setParamRoom(USER.room);
 		} else {
 			//salle prive ou non
-			if(r[1] && r[1] != 'false')
-				r[1] = true;
+			if(r.priv && r.priv != 'false')
+				r.priv = true;
 			else
-				r[1] = false;
+				r.priv = false;
 
 			//verif du nom de salle
-			if(r[0]){
-				if(USER.ranks.moderation < 1){
-					r[0] = r[0].substring(0,9);
-					r[0] = r[0].replace(/[^\w\s]/gi,'');
+			if(r.room){
+				if(USER.ranks.moderation < 1 && !r.invite){
+					r.room = r.room.substring(0,9);
+					r.room = r.room.replace(/[^\w\s]/gi,'');
 				}
 			} else {
-				r[0] = 'Default';
+				r.room = 'Default';
 			}
 
-			if(r[0] != USER.room){
+			if(r.room != USER.room){
 				socket.emit('command', {
 					'uid': USER.uid,
 					'command': {
 						'cmd':'join',
-						'param': {room: r[0], priv: r[1]}
+						'param': {room: r.room, priv: r.priv, invite: r.invite}
 					}
 				});
 			} else {
-				addServerMessage('You are already in \"'+r[0]+'\" room.');
+				addServerMessage('You are already in \"'+r.room+'\" room.');
 				playSound('error');
 			}
 		}
@@ -197,6 +197,20 @@ COMMANDS = {
 		} else {
 			addServerMessage('Slow actuel: '+SLOW+'s.');
 		}
+	},
+	'invite': function(inviteUid){
+		if(inviteUid){
+			socket.emit('command', {
+				'uid': USER.uid,
+				'command': {
+					'cmd': 'invite',
+					'param': inviteUid
+				}
+			});
+		} else {
+			addServerMessage("User not Found.");
+			playSound('error');
+		}
 	}
 }
 
@@ -213,10 +227,7 @@ function sendCommand(){
 	}
 
 	//exectution de la commande
-	var commandReturn = execCommand(commande);
-	//affichages des resultats de la commande
-	if(commandReturn.message)
-		addServerMessage(commandReturn.message);
+	execCommand(commande);
 
 }
 
@@ -229,82 +240,42 @@ function execCommand(data){
 
 		case 'login':
 			COMMANDS.login(data.param[0]);
-			valRetour = {
-				'etat': 1,
-				'message': ''
-			};
 			break;
 
 		case 'logout':
 			COMMANDS.logout();
-			valRetour = {
-				'etat': 1,
-				'message': ''
-			};
 			break;
 
 		case 'list':
 			COMMANDS.list();
-			valRetour = {
-				'etat': 1,
-				'message': ''
-			};
 			break;
 
 		case 'kick':
 			COMMANDS.kick(data.param[0]);
-			valRetour = {
-				'etat': 1,
-				'message': ''
-			};
 			break;
 
 		case 'ban':
 			COMMANDS.ban(data.param[0]);
-			valRetour = {
-				'etat': 1,
-				'message': ''
-			};
 			break;
 
 		case 'removeMsg':
 			COMMANDS.removeMsg(data.param[0]);
-			valRetour = {
-				'etat': 1,
-				'message': ''
-			};
 			break;
 
 		case 'clear':
 			COMMANDS.clear();
-			valRetour = {
-				'etat': 1,
-				'message': ''
-			};
 			break;
 
 		case 'clean':
 			COMMANDS.clean();
-			valRetour = {
-				'etat': 1,
-				'message': ''
-			};
 			break;
 
 		case 'command':
 			COMMANDS.command();
-			valRetour = {
-				'etat': 1,
-				'message': ''
-			};
 			break;
 
 		case 'popup':
 			COMMANDS.popup(data.param.join(' '));
-			valRetour = {
-				'etat': 1,
-				'message': ''
-			};
 			break;
 
 		case 'msg':
@@ -324,40 +295,32 @@ function execCommand(data){
 			};
 
 			COMMANDS.msg(dataMsg);
-
-			valRetour = {
-				'etat': 1,
-				'message': ''
-			};
 			break;
+
 		case 'version':
 			COMMANDS.version();
-			valRetour = {
-				'etat': 1,
-				'message': ''
-			};
 			break;
+
 		case 'quit':
 			COMMANDS.quit();
-			valRetour = {
-				'etat': 1,
-				'message': ''
-			};
 			break;
+
 		case 'join':
-			COMMANDS.join(data.param);
-			valRetour = {
-				'etat': 1,
-				'message': ''
-			};
+
+			COMMANDS.join({
+				room: data.param[0],
+				priv: data.param[1]
+			});
 			break;
+
+		case 'invite':
+			COMMANDS.invite(getUidFromUsername(data.param[0]));
+			break;
+
 		case 'slow':
 			COMMANDS.slow(data.param[0]);
-			valRetour = {
-				'etat': 1,
-				'message': ''
-			};
 			break;
+
 		default:
 			playSound('error');
 			valRetour = {

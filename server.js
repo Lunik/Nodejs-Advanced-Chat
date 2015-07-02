@@ -361,7 +361,7 @@ function executeCommand(command,user,socket){
         console.log('----> Private Room');
         command.param.room = '('+command.param.room+')';
       }
-      if(rooms.indexOf(command.param.room) != -1 && command.param.room == '('+command.param.room.replace(/[()]/g,'')+')' && user.ranks.moderation < 1){
+      if(rooms.indexOf(command.param.room) != -1 && command.param.room == '('+command.param.room.replace(/[()]/g,'')+')' && user.ranks.moderation < 1 && !command.param.invite){
         execCommand = 1;
         console.log('----> FAIL');
         socket.emit('cmd', {
@@ -417,6 +417,18 @@ function executeCommand(command,user,socket){
   			console.log('----> OK');
   		}
   		break;
+    case 'invite':
+      if(Users.usernames[command.param]){
+        var toSocket = Users.usernames[command.param].socketId;
+        io.to(toSocket).emit('cmd', {
+            'valRetour': {by: user.username, room: user.room},
+            'callback': 'invite',
+            'message': ''
+        });
+        execCommand = 1;
+        console.log('----> OK');
+      }
+      break;
 		default:
 			socket.emit('cmd', {
 					'valRetour': "Command not found.",

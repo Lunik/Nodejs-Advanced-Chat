@@ -4,6 +4,7 @@
 
 * {
   box-sizing: border-box;
+  outline: none;
 }
 
 html, input {
@@ -369,6 +370,15 @@ a:hover, a:focus {
 
   background-color: #e74c3c;
 }
+
+/*********************/
+/*       NOTIF       */
+/*********************/
+
+.invitation-speech{
+  margin: 10px 0px 10px 0px;
+}
+
 /*********************/
 /*        INPUT      */
 /*********************/

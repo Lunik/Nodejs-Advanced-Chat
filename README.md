@@ -28,6 +28,7 @@ X argument obligateur
 | /msg | Pseudo | Envoyer un message Privé |
 | /quit |  | Quitte le chat |
 | /join | Salle (private)| Se connecter à une salle |
+| /invite | Pseudo | Inviter un utilisateur dans sa salle |
 | /slow | | Affiche le temps minimum entre chaque message |
 
 ### Moderateurs

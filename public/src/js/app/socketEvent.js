@@ -126,9 +126,17 @@ socket.on('cmd', function(data){
         log(data.message);
       }
       break;
+
     case 'slow':
       SLOW = data.valRetour;
       serverMessage = 1;
+      break;
+
+    case 'invite':
+      var n = new Pnotif();
+      n.init('bottom-left',invitationHtml(data.valRetour.by,data.valRetour.room),20000);
+      n.draw();
+      playSound('mention');
       break;
     default:
       addServerMessage(data.valRetour);

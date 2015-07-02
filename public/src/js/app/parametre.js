@@ -101,5 +101,5 @@ function compareRoom(a, b){
 }
 //Pour changer de salle avec le menu deroulant
 $('.param-room').on('change',function(data){
-	COMMANDS.join([this.value,false]);
+	COMMANDS.join({room: this.value,priv:false});
 });
