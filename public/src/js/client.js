@@ -50,6 +50,9 @@ function initModules(){
 
   //Module Popup
 	$.getScript('src/js/popup/popup.js');
+
+	//Module pnotif
+	$.getScript('src/js/pnotif/pnotif.js');
 }
 
 function currentHour(){
