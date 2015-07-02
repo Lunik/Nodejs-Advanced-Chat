@@ -357,11 +357,11 @@ function executeCommand(command,user,socket){
 			break;
     case 'join':
       var rooms = getAllRooms();
-      if(command.param.priv){
+      if(command.param.pass){
         console.log('----> Private Room');
         command.param.room = '('+command.param.room+')';
       }
-      if(rooms.indexOf(command.param.room) != -1 && command.param.room == '('+command.param.room.replace(/[()]/g,'')+')' && user.ranks.moderation < 1 && !command.param.invite){
+      if(rooms.indexOf(command.param.room) != -1 && command.param.room == '('+command.param.room.replace(/[()]/g,'')+')' && user.ranks.moderation < 1 && !command.param.pass){
         execCommand = 1;
         console.log('----> FAIL');
         socket.emit('cmd', {

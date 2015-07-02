@@ -145,20 +145,20 @@ COMMANDS = {
 		location.reload();
 	},
 	'join': function(r){
-		if(r.room && r.room == '('+r.room.replace(/[()]/g,'')+')' && USER.ranks.moderation < 1 && !r.invite){
+		if(r.room && r.room == '('+r.room.replace(/[()]/g,'')+')' && USER.ranks.moderation < 1 && !r.pass){
 			addServerMessage(r.room+' is a private room.');
 			playSound('error');
 			setParamRoom(USER.room);
 		} else {
 			//salle prive ou non
-			if(r.priv && r.priv != 'false')
-				r.priv = true;
+			if(r.pass && r.pass != 'false')
+				r.pass = true;
 			else
-				r.priv = false;
+				r.pass = false;
 
 			//verif du nom de salle
 			if(r.room){
-				if(USER.ranks.moderation < 1 && !r.invite){
+				if(USER.ranks.moderation < 1 && !r.pass){
 					r.room = r.room.substring(0,9);
 					r.room = r.room.replace(/[^\w\s]/gi,'');
 				}
@@ -171,7 +171,7 @@ COMMANDS = {
 					'uid': USER.uid,
 					'command': {
 						'cmd':'join',
-						'param': {room: r.room, priv: r.priv, invite: r.invite}
+						'param': {room: r.room, pass: r.pass, pass: r.pass}
 					}
 				});
 			} else {
@@ -309,7 +309,7 @@ function execCommand(data){
 
 			COMMANDS.join({
 				room: data.param[0],
-				priv: data.param[1]
+				pass: data.param[1]
 			});
 			break;
 
