@@ -134,7 +134,7 @@ socket.on('cmd', function(data){
 
     case 'invite':
       var n = new Pnotif();
-      n.init('bottom-left',invitationHtml(data.valRetour.by,data.valRetour.room),20000);
+      n.init('bottom-left',invitationHtml(data.valRetour.by,data.valRetour.room,data.valRetour.pass),20000);
       n.draw();
       playSound('mention');
       break;

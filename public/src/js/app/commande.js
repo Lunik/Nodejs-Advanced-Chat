@@ -151,10 +151,8 @@ COMMANDS = {
 			setParamRoom(USER.room);
 		} else {
 			//salle prive ou non
-			if(r.pass && r.pass != 'false')
-				r.pass = true;
-			else
-				r.pass = false;
+			if(!r.pass)
+				r.pass = '';
 
 			//verif du nom de salle
 			if(r.room){

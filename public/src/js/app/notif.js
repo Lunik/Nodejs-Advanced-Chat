@@ -17,15 +17,15 @@ $('body').click(function(){
 	WAITINGMESSAGES = 0;
 });
 
-function invitationHtml(by,room){
+function invitationHtml(by,room,pass){
 	$html = $('<div>').addClass('invitationHtml');
 
 	$html.append(
 		$('<div>').addClass('invitation-speech').text(by+' invite you to join '+room+'.')
 	).append(
-		$('<input>').addClass('pnotif-but pnotif-decline decline-invitation').attr('type','submit').attr('value','Decline').attr('id',room)
+		$('<input>').addClass('pnotif-but pnotif-decline decline-invitation').attr('type','submit').attr('value','Decline')
 	).append(
-		$('<input>').addClass('pnotif-but pnotif-accept accept-invitation').attr('type','submit').attr('value','Accept').attr('id',room)
+		$('<input>').addClass('pnotif-but pnotif-accept accept-invitation').attr('type','submit').attr('value','Accept').attr('id',room+' '+pass)
 	);
 
 	return $html;
@@ -36,6 +36,9 @@ $('body').on('click','.decline-invitation',function(){
 });
 
 $('body').on('click','.accept-invitation',function(data){
-	COMMANDS.join({room: data.target.id,priv: false,invite: true});
+	var id = data.target.id.split(' ');
+	var room = id.shift();
+	var pass = id.shift();
+	COMMANDS.join({room: room,pass: pass});
 	pnotifClose();
 });

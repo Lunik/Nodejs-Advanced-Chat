@@ -31,6 +31,9 @@ var PASSWORDS = {
 
 var SLOW = 0;
 
+var ROOMSPASS = [];
+ROOMSPASS['Default'] = '';
+
 io.on('connection', function (socket) {
   socket.room = 'Default';
   socket.join(socket.room);
@@ -361,7 +364,7 @@ function executeCommand(command,user,socket){
         console.log('----> Private Room');
         command.param.room = '('+command.param.room+')';
       }
-      if(rooms.indexOf(command.param.room) != -1 && command.param.room == '('+command.param.room.replace(/[()]/g,'')+')' && user.ranks.moderation < 1 && !command.param.pass){
+      if(rooms.indexOf(command.param.room) != -1 && command.param.room == '('+command.param.room.replace(/[()]/g,'')+')' && user.ranks.moderation < 1 && command.param.pass != ROOMSPASS[command.param.room]){
         execCommand = 1;
         console.log('----> FAIL');
         socket.emit('cmd', {
@@ -384,6 +387,8 @@ function executeCommand(command,user,socket){
         socket.join(command.param.room);
         socket.room = command.param.room;
         Users.usernames[user.uid].room = socket.room;
+        ROOMSPASS[command.param.room] = command.param.pass;
+        console.log(ROOMSPASS);
         socket.broadcast.to(socket.room).emit('cmd', {
             'valRetour': '',
             'callback': 'join',
@@ -421,7 +426,7 @@ function executeCommand(command,user,socket){
       if(Users.usernames[command.param]){
         var toSocket = Users.usernames[command.param].socketId;
         io.to(toSocket).emit('cmd', {
-            'valRetour': {by: user.username, room: user.room},
+            'valRetour': {by: user.username, room: user.room.replace(/[()]/g,''), pass: ROOMSPASS[user.room]},
             'callback': 'invite',
             'message': ''
         });
