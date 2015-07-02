@@ -388,7 +388,7 @@ function executeCommand(command,user,socket){
         socket.room = command.param.room;
         Users.usernames[user.uid].room = socket.room;
         ROOMSPASS[command.param.room] = command.param.pass;
-        console.log(ROOMSPASS);
+
         socket.broadcast.to(socket.room).emit('cmd', {
             'valRetour': '',
             'callback': 'join',
