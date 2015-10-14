@@ -147,3 +147,7 @@ socket.on('cmd', function(data){
   if(serverMessage)
     addServerMessage(data.message);
 });
+
+socket.on('disconnect', function () {
+    window.location.reload()
+  });
