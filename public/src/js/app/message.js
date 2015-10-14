@@ -1,7 +1,7 @@
 var ALTERCOLOR = 1;
 var WAITINGMESSAGES = 0;
 var LASTMESSAGETIME = 0;
-
+var A;
 // Log a message
 function log (message) {
 	var $el = $('<li>').addClass('log').text(message);
@@ -97,7 +97,8 @@ function addMessageElement(el){
 	}
 	else
 		ALTERCOLOR = 1;
-
+	console.log(el);
+	A = el;
 	$('.messages').append(el);
 	$messages[0].scrollTop = $messages[0].scrollHeight;
 }

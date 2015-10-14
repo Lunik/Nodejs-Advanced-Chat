@@ -1,32 +1,32 @@
 <!doctype html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no"/>
-  <title>Lunik Chat</title>
-  <link rel="stylesheet" href="src/css/style.css">
-  <link rel="stylesheet" href="src/css/icon.css">
-  <link rel="stylesheet" href="src/css/emoji.css">
-</head>
-<body>
-	<ul class="pages">
-		<li class="chat page">
-			<div class="but but-param"><i class="icon icon-param"></i></div>
-			<div class="chatArea">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no"/>
+		<title>Lunik Chat</title>
+		<link rel="stylesheet" href="src/css/style.css">
+		<link rel="stylesheet" href="src/css/icon.css">
+		<link rel="stylesheet" href="src/css/emoji.css">
+	</head>
+	<body>
+		<ul class="pages">
+			<li class="chat page">
+				<div class="but but-param"><i class="icon icon-param"></i></div>
+				<div class="chatArea">
 				<ul class="messages"></ul>
 			</div>
-			<input class="inputMessage" placeholder="Ecrire ici..." list="smiley"/>
+			<input class="inputMessage" placeholder="Ecrire ici..." list="smiley" maxlength="150"/>
 			<div class="but but-send_message"><i class="icon icon-send_msg"></i></div>
 			<div class="smileys">
 				<div class="but but-smiley"><i class="em em-smile"></i></div>
 			</div>
-      <select class="param-room"><option value=""></option></select>
+			<select class="param-room"><option value=""></option></select>
 		</li>
 		<li class="login page">
 			<div class="form">
-        		<h3 class="title">Username ?</h3>
-          		<input class="usernameInput" type="text" maxlength="14" />
-      		</div>
+				<h3 class="title">Username ?</h3>
+				<input class="usernameInput" type="text" maxlength="14" />
+			</div>
 		</li>
 	</ul>
 	<div class="includeJS">
@@ -34,6 +34,6 @@
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="src/js/client.js"></script>
 		<script type="text/javascript" src="http://guillaume-lunik.fr/googleAnalytics.js"></script>
-  </div>
+	</div>
 </body>
 </html>
