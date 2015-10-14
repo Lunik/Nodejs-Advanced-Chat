@@ -7,9 +7,10 @@ var port = process.env.PORT || 5000;
 
 //sauvgarde de fichier
 var fs = require('fs');
+saveFile("log.log","");
 
 server.listen(port, function () {
-  console.log('Server listening at port %d', port);
+  log('Server listening at port '+port);
 });
 
 // Routing
@@ -42,7 +43,7 @@ io.on('connection', function (socket) {
 	socket.on('send msg', function(data){
 		//On emet au client d'exectuter 'new message'
 		data.user.username = Users.usernames[data.user.uid].username;
-		console.log('['+socket.room+'] <'+data.user.username+'> '+data.message.text);
+		log('['+socket.room+'] <'+data.user.username+'> '+data.message.text);
 		socket.broadcast.to(socket.room).emit('new msg', data);
 	});
 
@@ -72,7 +73,7 @@ io.on('connection', function (socket) {
     	socket.username = username;
     	socket.uid = uid;
 
-    	console.log('['+socket.room+'] '+DEFAULSERVERNAME+' '+username+' join');
+    	log('['+socket.room+'] '+DEFAULSERVERNAME+' '+username+' join');
 
     	socket.emit('login', {
 	  		user: Users.usernames[uid],
@@ -90,7 +91,7 @@ io.on('connection', function (socket) {
 
 	socket.on('disconnect', function () {
 		if(socket.username){
-		 	console.log('['+socket.room+'] '+DEFAULSERVERNAME+' '+socket.username+' left');
+		 	log('['+socket.room+'] '+DEFAULSERVERNAME+' '+socket.username+' left');
 	    	// remove the username from global usernames list
 		   	delete Users.usernames[socket.uid];
 	      	Users.count--;
@@ -185,10 +186,20 @@ function getAllRooms(){
 function saveFile(path,text){
 	fs.writeFile(path, text, function(err) {
     	if(err) {
-        	return console.log(err);
+        	return log(err);
     	}
 
-   		console.log(path+" was saved!");
+   		//log(path+" was saved!");
+	});
+}
+
+function addFile(path,text){
+	fs.appendFile(path, text, function(err) {
+    	if(err) {
+        	return log(err);
+    	}
+
+   		//log(path+" was saved!");
 	});
 }
 
@@ -200,9 +211,20 @@ function readJson(path){
 	return JSON.parse(fs.readFileSync(path, 'utf8'));
 }
 
+function log(text){
+	console.log(text);
+	var date = new Date();
+	addFile("log", "["+getDate()+"] "+text+"\n");
+	addFile("public/log", "["+getDate()+"] "+text+"\n");
+}
+
+function getDate(){
+	var date = new Date();
+	return date.getDate()+"/"+(date.getMonth()+1)+" "+(date.getHours()+1)+":"+(date.getMinutes()+1)+":"+(date.getSeconds()+1);
+}
 function executeCommand(command,user,socket){
-	console.log('['+socket.room+'] <'+user.username+'> execute '+command.cmd);
-  console.log(command.param);
+	log('['+socket.room+'] <'+user.username+'> execute '+command.cmd);
+  	log(command.param);
 
 	var server = getServerUser();
 	var cid = generateMsgCid();
@@ -221,7 +243,7 @@ function executeCommand(command,user,socket){
 				socket.emit('update userlist', Users);
 
 				execCommand = 1;
-				console.log('----> OK');
+				log('----> OK');
 			} else if(command.param == PASSWORDS.admin){
 				promoteUser(user.uid,'moderation',2);
 				socket.emit('cmd', {
@@ -233,7 +255,7 @@ function executeCommand(command,user,socket){
 				socket.emit('update userlist', Users);
 
 				execCommand = 1;
-				console.log('----> OK');
+				log('----> OK');
 			} else {
 				socket.emit('cmd', {
 					'valRetour': 0,
@@ -241,7 +263,7 @@ function executeCommand(command,user,socket){
 					'message': 'Wrong Password.'
 				});
 				execCommand = 1;
-				console.log('----> FAIL');
+				log('----> FAIL');
 			}
 			break;
 
@@ -253,14 +275,14 @@ function executeCommand(command,user,socket){
 					'message': 'Logged out.'
 				});
 			execCommand = 1;
-			console.log('----> OK');
+			log('----> OK');
 			break;
 
 		case 'kick':
 			if(user.ranks.moderation >= 1){
 				execCommand = 1;
 				var kickUser = Users.usernames[command.param];
-				console.log('kick '+kickUser.username);
+				log('kick '+kickUser.username);
 
 				socket.broadcast.to(socket.room).emit('cmd', {
 						'valRetour': kickUser.username,
@@ -274,14 +296,14 @@ function executeCommand(command,user,socket){
 						'message': kickUser.username+" was kicked/"
 				});
 
-				console.log('----> OK');
+				log('----> OK');
 			}
 			break;
 
 		case 'ban':
 			if(user.ranks.moderation >= 2){
 				execCommand = 1;
-				console.log('ban '+command.param);
+				log('ban '+command.param);
 				BannedNames.push(command.param);
 				saveObject('json/ban',BannedNames);
 
@@ -297,7 +319,7 @@ function executeCommand(command,user,socket){
 						'message': command.param+" was banned by "+user.username+'.'
 				});
 
-				console.log('----> OK');
+				log('----> OK');
 			}
 			break;
 
@@ -312,7 +334,7 @@ function executeCommand(command,user,socket){
 						'valRetour': command.param,
 						'callback': 'removeMsg'
 				});
-				console.log('----> OK');
+				log('----> OK');
 			}
 			break;
 
@@ -329,7 +351,7 @@ function executeCommand(command,user,socket){
 						'message': "Chat cleaned by "+user.username+'.'
 				});
 				execCommand = 1;
-				console.log('----> OK');
+				log('----> OK');
 			}
 			break;
 
@@ -346,7 +368,7 @@ function executeCommand(command,user,socket){
 						'message': ''
 				});
 				execCommand = 1;
-				console.log('----> OK');
+				log('----> OK');
 			}
 			break;
 
@@ -355,18 +377,18 @@ function executeCommand(command,user,socket){
 				var toSocket = Users.usernames[command.param.toUid].socketId;
 				io.to(toSocket).emit('msg',command.param);
 				execCommand = 1;
-				console.log('----> OK');
+				log('----> OK');
 			}
 			break;
     case 'join':
       var rooms = getAllRooms();
       if(command.param.pass){
-        console.log('----> Private Room');
+        log('----> Private Room');
         command.param.room = '('+command.param.room+')';
       }
       if(rooms.indexOf(command.param.room) != -1 && command.param.room == '('+command.param.room.replace(/[()]/g,'')+')' && user.ranks.moderation < 1 && command.param.pass != ROOMSPASS[command.param.room]){
         execCommand = 1;
-        console.log('----> FAIL');
+        log('----> FAIL');
         socket.emit('cmd', {
             'valRetour': 0,
             'callback': 'join',
@@ -402,7 +424,7 @@ function executeCommand(command,user,socket){
         socket.broadcast.emit('update userlist', Users);
         socket.emit('update userlist', Users);
         execCommand = 1;
-        console.log('----> OK');
+        log('----> OK');
       }
   		break;
     case 'slow':
@@ -419,7 +441,7 @@ function executeCommand(command,user,socket){
             'message': 'Temps entre chaques messages: '+SLOW+'s'
         });
   			execCommand = 1;
-  			console.log('----> OK');
+  			log('----> OK');
   		}
   		break;
     case 'invite':
@@ -431,7 +453,7 @@ function executeCommand(command,user,socket){
             'message': ''
         });
         execCommand = 1;
-        console.log('----> OK');
+        log('----> OK');
       }
       break;
 		default:
@@ -447,6 +469,6 @@ function executeCommand(command,user,socket){
 					'valRetour': "Not permitted.",
 					'callback': ''
 				});
-			console.log('----> FAIL');
+			log('----> FAIL');
 		}
 }
