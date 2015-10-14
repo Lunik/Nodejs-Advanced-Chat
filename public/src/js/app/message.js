@@ -97,8 +97,6 @@ function addMessageElement(el){
 	}
 	else
 		ALTERCOLOR = 1;
-	console.log(el);
-	A = el;
 	$('.messages').append(el);
 	$messages[0].scrollTop = $messages[0].scrollHeight;
 }
