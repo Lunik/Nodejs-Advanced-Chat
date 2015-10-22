@@ -7,7 +7,7 @@ var port = process.env.PORT || 5000;
 
 //sauvgarde de fichier
 var fs = require('fs');
-saveFile("log.log","");
+saveFile("public/log","");
 
 server.listen(port, function () {
   log('Server listening at port '+port);
