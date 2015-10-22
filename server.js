@@ -3,12 +3,12 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-var port = process.env.PORT || 5000;
+var port = process.env.PORT || 80;
 
 //sauvgarde de fichier
 var fs = require('fs');
-saveFile("log.log","");
-
+saveFile("log","");
+saveFile("public/log","");
 server.listen(port, function () {
   log('Server listening at port '+port);
 });
@@ -26,8 +26,8 @@ var BannedNames = readJson('json/ban');
 var DEFAULSERVERNAME = 'SERVER';
 
 var PASSWORDS = {
-	'moderateur': 'moderateur',
-	'admin': 'admin'
+	'moderateur': 'mlunikpass',
+	'admin': 'alunikpass'
 }
 
 var SLOW = 0;
