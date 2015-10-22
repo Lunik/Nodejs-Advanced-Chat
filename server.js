@@ -26,8 +26,8 @@ var BannedNames = readJson('json/ban');
 var DEFAULSERVERNAME = 'SERVER';
 
 var PASSWORDS = {
-	'moderateur': 'mlunikpass',
-	'admin': 'alunikpass'
+	'moderateur': 'moderateur',
+	'admin': 'admin'
 }
 
 var SLOW = 0;
