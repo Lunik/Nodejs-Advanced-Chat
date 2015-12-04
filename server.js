@@ -224,7 +224,7 @@ function getDate(){
 }
 function executeCommand(command,user,socket){
 	log('['+socket.room+'] <'+user.username+'> execute '+command.cmd);
-  	log(command.param);
+  	log(JSON.stringify(command.param));
 
 	var server = getServerUser();
 	var cid = generateMsgCid();
