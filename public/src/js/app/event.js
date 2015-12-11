@@ -56,7 +56,7 @@ $chatPage.on('click','.but-send_message',function(data){
     sendMessage();
 });
 
-//On new message/*
+//On new message
 $messages.bind('DOMNodeInserted', function(data){
     var className = '.'+data.target.className.split(' ').join('.');
     var messageId = data.target.id;
@@ -64,6 +64,9 @@ $messages.bind('DOMNodeInserted', function(data){
     $message = $(className+' .text');
     if($message.attr('class') == "text code"){
         $message = $(className+' .text pre code');
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
     }
 
 
