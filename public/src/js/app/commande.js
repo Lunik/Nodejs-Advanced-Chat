@@ -214,30 +214,25 @@ COMMANDS = {
 		var $html = $('<div>').addClass('codeHtml');
 		var $selectCode = $('<select>').addClass('code-selectcode');
 		var languages={
-			'Apache':"apache",
 			'Bash':"bash",
 			'C++':"cpp",
 			'C#':"cs",
 			'Css':"css",
-			'Caché Object Script':"cos",
-			'CofeeScript':"cofeescript",
 			'Diff':"diff",
 			'Html':"html",
 			'Xml':"xml",
-			'Http':"http",
-			'Ini':"ini",
 			'JSON':"json",
 			'Java':"java",
 			'JavaScript':"javascript",
 			'Makefile':"makefile",
-			'Markdown':"markdown",
-			'Nginx':"nginx",
 			'Objective C':"objectivc",
 			'PHP':"php",
 			'Perl':"perl",
+			'Prolog':"prolog",
 			'Python':"python",
 			'Ruby':"ruby",
 			'SQL':"sql"
+			'Swift':"swift"
 		}
 		for(var key in languages){
 			$selectCode.append($("<option>").attr('value',languages[key]).text(key));
