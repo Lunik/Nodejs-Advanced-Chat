@@ -399,3 +399,25 @@ a:hover, a:focus {
   border: 10px solid #000;
   outline: none;
 }
+
+/*********************/
+/*     Code Popup    */
+/*********************/
+
+.codeHtml .code-textarea{
+  width: 100%;
+  min-height: 100px;
+}
+
+.codeHtml .code-submit{
+  border: 3px outset #e74c3c;
+  border-radius: 3px;
+
+  background-color: #e74c3c;
+
+  font-size: 12px;
+}
+
+.codeHtml .code-submit:active{
+  border-style: inset;
+}

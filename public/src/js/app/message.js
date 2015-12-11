@@ -51,7 +51,13 @@ function addChatMessage (data){
 	if(user.username == DEFAULSERVERNAME){
 		$text.html(message.text);
 	} else {
-		$text.text(message.text);
+		if(data.message.code){
+			$text.addClass('code');
+			$text.html($('<pre>').append($('<code>').text(message.text)));
+		} else {
+			$text.text(message.text);
+		}
+		
 	}
 
 	//Ajout de la couleur
@@ -132,7 +138,8 @@ function sendMessage(){
 				'user': USER,
 				'message': {
 					'id': generateMsgCid(),
-					'text': message
+					'text': message,
+					'code': false
 				}
 			};
 

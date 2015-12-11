@@ -30,6 +30,7 @@ X argument obligateur
 | /join | Salle (Mot de passe)| Se connecter à une salle |
 | /invite | Pseudo | Inviter un utilisateur dans sa salle |
 | /slow | | Affiche le temps minimum entre chaque message |
+| /code | | Ecrire du code formaté dans le chat |
 
 ### Moderateurs
 

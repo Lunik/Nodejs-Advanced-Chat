@@ -3,3 +3,7 @@
 ._*
 
 depot
+
+node_modules
+
+log*

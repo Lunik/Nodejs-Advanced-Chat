@@ -138,6 +138,7 @@ socket.on('cmd', function(data){
       n.draw();
       playSound('mention');
       break;
+      
     default:
       addServerMessage(data.valRetour);
       if(data.valRetour == "Not permitted.")

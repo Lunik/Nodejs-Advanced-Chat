@@ -209,6 +209,37 @@ COMMANDS = {
 			addServerMessage("User not Found.");
 			playSound('error');
 		}
+	},
+	'code': function(){
+		var $html = $('<div>').addClass('codeHtml');
+
+		var $textarea = $('<textarea>').addClass('code-textarea');
+		$html.append($textarea);
+		var $but = $('<input>').addClass('code-submit').attr('type','submit').attr('valu','Envoyer');
+		$html.append($but);
+		
+		$currentInput = $textarea;
+		var p = new Popup();
+		p.init('center','center','50%','','Code',$html,true);
+		p.draw();
+
+		$but.click(function(){
+			var data = {
+				'user': USER,
+				'message': {
+					'id': generateMsgCid(),
+					'text': $textarea.val(),
+					'code': true
+				}
+			};
+
+			addChatMessage(data);
+
+			socket.emit('send msg', data);
+
+			$currentInput = $inputMessage.focus();
+			popupClose();
+		});
 	}
 }
 
@@ -318,7 +349,9 @@ function execCommand(data){
 		case 'slow':
 			COMMANDS.slow(data.param[0]);
 			break;
-
+		case 'code':
+			COMMANDS.code();
+			break;
 		default:
 			playSound('error');
 			valRetour = {

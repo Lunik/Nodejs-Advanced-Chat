@@ -29,30 +29,35 @@ function Main(){
 */
 function initModules(){
 	//Module app//
-  //Evenement
+  	//Evenement
 	$.getScript('src/js/app/event.js');
-  $.getScript('src/js/app/socketEvent.js');
-  //Utilisateurs
+  	$.getScript('src/js/app/socketEvent.js');
+  	//Utilisateurs
 	$.getScript('src/js/app/user.js');
-  //Stockage des donnes
+  	//Stockage des donnes
 	$.getScript('src/js/app/storage.js');
-  //Messages + commandes
+  	//Messages + commandes
 	$.getScript('src/js/app/message.js');
 	$.getScript('src/js/app/commande.js');
-  //Parametres
+  	//Parametres
 	$.getScript('src/js/app/parametre.js');
-  //Notifications
-  $.getScript('src/js/app/notif.js');
-  //Emojis
+  	//Notifications
+  	$.getScript('src/js/app/notif.js');
+  	//Emojis
 	$.getScript('src/js/app/emoji.js');
-  //Module Audio
-  $.getScript('src/js/app/sound.js');
+  	//Module Audio
+  	$.getScript('src/js/app/sound.js');
 
-  //Module Popup
+  	//Module Popup
 	$.getScript('src/js/popup/popup.js');
 
 	//Module pnotif
 	$.getScript('src/js/pnotif/pnotif.js');
+
+	//Module Highlight
+	$.getScript('src/js/highlight/highlight.js',function(){
+		hljs.initHighlightingOnLoad();
+	});
 }
 
 function currentHour(){

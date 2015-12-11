@@ -9,6 +9,12 @@ function parameterHtml(){
 	$usernameDiv.append($usernameLabel).append($usernameSpan).append($usernameInput);
 	$html.append($usernameDiv);
 
+	$usernameInput.click(function(){
+		USER.setUsername('');
+		saveUser();
+		location.reload();
+	});
+
 	// COULEUR D'ECRITURE //
 	$colorDiv = $('<div>').addClass('param-color');
 	$colorLabel = $('<label>').text('Color:');
@@ -23,40 +29,34 @@ function parameterHtml(){
 	$soundDiv.append($soundLabel).append($soundInput);
 	$html.append($soundDiv);
 
+	$soundInput.click(function(){
+		if(SOUNDS.etat)
+			SOUNDS.etat = false;
+		else
+			SOUNDS.etat = true;
+
+		$soundInput.attr('value',SOUNDS.etat);
+	});
+
 	// SUBMIT //
 	$saveDiv = $('<div>').addClass('param-save');
 	$submitInput = $('<input>').addClass('param-input save').attr('type','submit').attr('value','Save');
 	$saveDiv.append($submitInput);
 	$html.append($saveDiv);
 
+	$saveDiv.click(function(){
+		var color = $colorDiv.val();
+
+		USER.setColor(color);
+
+		saveUser();
+		storeData('SOUNDS',SOUNDS.etat);
+		$currentInput = $inputMessage;
+		popupClose();
+	});
+
 	return $html;
 }
-
-$('body').on('click','.param-username .change-username',function(){
-	USER.setUsername('');
-	saveUser();
-	location.reload();
-});
-
-$('body').on('click','.param-sound .change-sound',function(){
-	if(SOUNDS.etat)
-		SOUNDS.etat = false;
-	else
-		SOUNDS.etat = true;
-
-	$('.param-sound .change-sound').attr('value',SOUNDS.etat);
-});
-
-$('body').on('click','.param-save',function(){
-	var color = $('.param-color input').val();
-
-	USER.setColor(color);
-
-	saveUser();
-	storeData('SOUNDS',SOUNDS.etat);
-	$currentInput = $inputMessage;
-	popupClose();
-});
 
 function setParamRoom(room){
 	var $rooms = $('.param-room').html(' ');
