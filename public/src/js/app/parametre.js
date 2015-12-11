@@ -45,7 +45,7 @@ function parameterHtml(){
 	$html.append($saveDiv);
 
 	$saveDiv.click(function(){
-		var color = $colorDiv.val();
+		var color = $colorInput.val();
 
 		USER.setColor(color);
 
