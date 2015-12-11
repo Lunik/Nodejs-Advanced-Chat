@@ -53,7 +53,7 @@ function addChatMessage (data){
 	} else {
 		if(data.message.code){
 			$text.addClass('code');
-			$text.html($('<pre>').append($('<code>').text(message.text)));
+			$text.html($('<pre>').append($('<code>').addClass(message.language).text(message.text)));
 		} else {
 			$text.text(message.text);
 		}

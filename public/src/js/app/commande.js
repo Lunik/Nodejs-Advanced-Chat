@@ -212,7 +212,37 @@ COMMANDS = {
 	},
 	'code': function(){
 		var $html = $('<div>').addClass('codeHtml');
-
+		var $selectCode = $('<select>').addClass('code-selectcode');
+		var languages={
+			'Apache':"apache",
+			'Bash':"bash",
+			'C++':"cpp",
+			'C#':"cs",
+			'Css':"css",
+			'Caché Object Script':"cos",
+			'CofeeScript':"cofeescript",
+			'Diff':"diff",
+			'Html':"html",
+			'Xml':"xml",
+			'Http':"http",
+			'Ini':"ini",
+			'JSON':"json",
+			'Java':"java",
+			'JavaScript':"javascript",
+			'Makefile':"makefile",
+			'Markdown':"markdown",
+			'Nginx':"nginx",
+			'Objective C':"objectivc",
+			'PHP':"php",
+			'Perl':"perl",
+			'Python':"python",
+			'Ruby':"ruby",
+			'SQL':"sql"
+		}
+		for(var key in languages){
+			$selectCode.append($("<option>").attr('value',languages[key]).text(key));
+		}
+		$html.append($selectCode);
 		var $textarea = $('<textarea>').addClass('code-textarea');
 		$html.append($textarea);
 		var $but = $('<input>').addClass('code-submit').attr('type','submit').attr('valu','Envoyer');
@@ -229,7 +259,8 @@ COMMANDS = {
 				'message': {
 					'id': generateMsgCid(),
 					'text': $textarea.val(),
-					'code': true
+					'code': true,
+					'language':$selectCode.val()
 				}
 			};
 
