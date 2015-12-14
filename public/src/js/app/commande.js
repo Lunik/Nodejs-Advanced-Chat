@@ -231,7 +231,7 @@ COMMANDS = {
 			'Prolog':"prolog",
 			'Python':"python",
 			'Ruby':"ruby",
-			'SQL':"sql"
+			'SQL':"sql",
 			'Swift':"swift"
 		}
 		for(var key in languages){
