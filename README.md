@@ -7,10 +7,10 @@
 ## [DEMO](http://chat.guillaume-lunik.fr/)
 
 ## Installation:
-	$ git clone https://github.com/Lunik/Lunik-Chat-V2.0.git
-	$ cd Lunik-Chat-V2.0/
-	$ node server.js
-	$ open http://localhost:5000
+	$ npm install lunik-chat
+
+## Run
+	$ npm run start
 
 ## Commandes:
 
