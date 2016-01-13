@@ -1,6 +1,6 @@
 {
    "name":"lunik-chat",
-   "version":"2.1.1",
+   "version":"2.1.2",
    "description":"chat instantane",
    "author":"Guillaume Lunik <guillaume.lunik@gmail.com",
    "scripts":{

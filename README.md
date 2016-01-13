@@ -1,10 +1,10 @@
 # Lunik-Chat-V2.0
-## [DEMO](http://chat.guillaume-lunik.fr/)
 
-## Require:
-#### [node.js](https://nodejs.org/)
-#### [socket.io](http://socket.io/)
-#### [express](http://expressjs.com/)
+[![js-npm](https://img.shields.io/npm/v/standard.svg?style=flat)](https://npmjs.org/package/standard)
+[![socketio](https://img.shields.io/badge/socket.io-v1.4.4%20-green.svg)](http://socket.io/)
+[![express](https://img.shields.io/badge/express-v4.13.3%20-green.svg)](http://expressjs.com/)
+
+## [DEMO](http://chat.guillaume-lunik.fr/)
 
 ## Installation:
 	$ git clone https://github.com/Lunik/Lunik-Chat-V2.0.git
