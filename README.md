@@ -7,7 +7,9 @@
 ## [DEMO](http://chat.guillaume-lunik.fr/)
 
 ## Installation:
-	$ npm install lunik-chat
+	$ git clone https://github.com/Lunik/Nodejs-Advanced-Chat.git
+	$ cd Nodejs-Advanced-Chat
+	$ npm install
 
 ## Run
 	$ npm run start
