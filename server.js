@@ -317,6 +317,9 @@ function executeCommand(command,user,socket){
 						'message': command.param+" was banned by "+user.username+'.'
 				});
 
+        delete Users.username[command.param];
+        Users.count --;
+        
 				log('----> OK');
 			}
 			break;
@@ -408,7 +411,7 @@ function executeCommand(command,user,socket){
 	     	  socket.join(command.param.room);
 	     	  socket.room = command.param.room;
 	     	  Users.usernames[user.uid].room = socket.room;
-	     	  ROOMSPASS[command.param.room] = command.param.pass;	
+	     	  ROOMSPASS[command.param.room] = command.param.pass;
 	     	  socket.broadcast.to(socket.room).emit('cmd', {
 	     	      'valRetour': '',
 	     	      'callback': 'join',
