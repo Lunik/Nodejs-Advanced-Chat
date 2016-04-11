@@ -319,7 +319,9 @@ function executeCommand(command,user,socket){
 
         delete Users.username[command.param];
         Users.count --;
-        
+        socket.broadcast.emit('update userlist', Users);
+        socket.emit('update userlist', Users);
+
 				log('----> OK');
 			}
 			break;
