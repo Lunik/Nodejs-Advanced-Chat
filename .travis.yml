@@ -13,6 +13,7 @@ script:
 - npm start &
 - sleep 10
 - curl http://localhost:$PORT
+- curl http://localhost:$PORT/socket.io/socket.io.js
 deploy:
   provider: npm
   email: guillaume.lunik@gmail.com
