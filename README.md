@@ -7,12 +7,16 @@
 ## [DEMO](http://chat.guillaume-lunik.fr/)
 
 ## Installation:
-	$ git clone https://github.com/Lunik/Nodejs-Advanced-Chat.git
-	$ cd Nodejs-Advanced-Chat
-	$ npm install
+```
+$ git clone https://github.com/Lunik/Nodejs-Advanced-Chat.git
+$ cd Nodejs-Advanced-Chat
+$ npm install
+```
 
 ## Run
-	$ npm run start
+```
+$ npm run start
+```
 
 ## Commandes:
 
