@@ -1,0 +1,22 @@
+notifications:
+  email: false
+language: node_js
+node_js:
+- '6'
+- '5'
+env:
+- PORT="5000"
+before_install:
+- sudo apt-get update -qq
+- sudo apt-get install curl
+script:
+- npm start &
+- sleep 10
+- curl http://localhost:$PORT
+deploy:
+  provider: npm
+  email: guillaume.lunik@gmail.com
+  on:
+    tags: true
+  api_key:
+    secure: HfBs3aoT8/RNY3eyVyKA9Tf7XWQNKRg3Ot2vzWFLSI/MqTVnbmBLNA68YatXrMO/Au3m1fonszbEZyK8WX+xXMCIHP/35gyIlAmNyA43YWZHsnJ/TX0bCaqAXjR6enz5bI8gsVMmq3zSbIVmTy1wzXGVOdRt2QKqaUUHHtW/KUwUnC3AAJZI1DrwFFgpwWnJyU8rgCbu5bzFn4QgDx58tpFZ5QOY9eVzLwreMlCVPpahdEmH/BVIUx7bNuh+YMVv/KN3TPIuo226xr1UcxD1LWPnSmpMClTHTaVgiTZm1qyHkEoJokaX89/EnRfMg4exBQ8LmtMA2mNDUxctiegI9hVEpg+2xp+1cKeFsHRoEs6P3kQm92rrtIOq6BPFirMSdMENza/DZb4fi7PJuV2y0KyeDYLv9RXeNDE8Y5Res8iBn0AErg5J1lmzpkMZBQEol0sZI8+4prm/FSs9MvW+ta+VJHXCvnKWqMxrjO6KcFneLPmJhGBlsdJeAv9mV7UnMIVPCBPz04lSJyF7RW5yAaygDlaY8oxnx7C/mR9+GsgOOKlaiWNf3a7vm+6hTPazhgDrWYL0BM3VzKRhDxvGBFmoE23d9In7y6om0R/rp21+S5OvmKZkqRd2NjPK9ddt67BrWTKrWkr9uPiinVlD+k26CUoZhPYnbhNGzNqUQrw=
